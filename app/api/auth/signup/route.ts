@@ -1,7 +1,7 @@
 import { signupSchema } from "@/zod";
 import { sign } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import prisma from "@/app/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     });
 
     const token = sign(
-      { id: user.id },
+      { id: user.id, },
       process.env.NEXTAUTH_SECRET as string,
       { expiresIn: "1h" }
     );
