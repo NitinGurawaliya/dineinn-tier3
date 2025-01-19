@@ -12,45 +12,48 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model User {
+  id               Int              @id @default(autoincrement())
+  name             String
+  email            String           @unique
+  password         String
 
-model User{
-  id                      Int      @id @default(autoincrement())
-  name                    String
-  email                   String  @unique
-  password                String
-
-  restaurantDetail        RestaurantDetail?
+  restaurantDetail RestaurantDetail?
 }
 
-model RestaurantDetail{
-  id                  Int  @id @default(autoincrement())
-  restaurantName      String
-  contactNumber       String?
-  location            String
-  WeekendWorking      String?  
-  WeekdaysWorking     String? 
-  Logo                String?
-  Instagram           String?
-  Facebook            String?
-  userId              Int @unique
-  owner                User @relation(fields: [userId],references: [id])
-  categories           Category[]
+model RestaurantDetail {
+  id              Int        @id @default(autoincrement())
+  restaurantName  String
+  contactNumber   String?
+  location        String
+  weekendWorking  String?
+  weekdaysWorking String?
+  logo            String?
+  instagram       String?
+  facebook        String?
+  userId          Int        @unique
+  user            User       @relation(fields: [userId], references: [id])
+
+  categories      Category[]
+  dishes          Dishes[]  // Direct relation to dishes
 }
 
-model Category{
-  id        Int @id @default(autoincrement())
-  name      String
-  restaurantId    Int
-  restaurant    RestaurantDetail @relation(fields: [restaurantId],references: [id])
+model Category {
+  id            Int        @id @default(autoincrement())
+  name          String
+  restaurantId  Int
+  restaurant    RestaurantDetail @relation(fields: [restaurantId], references: [id])
+
   dishes        Dishes[]
 }
 
-model Dishes{
-  id      Int @id @default(autoincrement())
-  name    String
-  price   Float
-  categoryId  Int
-  image         String?   // URL for the dish image
-  tags          String[]  // Array of tags (e.g., ["spicy", "vegetarian"])
-  dishes    Category @relation(fields: [categoryId],references: [id])
+model Dishes {
+  id              Int         @id @default(autoincrement())
+  name            String
+  price           Float
+  image           String?     // URL for the dish image
+  categoryId      Int
+  restaurantId    Int          // Direct relation to the restaurant
+  restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
+  category        Category     @relation(fields: [categoryId], references: [id])
 }
