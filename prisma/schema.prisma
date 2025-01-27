@@ -35,7 +35,7 @@ model RestaurantDetail {
   user            User       @relation(fields: [userId], references: [id])
 
   categories      Category[]
-  dishes          Dishes[]  // Direct relation to dishes
+  dishes          Dishes[]  
 }
 
 model Category {
@@ -51,9 +51,9 @@ model Dishes {
   id              Int         @id @default(autoincrement())
   name            String
   price           Float
-  image           String?     // URL for the dish image
+  image           String?     
   categoryId      Int
-  restaurantId    Int          // Direct relation to the restaurant
+  restaurantId    Int         
   restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
   category        Category     @relation(fields: [categoryId], references: [id])
 }
