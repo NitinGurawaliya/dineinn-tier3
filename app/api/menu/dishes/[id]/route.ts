@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
 export async function POST(req: NextRequest, context: { params: { id: string } }) {
-    // Explicitly await params if needed
     const params = await Promise.resolve(context.params);
     const { id } = params;
 
@@ -14,8 +13,8 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
 
     const { name, price, image } = await req.json();
 
-    const restaurantId = req.headers.get("restaurantId")
-    const userId = req.headers.get("userId")
+    const restaurantId = req.cookies.get("userId")?.value;
+    const userId = req.cookies.get("userId")?.value
 
     if (!userId || !restaurantId) {
         return NextResponse.json({ msg: "User ID or Restaurant ID not found" }, { status: 400 });
@@ -32,8 +31,6 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
             categoryId:parseInt(id),
             restaurantId:parseInt(restaurantId),
             
-
-
         }
     })
 
