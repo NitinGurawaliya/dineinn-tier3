@@ -32,13 +32,23 @@ export async function POST(req: NextRequest) {
     });
 
     const token = sign(
-      { id: user.id, },
+      { id: user.id },
       process.env.NEXTAUTH_SECRET as string,
       { expiresIn: "1h" }
     );
 
-    const response = NextResponse.json({token,userId:user.id});
-    response.cookies.set("token", token, { httpOnly: true, path: "/" });
+    const response = NextResponse.json({ msg: "Signup successful" });
+
+    response.cookies.set("token", token, {
+      path: "/",
+      maxAge: 60 * 60,
+    });
+
+    response.cookies.set("userId", user.id.toString(), { 
+      path: "/",
+      sameSite: "strict",
+      maxAge: 60 * 60, 
+    });
 
     return response;
   } catch (error) {
