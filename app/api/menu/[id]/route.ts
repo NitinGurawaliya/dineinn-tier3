@@ -25,7 +25,6 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
             },
         });
 
-        // Check if the menu exists
         if (!menu) {
             return NextResponse.json({ msg: "Menu not found" }, { status: 404 });
         }
