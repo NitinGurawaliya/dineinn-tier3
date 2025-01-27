@@ -27,6 +27,7 @@ export async function POST(res:NextResponse,req:NextRequest){
 
     const response = NextResponse.json({token,userId:findUser.id})
     response.cookies.set("token",token,{httpOnly:true,path:'/'})
+    res.cookies.set("userId",findUser.id.toString(),{path:"/"})
 
     return response
 
