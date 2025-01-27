@@ -11,8 +11,11 @@ export async function POST(req: NextRequest) {
         return authResult.error; // Return the error response from the middleware
     }
 
-    const restaurantId  = req.headers.get("restaurantId");
-    const userId = req.headers.get("userId");
+    // const restaurantId  = req.headers.get("restaurantId");
+    const userId = req.cookies.get("userId")?.value;
+    const restaurantId  = req.cookies.get("userId")?.value
+
+
 
 
     console.log("User ID:", userId);
@@ -45,3 +48,31 @@ export async function POST(req: NextRequest) {
 }
 
 
+
+export async function GET(req:NextRequest) {
+    const authResult = await authMiddleware(req)
+
+    if(authResult.error){
+        return authResult.error;
+    }
+
+    const restaurantId = req.cookies.get("userId")?.value;
+    const userId = req.cookies.get("userId")?.value
+
+    if (!userId || !restaurantId) {
+        return NextResponse.json({ msg: "User ID or Restaurant ID not found" }, { status: 400 });
+    }
+
+    const allCategories = await prisma.category.findMany({
+        where:{
+            restaurantId:parseInt(restaurantId),
+            
+        },
+        
+    })
+
+    return NextResponse.json({allCategories})
+
+
+    
+}
