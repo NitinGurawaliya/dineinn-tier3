@@ -6,7 +6,6 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     // Extract the 'id' from params
     const { id } = params;
 
-    // Check if 'id' is defined
     if (!id) {
         return NextResponse.json({ msg: "Menu ID is required" }, { status: 400 });
     }
