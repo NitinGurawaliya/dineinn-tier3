@@ -5,12 +5,18 @@ import prisma from "@/app/lib/prisma";
 
 export async function GET(req:NextRequest,res:NextResponse) {
 
+    console.log("from menu router")
+
+    console.log("Auth Middleware Cookies:", req.cookies.get("userId")?.value);
+
+
     const authResult = await authMiddleware(req);
     if(authResult.error){
         return authResult.error;
     }
 
-    const userId = req.headers.get("userId");
+    const userId = req.cookies.get("userId")?.value;
+    console.log(userId)
 
     if(!userId){
         return NextResponse.json({msg:"no user id"})
