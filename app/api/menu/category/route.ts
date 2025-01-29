@@ -8,10 +8,9 @@ export async function POST(req: NextRequest) {
     const authResult = await authMiddleware(req);
 
     if (authResult.error) {
-        return authResult.error; // Return the error response from the middleware
+        return authResult.error; 
     }
 
-    // const restaurantId  = req.headers.get("restaurantId");
     const userId = req.cookies.get("userId")?.value;
     const restaurantId  = req.cookies.get("userId")?.value
 
