@@ -18,6 +18,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
             },
             select: {
                 restaurantName: true,
+                weekdaysWorking:true,
+                weekendWorking:true,
+                location:true,
+                contactNumber:true,
                 logo: true,
                 categories: true,
                 dishes: true,
