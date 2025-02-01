@@ -19,14 +19,14 @@ const DishesCard:React.FC<DishCardProps>=({id,name,price,image,categoryId,restau
             <div className="p-2 bg-gray-100 flex-1">
                 {/* Dish Name & Veg Icon */}
                 <div className="flex items-start justify-between">
-                    <h2 className="text-lg font-semibold">{name}</h2>
+                    <h2 className="text-xl font-medium ">{name}</h2>
                     <div className="w-3 h-3 border border-green-600 rounded-sm"></div>
                 </div>
 
                
 
                 {/* Description */}
-                <p className="text-gray-600 text-xs mt-2 mb-8">
+                <p className="text-gray-600 text-sm mt-2 mb-8">
                     A French-style hearty soup made with fresh broccoli served with crunchy almond slivers.
                 </p>
 
