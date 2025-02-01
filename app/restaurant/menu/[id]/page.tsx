@@ -1,87 +1,104 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import CategoryComponent from "@/components/CategoryBar";
 import DishesCard from "@/components/DishesCard";
 import axios from "axios";
-import { cookies } from "next/headers";
+import HamburgerMenu from "@/components/HambergerMenu";
+import { Button } from "@/components/ui/button";
+import { PencilIcon } from "lucide-react";
+
+interface RestaurantDetails {
+  restaurantName: string;
+  weekdaysWorking: string;
+  weekendWorking: string;
+  location: string;
+  contactNumber: string;
+  logo: string;
+}
 
 interface Category {
-    id: number;
-    name: string;
-    restaurantId: number;
+  id: number;
+  name: string;
+  restaurantId: number;
 }
 
 interface Dish {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-    categoryId: number;
-    restaurantId: number;
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  categoryId: number;
+  restaurantId: number;
 }
 
-interface MenuData {
-    restaurantName: string;
-    logo: string;
-    categories: Category[];
-    dishes: Dish[];
-}
+export default function RestaurantMenuPage() {
+  const params = useParams();
+  const { id } = params;
 
-export default async function RestaurantMenuPage({params}:any) {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [dishes, setDishes] = useState<Dish[]>([]);
+  const [filteredDishes, setFilteredDishes] = useState<Dish[]>([]);
+  const [logo, setLogo] = useState("");
+  const [restaurantData, setRestaurantData] = useState<RestaurantDetails | null>(null);
 
-    const {id} = params
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/api/menu/${id}`);
+        const menuData = res.data;
 
-    let menuData: MenuData | null = null;
-
-    try {
-        const cookieHeader = cookies().toString();
-
-        const res = await axios.get(`http://localhost:3000/api/menu/${id}`, {
-            headers: {
-              Cookie: cookieHeader, 
-            },
-            withCredentials: true,
-          });
-
-        const data = res.data;
-        menuData = data; 
-
-        console.log(menuData?.restaurantName); // "solan dhaba"
-        console.log(menuData?.dishes); // Array of dish objects
-
-    } catch (error) {
+        setRestaurantData(menuData);
+        setLogo(menuData.logo);
+        setCategories(menuData.categories);
+        setDishes(menuData.dishes);
+        setFilteredDishes(menuData.dishes);
+      } catch (error) {
         console.error("Error fetching menu data:", error);
-    }
+      }
+    };
 
-    return (
-        <div className="p-4">
-            {/* Restaurant Name & Logo */}
-            
-            <div className="flex flex-col items-center mb-6">
-                <img src={menuData?.logo} className="w-24 h-24 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-300 "></img>
-             </div>
-             <h1 className="text-2xl text-center font-bold">{menuData?.restaurantName}</h1>
+    if (id) fetchMenuData(); // Ensure `id` is available before making API call
+  }, [id]);
 
-            {/* Categories */}
-            <h2 className="text-xl font-semibold mt-4">Categories</h2>
-            <ul className="list-disc list-inside">
-                {menuData?.categories.map((category) => (
-                    <li key={category.id}>{category.name}</li>
-                ))}
-            </ul>
+  const handleCategorySelect = (categoryId: number) => {
+    const filtered = dishes.filter((dish) => dish.categoryId === categoryId);
+    setFilteredDishes(filtered);
+  };
 
-            {/* Dishes List */}
-            <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {menuData?.dishes.map((dish) => (
-                    <DishesCard
-                    key={dish.id}
-                    id={dish.id}
-                    name={dish.name}
-                    price={dish.price}
-                    image={dish.image}
-                    categoryId={dish.categoryId}
-                    restaurantId={dish.restaurantId}
-                />
-                
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <div className="flex justify-between items-center px-4 mb-6">
+       
+        <HamburgerMenu
+          restaurantName={restaurantData?.restaurantName ?? "Loading..."}
+          weekdaysWorking={restaurantData?.weekdaysWorking ?? ""}
+          weekendWorking={restaurantData?.weekendWorking ?? ""}
+          contactNumber={restaurantData?.contactNumber ?? ""}
+        />
+
+        <Button className="rounded-2xl mt-5 flex items-center gap-2 px-4 py-2">
+          <PencilIcon size={18} />
+          <span>Feedback</span>
+        </Button>
+      </div>
+
+      <CategoryComponent categories={categories} onCategorySelect={handleCategorySelect} />
+
+      <div className="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        {filteredDishes.map((dish) => (
+          <DishesCard
+            key={dish.id}
+            id={dish.id}
+            name={dish.name}
+            price={dish.price}
+            image={dish.image}
+            categoryId={dish.categoryId}
+            restaurantId={dish.restaurantId}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
