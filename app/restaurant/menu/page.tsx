@@ -1,3 +1,6 @@
+
+
+import CategoryComponent from "@/components/CategoryBar";
 import DishesCard from "@/components/DishesCard";
 import axios from "axios";
 import { cookies } from "next/headers";
@@ -56,13 +59,7 @@ export default async function MenuPage() {
              </div>
              <h1 className="text-2xl text-center font-bold">{menuData?.restaurantName}</h1>
 
-            {/* Categories */}
-            <h2 className="text-xl font-semibold mt-4">Categories</h2>
-            <ul className="list-disc list-inside">
-                {menuData?.categories.map((category) => (
-                    <li key={category.id}>{category.name}</li>
-                ))}
-            </ul>
+             {menuData?.categories && <CategoryComponent categories={menuData.categories} />}
 
             {/* Dishes List */}
             <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4">
