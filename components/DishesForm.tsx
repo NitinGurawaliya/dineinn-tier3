@@ -1,70 +1,77 @@
-"use client"
+"use client";
 
-import axios from "axios"
-import { useEffect, useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface Category {
-    id: number
-    name: string
-    restaurantId: number
+    id: number;
+    name: string;
+    restaurantId: number;
 }
 
 const DishesForm = () => {
-    const [categories, setCategories] = useState<Category[]>([])
-    const [expandedCategory, setExpandedCategory] = useState<number | null>(null)
-    const [dishData, setDishData] = useState<{ [key: number]: { name: string; price: string } }>({})
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
+    const [dishData, setDishData] = useState<{ [key: number]: { name: string; price: string; image: File | "" } }>({});
 
     useEffect(() => {
         async function getCategory() {
             try {
                 const res = await axios.get<{ allCategories: Category[] }>("http://localhost:3000/api/menu/category", {
                     withCredentials: true
-                })
-                setCategories(res.data.allCategories)
+                });
+                setCategories(res.data.allCategories);
             } catch (error) {
-                console.error("Error fetching categories:", error)
+                console.error("Error fetching categories:", error);
             }
         }
-        getCategory()
-    }, [])
+        getCategory();
+    }, []);
 
     const toggleCategory = (categoryId: number) => {
-        setExpandedCategory(expandedCategory === categoryId ? null : categoryId)
-    }
+        setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
+    };
 
-    const handleInputChange = (categoryId: number, field: string, value: string) => {
-        setDishData({
-            ...dishData,
+    const handleInputChange = (categoryId: number, field: string, value: string | File) => {
+        setDishData((prevData) => ({
+            ...prevData,
             [categoryId]: {
-                ...dishData[categoryId],
+                ...prevData[categoryId],
                 [field]: value
             }
-        })
-    }
+        }));
+    };
 
     const handleSubmit = async (categoryId: number) => {
-        const dish = dishData[categoryId]
-        if (!dish?.name || !dish?.price) {
-            alert("Please enter dish name and price")
-            return
+        const dish = dishData[categoryId];
+        if (!dish?.name || !dish?.price || !dish?.image) {
+            alert("Please enter dish name, price, and select an image");
+            return;
         }
 
         try {
-            const res = await axios.post(`http://localhost:3000/api/menu/dishes/${categoryId}`, {
-                name: dish.name,
-                price: parseFloat(dish.price),
-                image: "default-image.jpg" // Placeholder for image
-            }, {
-                withCredentials: true
-            })
+            const formData = new FormData();
+            formData.append("name", dish.name);
+            formData.append("price", dish.price);
+            formData.append("image", dish.image); // Image is always `File | ""`, so no type error.
 
-            console.log("Dish added:", res.data)
-            alert("Dish added successfully!")
-            setDishData({ ...dishData, [categoryId]: { name: "", price: "" } })  // Clear inputs after submission
+            const res = await axios.post(`http://localhost:3000/api/menu/dishes/${categoryId}`, formData, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+            console.log("Dish added:", res.data);
+            alert("Dish added successfully!");
+            setDishData((prevData) => ({
+                ...prevData,
+                [categoryId]: { name: "", price: "", image: "" } // Reset fields properly
+            }));
         } catch (error) {
-            console.error("Error adding dish:", error)
+            console.error("Error adding dish:", error);
         }
-    }
+    };
 
     return (
         <div className="p-4">
@@ -102,6 +109,13 @@ const DishesForm = () => {
                                     className="p-2 border rounded-md w-full"
                                 />
 
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => handleInputChange(category.id, "image", e.target.files?.[0] || "")}
+                                    className="p-2 border rounded-md w-full"
+                                />
+
                                 <button 
                                     onClick={() => handleSubmit(category.id)} 
                                     className="bg-green-500 text-white p-2 rounded-md w-full"
@@ -114,7 +128,7 @@ const DishesForm = () => {
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default DishesForm
+export default DishesForm;
