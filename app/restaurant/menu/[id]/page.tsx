@@ -8,6 +8,7 @@ import axios from "axios";
 import HamburgerMenu from "@/components/HambergerMenu";
 import { Button } from "@/components/ui/button";
 import { PencilIcon } from "lucide-react";
+import Link from "next/link";
 
 interface RestaurantDetails {
   restaurantName: string;
@@ -68,25 +69,26 @@ export default function RestaurantMenuPage() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center px-4 mb-6">
-       
+    <div className="bg-gray-100">
+      <div className="flex justify-between w-full bg-stone-500 items-center mt-0 p-4 mb-0">
         <HamburgerMenu
           restaurantName={restaurantData?.restaurantName ?? "Loading..."}
           weekdaysWorking={restaurantData?.weekdaysWorking ?? ""}
           weekendWorking={restaurantData?.weekendWorking ?? ""}
           contactNumber={restaurantData?.contactNumber ?? ""}
         />
-
-        <Button className="rounded-2xl mt-5 flex items-center gap-2 px-4 py-2">
-          <PencilIcon size={18} />
-          <span>Feedback</span>
-        </Button>
+        
+        <Link  href={`http://localhost:3000/restaurant/menu/${id}/feedback`}>
+          <Button className="rounded-2xl  flex items-center gap-2 px-4 ">
+            <PencilIcon size={18} />
+            <span>Feedback</span>
+          </Button>
+        </Link>
       </div>
 
       <CategoryComponent categories={categories} onCategorySelect={handleCategorySelect} />
 
-      <div className="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 p-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {filteredDishes.map((dish) => (
           <DishesCard
             key={dish.id}
