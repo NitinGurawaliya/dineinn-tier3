@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function Feedback() {
   return (
-    <div className="flex bg-yellow-200 flex-col min-h-screen">
+    <div className="flex bg-white flex-col min-h-screen">
       <div className="bg-black p-4 text-3xl text-white text-center">
         Feedback
       </div>
