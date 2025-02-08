@@ -1,8 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import type React from "react" // Added import for React
+import type React from "react"
 
 interface Category {
   id: number
@@ -29,41 +28,26 @@ const CategoryComponent: React.FC<CategoryProps> = ({ categories, onCategorySele
   }
 
   return (
-    <div className="bg-slate-400 rounded-xl mt-6 p-4 relative">
-      <button
-        onClick={() => scroll("left")}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-purple-600 p-2 rounded-full shadow-lg hover:bg-purple-100 transition-colors duration-300 z-10"
-        aria-label="Scroll left"
-      >
-        <ChevronLeft size={24} />
-      </button>
+    <div className="bg-white mt-0 py-0 px-4 relative shadow-[0_4px_10px_-8px_rgba(0,0,0,0),0_-4px_10px_-4px_rgba(0,0,0.0,0.2)]">
       <div className="overflow-x-auto hide-scrollbar">
         <div
           ref={scrollContainerRef}
-          className="flex space-x-4 px-2"
+          className="flex space-x-4 mr-8"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => onCategorySelect(category.id)}
-              className="flex-shrink-0 text-md ml-8 bg-white text-purple-700 font-semibold py-3 px-6 rounded-full shadow-md hover:bg-purple-50 hover:text-purple-800 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50"
+              className="flex-shrink-0 my-2 text-xl font-serif font-light bg-white text-gray-600  py-4 px-4 rounded-3xl focus:text-violet-800 "
             >
-              {category.name}
+              {category.name.toUpperCase()}
             </button>
           ))}
         </div>
       </div>
-      <button
-        onClick={() => scroll("right")}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-purple-600 p-2 rounded-full shadow-lg hover:bg-purple-100 transition-colors duration-300 z-10"
-        aria-label="Scroll right"
-      >
-        <ChevronRight size={24} />
-      </button>
     </div>
   )
 }
 
 export default CategoryComponent
-
