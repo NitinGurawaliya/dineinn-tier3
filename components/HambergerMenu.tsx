@@ -37,11 +37,11 @@ const HamburgerMenu: React.FC<RestaurantDetails> = ({
   }, []);
 
   return (
-    <div className="relative mt-4"  ref={menuRef}>
+    <div className="relative"  ref={menuRef}>
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+        className="p-2 text-gray-300 hover:text-gray-900 focus:outline-none"
         aria-expanded={isOpen}
         aria-label="Toggle menu"
       >
@@ -50,7 +50,7 @@ const HamburgerMenu: React.FC<RestaurantDetails> = ({
 
       {/* Menu Content */}
       {isOpen && (
-        <div className="fixed top-0 right-0 w-full h-full bg-white shadow-lg p-6 z-50 rounded-l-lg">
+        <div className="fixed top-0 right-0 w-full h-full bg-gray-200 shadow-lg p-6 z-50 rounded-l-lg">
           {/* Close Button */}
           <button
             onClick={toggleMenu}
