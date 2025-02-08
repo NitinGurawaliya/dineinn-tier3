@@ -26,8 +26,17 @@ export async function POST(res:NextResponse,req:NextRequest){
     const token = sign({id:findUser.id},process.env.NEXTAUTH_SECRET as string,{expiresIn:'6h'})
 
     const response = NextResponse.json({token,userId:findUser.id})
-    response.cookies.set("token",token,{httpOnly:true,path:'/'})
-    res.cookies.set("userId",findUser.id.toString(),{path:"/"})
+    
+    response.cookies.set("token", token, {
+        path: "/",
+        maxAge: 60 * 60,
+      });
+  
+      response.cookies.set("userId", findUser.id.toString(), { 
+        path: "/",
+        sameSite: "strict",
+        maxAge: 60 * 60, 
+      });
 
     return response
 
