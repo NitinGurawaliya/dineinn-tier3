@@ -17,14 +17,18 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
                 id: parseInt(id), // Convert to integer
             },
             select: {
+                id:true,
                 restaurantName: true,
                 weekdaysWorking:true,
                 weekendWorking:true,
                 location:true,
+                facebook:true,
+                instagram:true,
                 contactNumber:true,
                 logo: true,
                 categories: true,
-                dishes: true,
+                dishes: true
+                
             },
         });
 
