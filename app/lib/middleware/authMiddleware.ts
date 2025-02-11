@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function authMiddleware(req: NextRequest) {
+  console.log("from middleware")
   const token = req.cookies.get("token")?.value; // Get token from cookies
   if (!token) {
     return { error: NextResponse.json({ msg: "Not authenticated" }, { status: 401 }) };
