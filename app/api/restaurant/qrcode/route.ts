@@ -1,39 +1,39 @@
-import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import QRCode from "qrcode";
 import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 
-
-
-export async function GET(req:NextRequest) {
-
-      const authResult = await authMiddleware(req);
+export async function GET(req: NextRequest) {
+    console.log("hi from route");
     
-        if (authResult.error) {
-            return authResult.error; 
-        }
+    const authResult = await authMiddleware(req);
 
-    const restaurantId = req.cookies.get("userId")?.value
+    if (authResult.error) {
+        return NextResponse.json(authResult.error, { status: 401 });
+    }
 
-     if (!restaurantId) {
-            return NextResponse.json({ msg: "Menu ID is required" }, { status: 400 });
-        }
+    const restaurantId = req.cookies.get("userId")?.value;
 
-        const restaurantDetail = await prisma.restaurantDetail.findUnique({
-            where:{
-                id:parseInt(restaurantId)
-            }
-        })
+    if (!restaurantId) {
+        return NextResponse.json({ msg: "Menu ID is required" }, { status: 400 });
+    }
 
-        const frontendUrl = `https://dine-inn.vercel.app/menu/${restaurantId}`
+    const restaurantDetail = await prisma.restaurantDetail.findUnique({
+        where: {
+            id: parseInt(restaurantId),
+        },
+    });
 
-        QRCode.toDataURL(frontendUrl,function(err,url){
-            if(err) {
-                NextResponse.json({msg:"Failed to gen qr code "})
-            }
-    
-            console.log(url);
-            NextResponse.json({qrCodeUrl: url,restaurantDetail})
-        })    
+    if (!restaurantDetail) {
+        return NextResponse.json({ msg: "Restaurant not found" }, { status: 404 });
+    }
+
+    const frontendUrl = `http://localhost:3000/restaurant/menu/home/${restaurantId}`;
+
+    try {
+        const qrCodeUrl = await QRCode.toDataURL(frontendUrl);
+        return NextResponse.json({ qrCodeUrl, restaurantDetail }, { status: 200 });
+    } catch (err) {
+        return NextResponse.json({ msg: "Failed to generate QR code" }, { status: 500 });
+    }
 }
