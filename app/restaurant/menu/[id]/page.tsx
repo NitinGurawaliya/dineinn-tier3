@@ -7,7 +7,7 @@ import DishesCard from "@/components/DishesCard";
 import axios from "axios";
 import HamburgerMenu from "@/components/HambergerMenu";
 import { Button } from "@/components/ui/button";
-import { PencilIcon } from "lucide-react";
+import { PencilIcon, Search } from "lucide-react";
 import Link from "next/link";
 
 interface RestaurantDetails {
@@ -69,8 +69,8 @@ export default function RestaurantMenuPage() {
   };
 
   return (
-    <div className="bg-gray-100">
-      <div className="flex justify-between w-full bg-stone-500 items-center mt-0 p-4 mb-0">
+    <div className="bg-white">
+      <div className="flex justify-between w-full bg-stone-500 items-center mt-0 p-2 mb-0">
         <HamburgerMenu
           restaurantName={restaurantData?.restaurantName ?? "Loading..."}
           weekdaysWorking={restaurantData?.weekdaysWorking ?? ""}
@@ -78,7 +78,7 @@ export default function RestaurantMenuPage() {
           contactNumber={restaurantData?.contactNumber ?? ""}
         />
         
-        <Link  href={`http://localhost:3000/restaurant/menu/${id}/feedback`}>
+        <Link  href={`https://9e67-2409-40d7-1001-1f8e-79c7-b29b-1406-7a58.ngrok-free.app/restaurant/menu/${id}/feedback`}>
           <Button className="rounded-2xl  flex items-center gap-2 px-4 ">
             <PencilIcon size={18} />
             <span>Feedback</span>
@@ -86,9 +86,18 @@ export default function RestaurantMenuPage() {
         </Link>
       </div>
 
+      <div className="flex w-full h-14  bg-center rounded-lg items-center px-4">
+        <Search className="text-black mr-2 h-12" />
+        <input className="w-full text-black h-14  bg-white focus:outline-none px-2" placeholder="Search dishes..." />
+      </div>
+
+      <div className="flex w-full h-40 bg-[url('https://res.cloudinary.com/dixjcb4on/image/upload/v1739046120/dishes_image/res%20image.jpg')] bg-cover bg-center  items-center">
+      </div>
+
+
       <CategoryComponent categories={categories} onCategorySelect={handleCategorySelect} />
 
-      <div className="grid grid-cols-1 p-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 bg-gray-100 p-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {filteredDishes.map((dish) => (
           <DishesCard
             key={dish.id}
