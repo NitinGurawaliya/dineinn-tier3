@@ -1,3 +1,4 @@
+"use client"
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
@@ -27,10 +28,10 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
             key={id}
             initial={{ opacity: 0, y: 30 }}
             animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex bg-white mt-4 rounded-lg h-full overflow-hidden w-full border shadow-md"
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="flex bg-white mt-0 rounded-lg h-full overflow-hidden w-full border shadow-md"
         >
-            <img src={image} className="w-40 h-full bg-gray-300" alt={name} />
+            <img src={image} className="w-40 h-40 bg-gray-300" alt={name} />
 
             {/* Text Section */}
             <div className="p-2 bg-white flex-1">
