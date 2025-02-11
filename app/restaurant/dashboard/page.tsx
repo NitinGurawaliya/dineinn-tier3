@@ -67,12 +67,12 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
   return (
     <div>
       <Navbar id={details.id} restaurantName={details.restaurantName} logo={details.logo} />
-      <div className="flex">
+   
         {/* Sidebar */}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">{content}</main>
-      </div>
+        <main className="flex-1 overflow-x-hidden overflow-y-auto">{content}</main>
+     
     </div>
   );
 }
