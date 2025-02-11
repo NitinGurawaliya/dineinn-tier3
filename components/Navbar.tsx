@@ -12,7 +12,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ restaurantName, logo }) => {
   return (
-    <nav className="bg-white w-full border-b-2 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <nav className="bg-white w-full border-b-2 p-1 shadow-xl border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="w-full flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-3">
           <img src={logo} className="h-12 w-12" alt="Restaurant Logo" />
