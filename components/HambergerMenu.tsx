@@ -41,7 +41,7 @@ const HamburgerMenu: React.FC<RestaurantDetails> = ({
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="p-2 text-gray-300 hover:text-gray-900 focus:outline-none"
+        className=" text-gray-300 hover:text-gray-900 focus:outline-none"
         aria-expanded={isOpen}
         aria-label="Toggle menu"
       >
