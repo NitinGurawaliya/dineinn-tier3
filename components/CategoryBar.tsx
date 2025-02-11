@@ -28,7 +28,7 @@ const CategoryComponent: React.FC<CategoryProps> = ({ categories, onCategorySele
   }
 
   return (
-    <div className="bg-white mt-0 py-0 px-4 relative shadow-[0_4px_10px_-8px_rgba(0,0,0,0),0_-4px_10px_-4px_rgba(0,0,0.0,0.2)]">
+    <div className="bg-white py-0 px-4 relative shadow-[0_4px_10px_-8px_rgba(0,0,0,0),0_-4px_10px_-4px_rgba(0,0,0.0,0.2)]">
       <div className="overflow-x-auto hide-scrollbar">
         <div
           ref={scrollContainerRef}
@@ -39,7 +39,7 @@ const CategoryComponent: React.FC<CategoryProps> = ({ categories, onCategorySele
             <button
               key={category.id}
               onClick={() => onCategorySelect(category.id)}
-              className="flex-shrink-0 my-2 text-xl font-serif font-light bg-white text-gray-600  py-4 px-4 rounded-3xl focus:text-violet-800 "
+              className="flex-shrink-0 my-2 text-md font-serif font-light bg-white text-gray-600  py-2 px-4 rounded-3xl focus:text-violet-800 "
             >
               {category.name.toUpperCase()}
             </button>
