@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic"; // Ensures SSR and disables static gener
 async function getData() {
   try {
     const cookieHeader = cookies().toString();
-    const res = await fetch("http://localhost:3000/api/menu", {
+    const res = await fetch("https://dineinn-tier2.vercel.app/api/menu", {
       headers: { Cookie: cookieHeader },
       credentials: "include",
     });
