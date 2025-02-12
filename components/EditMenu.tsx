@@ -1,6 +1,8 @@
 // EditMenu.tsx
 "use client";
+
 import React, { useState } from "react";
+import { Button } from "./ui/button";
 
 export default function EditMenu() {
   const [menuItems, setMenuItems] = useState([
@@ -15,24 +17,15 @@ export default function EditMenu() {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Edit Menu</h2>
-      {menuItems.map((item) => (
-        <div key={item.id} className="flex items-center space-x-4 mb-4">
-          <input
-            type="text"
-            value={item.name}
-            onChange={(e) => handleEdit(item.id, "name", e.target.value)}
-            className="border p-2 rounded w-1/2"
-          />
-          <input
-            type="number"
-            value={item.price}
-            onChange={(e) => handleEdit(item.id, "price", parseInt(e.target.value))}
-            className="border p-2 rounded w-1/4"
-          />
-        </div>
-      ))}
+    <div className="p-6  bg-white rounded-lg shadow-md">
+      <div className="flex border-gray-300 border-b shadow-md">
+        <h2 className="text-3xl font-semibold mb-4">Edit Menu</h2>
+        <Button className="px-6  ml-10 text-lg py-3  bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105" >Add Category </Button>
+
+        <Button className="px-6 text-lg py-3 ml-4  bg-gray-800 text-white font-semibold rounded-lg shadow-lg hover:bg-gray-200 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-900 focusN:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105">Add Dishes </Button>
+      </div>
+      
+
     </div>
   );
 }
