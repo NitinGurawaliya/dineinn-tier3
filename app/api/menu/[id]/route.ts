@@ -11,8 +11,8 @@ export async function GET(
     console.log("id is ", id);
 
     if (!id) {
-         NextResponse.json({ msg:"is not avialble" },{status:401})
-         return
+        return NextResponse.json({ msg:"is not avialble" },{status:401})
+         
 
     }
 
@@ -35,12 +35,12 @@ export async function GET(
         });
 
         if (!menu) {
-             NextResponse.json({ msg: "Menu not found" }, { status: 404 });
-             return
+            return NextResponse.json({ msg: "Menu not found" }, { status: 404 });
+             
         }
 
-         NextResponse.json(menu, { status: 200 });
-         return
+        return NextResponse.json(menu, { status: 200 });
+         
     } catch (error) {
         console.error("Error fetching menu:", error);
          NextResponse.json({ msg: "Internal server error" }, { status: 500 });
