@@ -17,7 +17,7 @@ export default async function GenerateQRCode() {
   const cookieHeader = cookies().toString();
 
   try {
-    const res = await axios.get("http://localhost:3000/api/restaurant/qrcode", {
+    const res = await axios.get("https://dineinn-tier2.vercel.app/api/restaurant/qrcode", {
       headers: { Cookie: cookieHeader },
       withCredentials: true,
     });
