@@ -1,8 +1,7 @@
-import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET( { params }: { params: { id: string } }) {
     // Extract the 'id' from params
     const { id } = params;
 
