@@ -28,6 +28,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
 
   let content;
   switch (searchParams.section) {
+    
     case "my-menu":
       content = <MenuPage />;
       break;
