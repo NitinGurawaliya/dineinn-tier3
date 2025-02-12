@@ -9,7 +9,7 @@ export default function SignupComponent(){
     const[email,setEmail] = useState("")
 
     async function signupHandler() {
-        const res = await axios.post("http://localhost:3000/api/auth/signup",{
+        const res = await axios.post("https://dineinn-tier2.vercel.app/api/auth/signup",{
             name,
             password,
             email
