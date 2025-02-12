@@ -33,7 +33,7 @@ export default async function MenuPage() {
     try {
         const cookieHeader = cookies().toString();
 
-        const res = await axios.get("http://localhost:3000/api/menu", {
+        const res = await axios.get("https://dineinn-tier2.vercel.app/api/menu", {
             headers: {
               Cookie: cookieHeader, 
             },
