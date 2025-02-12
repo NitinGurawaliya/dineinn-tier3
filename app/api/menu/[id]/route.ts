@@ -1,44 +1,49 @@
-import {  NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
-export async function GET( { params }: { params: { id: string } }) {
-    // Extract the 'id' from params
-    const { id } = params;
+export async function GET(
+    req: NextRequest,
+    context: { params: { id: string } }
+){ 
+
+    const id = context.params.id; 
+
+    console.log("id is ", id);
 
     if (!id) {
-        return NextResponse.json({ msg: "Menu ID is required" }, { status: 400 });
+         NextResponse.json({ msg:"is not avialble" },{status:401})
+         return
+
     }
 
     try {
-        // Fetch the menu using Prisma
         const menu = await prisma.restaurantDetail.findUnique({
-            where: {
-                id: parseInt(id), // Convert to integer
-            },
+            where: { id: Number(id) }, // Convert ID to number
             select: {
-                id:true,
+                id: true,
                 restaurantName: true,
-                weekdaysWorking:true,
-                weekendWorking:true,
-                location:true,
-                facebook:true,
-                instagram:true,
-                contactNumber:true,
+                weekdaysWorking: true,
+                weekendWorking: true,
+                location: true,
+                facebook: true,
+                instagram: true,
+                contactNumber: true,
                 logo: true,
                 categories: true,
-                dishes: true
-                
+                dishes: true,
             },
         });
 
         if (!menu) {
-            return NextResponse.json({ msg: "Menu not found" }, { status: 404 });
+             NextResponse.json({ msg: "Menu not found" }, { status: 404 });
+             return
         }
 
-        return NextResponse.json(menu, { status: 200 });
+         NextResponse.json(menu, { status: 200 });
+         return
     } catch (error) {
         console.error("Error fetching menu:", error);
-        return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
+         NextResponse.json({ msg: "Internal server error" }, { status: 500 });
+         return
     }
 }
-
