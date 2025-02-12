@@ -34,7 +34,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
             <img src={image} className="w-40 h-40 bg-gray-300" alt={name} />
 
             {/* Text Section */}
-            <div className="p-2 bg-white flex-1">
+            <div className="p-2 bg-gray-50 flex-1">
                 {/* Dish Name & Veg Icon */}
                 <div className="flex items-start justify-between">
                     <h2 className="text-lg font-medium">{name}</h2>
