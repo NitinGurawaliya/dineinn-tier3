@@ -4,7 +4,7 @@ import axios from "axios"
 
 async function getData(id:string) {
     try {
-        const res = await axios.get(`http://localhost:3000/api/menu/${id}`)
+        const res = await axios.get(`https://dineinn-tier2.vercel.app/api/menu/${id}`)
         return res.data;
     
     } catch (error) {
