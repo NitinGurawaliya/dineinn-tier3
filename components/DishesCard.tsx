@@ -46,7 +46,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
                 </p> */}
 
                 {/* Price */}
-                <div className="mt-2 bg-red-600 w-16 px-2 text-white rounded-lg text-lg font-semibold">
+                <div className="mt-12 bg-red-600 w-16 px-2 text-white rounded-lg text-lg font-semibold">
                     ₹{price}
                 </div>
             </div>
