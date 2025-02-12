@@ -41,9 +41,9 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
                     <div className="w-3 h-3 border border-green-600 rounded-sm"></div>
                 </div>
 
-                <p className="text-gray-600 text-sm mt-2 mb-8">
+                {/* <p className="text-gray-600 text-sm mt-2 mb-8">
                     A French-style hearty soup made with fresh broccoli served with crunchy almond slivers.
-                </p>
+                </p> */}
 
                 {/* Price */}
                 <div className="mt-2 bg-red-600 w-16 px-2 text-white rounded-lg text-lg font-semibold">
