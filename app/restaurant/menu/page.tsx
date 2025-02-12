@@ -1,4 +1,5 @@
 
+export const dynamic = 'force-dynamic'; // Ensures the page is always dynamically rendered
 
 import CategoryComponent from "@/components/CategoryBar";
 import DishesCard from "@/components/DishesCard";
@@ -61,7 +62,7 @@ export default async function MenuPage() {
              </div>
              <h1 className="text-2xl text-center font-bold">{menuData?.restaurantName}</h1>
 
-             {menuData?.categories && <CategoryComponent  categories={menuData.categories} />}
+             {/* {menuData?.categories && <CategoryComponent  categories={menuData.categories} />} */}
 
             {/* Dishes List */}
             <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4">
