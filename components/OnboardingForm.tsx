@@ -41,7 +41,7 @@ const RestaurantOnboardingForm = () => {
         }
 
         try {
-            const response = await axios.post("/api/restaurant/onboarding", formData, {
+            const response = await axios.post("https://dineinn-tier2.vercel.app/api/restaurant/onboarding", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
