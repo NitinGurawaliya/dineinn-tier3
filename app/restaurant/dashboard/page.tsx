@@ -1,9 +1,11 @@
 import { cookies } from "next/headers";
 import Navbar from "@/components/Navbar";
 import EditMenu from "@/components/EditMenu";
-import GenerateQRCode from "@/components/QrCode";
-import { redirect } from "next/navigation";
+
 import MenuPage from "@/components/MyMenu";
+
+export const dynamic = "force-dynamic"; // Ensures SSR and disables static generation
+
 
 async function getData() {
   try {
@@ -35,9 +37,9 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
     case "edit-menu":
       content = <EditMenu />;
       break;
-    case "generate-qr":
-      content = <GenerateQRCode />;
-      break;
+    // case "generate-qr":
+    //   content = <GenerateQRCode />;
+    //   break;
     default:
       content = (
         <main className="flex-1 overflow-x-hidden overflow-y-auto ">
