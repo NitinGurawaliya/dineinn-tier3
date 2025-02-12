@@ -9,7 +9,7 @@ const CategoryForm = ()=>{
 
     async function categoryHandler() {
         try {
-            const res = await axios.post("http://localhost:3000/api/menu/category", {
+            const res = await axios.post(`https://dineinn-tier2.vercel.app/api/menu/category`, {
                 category: category  
             }, {
                 withCredentials: true  
