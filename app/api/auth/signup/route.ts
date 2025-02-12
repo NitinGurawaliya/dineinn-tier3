@@ -3,7 +3,7 @@ import { sign } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request,res:Response) {
   try {
     const body = await req.json();
 
