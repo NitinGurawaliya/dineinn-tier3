@@ -47,7 +47,7 @@ export default function RestaurantMenuPage() {
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/menu/${id}`);
+        const res = await axios.get(`https://dineinn-tier2.vercel.app/api/menu/${id}`);
         const menuData = res.data;
 
         setRestaurantData(menuData);
@@ -78,7 +78,7 @@ export default function RestaurantMenuPage() {
           contactNumber={restaurantData?.contactNumber ?? ""}
         />
         
-        <Link  href={`https://9e67-2409-40d7-1001-1f8e-79c7-b29b-1406-7a58.ngrok-free.app/restaurant/menu/${id}/feedback`}>
+        <Link  href={`https://dineinn-tier2.vercel.app/restaurant/menu/${id}/feedback`}>
           <Button className="rounded-2xl  flex items-center gap-2 px-4 ">
             <PencilIcon size={18} />
             <span>Feedback</span>
