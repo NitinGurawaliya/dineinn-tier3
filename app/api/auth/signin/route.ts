@@ -3,8 +3,8 @@ import prisma from "@/app/lib/prisma";
 import { signinSchema } from "@/zod";
 import { sign } from "jsonwebtoken";
 
-export async function POST(res:NextResponse){
-    const body = await res.json();
+export async function POST(req:NextRequest){
+    const body = await req.json();
 
     const {success} =  signinSchema.safeParse(body)
 
