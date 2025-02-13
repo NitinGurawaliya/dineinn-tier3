@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ msg: "Restaurant not found" }, { status: 404 });
     }
 
-    const frontendUrl = `http://localhost:3000/restaurant/menu/home/${restaurantId}`;
+    const frontendUrl = `https://dineinn-tier2.vercel.app/restaurant/menu/home/${restaurantId}`;
 
     try {
         const qrCodeUrl = await QRCode.toDataURL(frontendUrl);
