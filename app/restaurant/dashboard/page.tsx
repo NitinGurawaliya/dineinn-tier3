@@ -38,7 +38,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
       content = <EditMenu />;
       break;
     case "generate-qr":
-      content = <GenerateQRCode qrData={null} />;
+      content = <GenerateQRCode />;
       break;
     default:
       content = (
