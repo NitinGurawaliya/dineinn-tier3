@@ -1,10 +1,11 @@
 import HomePage from "@/components/HomePage";
+import { REQUEST_URL } from "@/config";
 import axios from "axios"
 
 
 async function getData(id:string) {
     try {
-        const res = await axios.get(`https://dineinn-tier2.vercel.app/api/menu/${id}`)
+        const res = await axios.get(`${REQUEST_URL}/api/menu/${id}`)
         return res.data;
     
     } catch (error) {
