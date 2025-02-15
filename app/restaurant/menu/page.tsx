@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'; // Ensures the page is always dynamicall
 
 import CategoryComponent from "@/components/CategoryBar";
 import DishesCard from "@/components/DishesCard";
+import { REQUEST_URL } from "@/config";
 import axios from "axios";
 import { cookies } from "next/headers";
 
@@ -34,7 +35,7 @@ export default async function MenuPage() {
     try {
         const cookieHeader = cookies().toString();
 
-        const res = await axios.get("https://dineinn-tier2.vercel.app/api/menu", {
+        const res = await axios.get(`${REQUEST_URL}/api/menu`, {
             headers: {
               Cookie: cookieHeader, 
             },
