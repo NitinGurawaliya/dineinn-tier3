@@ -9,7 +9,7 @@ export default function Home() {
       <Link href="/onboarding/auth/signup">
       <button className="m-2">Signup</button>
       </Link>
-      <Link href="/">
+      <Link href="/onboarding/auth/signin">
       <button>Signin</button>
       </Link>
 
