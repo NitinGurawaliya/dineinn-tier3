@@ -1,5 +1,6 @@
 "use client"
 
+import { REQUEST_URL } from "@/config"
 import axios from "axios"
 
 import { useState } from "react"
@@ -9,7 +10,7 @@ const CategoryForm = ()=>{
 
     async function categoryHandler() {
         try {
-            const res = await axios.post(`https://dineinn-tier2.vercel.app/api/menu/category`, {
+            const res = await axios.post(`${REQUEST_URL}/api/menu/category`, {
                 category: category  
             }, {
                 withCredentials: true  
