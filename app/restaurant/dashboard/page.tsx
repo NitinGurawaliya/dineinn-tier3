@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import EditMenu from "@/components/EditMenu";
 import GenerateQRCode from "@/components/QrCode";
 import MenuPage from "@/components/MyMenu";
+import { REQUEST_URL } from "@/config";
 
 export const dynamic = "force-dynamic"; // Ensures SSR and disables static generation
 
@@ -10,7 +11,8 @@ export const dynamic = "force-dynamic"; // Ensures SSR and disables static gener
 async function getData() {
   try {
     const cookieHeader = cookies().toString();
-    const res = await fetch("https://dineinn-tier2.vercel.app/api/menu", {
+    const res = await fetch(`${REQUEST_URL}/api/menu`, {
+
       headers: { Cookie: cookieHeader },
       credentials: "include",
     });
