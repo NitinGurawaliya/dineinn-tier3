@@ -1,5 +1,6 @@
 "use client";
 
+import { REQUEST_URL } from "@/config";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -55,7 +56,7 @@ const DishesForm = () => {
             formData.append("price", dish.price);
             formData.append("image", dish.image); // Image is always `File | ""`, so no type error.
 
-            const res = await axios.post(`https://dineinn-tier2.vercel.app/api/menu/dishes/${categoryId}`, formData, {
+            const res = await axios.post(`${REQUEST_URL}/api/menu/dishes/${categoryId}`, formData, {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "multipart/form-data"
