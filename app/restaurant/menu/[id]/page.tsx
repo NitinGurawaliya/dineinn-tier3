@@ -7,9 +7,11 @@ import DishesCard from "@/components/DishesCard";
 import axios from "axios";
 import HamburgerMenu from "@/components/HambergerMenu";
 import { Button } from "@/components/ui/button";
-import { PencilIcon, Search } from "lucide-react";
+import { ChefHat, ChefHatIcon, PencilIcon, Search } from "lucide-react";
 import Link from "next/link";
 import { REQUEST_URL } from "@/config";
+
+
 
 interface RestaurantDetails {
   restaurantName: string;
@@ -44,9 +46,11 @@ export default function RestaurantMenuPage() {
   const [filteredDishes, setFilteredDishes] = useState<Dish[]>([]);
   const [logo, setLogo] = useState("");
   const [restaurantData, setRestaurantData] = useState<RestaurantDetails | null>(null);
+  const[loading,setLoading] = useState(false)
 
   useEffect(() => {
     const fetchMenuData = async () => {
+      setLoading(true)
       try {
         const res = await axios.get(`${REQUEST_URL}/api/menu/${id}`);
         const menuData = res.data;
@@ -59,6 +63,9 @@ export default function RestaurantMenuPage() {
       } catch (error) {
         console.error("Error fetching menu data:", error);
       }
+      finally{
+        setLoading(false)
+      }
     };
 
     if (id) fetchMenuData(); // Ensure `id` is available before making API call
@@ -68,6 +75,7 @@ export default function RestaurantMenuPage() {
     const filtered = dishes.filter((dish) => dish.categoryId === categoryId);
     setFilteredDishes(filtered);
   };
+
 
   return (
     <div className="bg-white">
@@ -95,10 +103,16 @@ export default function RestaurantMenuPage() {
       <div className="flex w-full h-40 bg-[url('https://res.cloudinary.com/dixjcb4on/image/upload/v1739046120/dishes_image/res%20image.jpg')] bg-cover bg-center  items-center">
       </div>
 
-
-      <CategoryComponent categories={categories} onCategorySelect={handleCategorySelect} />
-
-      <div className="grid grid-cols-1 bg-gray-100 p-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+     
+      {loading ? (
+            <div className="flex  justify-center items-center my-40">
+            <ChefHatIcon size={80} className="animate-spin flex text-gray-900" />
+          </div>
+      )
+       : (
+        <>
+       <CategoryComponent categories={categories} onCategorySelect={handleCategorySelect} />
+        <div className="grid grid-cols-1 bg-gray-100 p-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {filteredDishes.map((dish) => (
           <DishesCard
             key={dish.id}
@@ -110,7 +124,9 @@ export default function RestaurantMenuPage() {
             restaurantId={dish.restaurantId}
           />
         ))}
-      </div>
+        </div>
+        </>
+       )}
     </div>
   );
 }
