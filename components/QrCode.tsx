@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "./ui/button";
+import { REQUEST_URL } from "@/config";
 
 interface QrData {
   qrCodeUrl: string;
@@ -19,7 +20,7 @@ export default function GenerateQRCode() {
   useEffect(() => {
     const fetchQRCode = async () => {
       try {
-        const res = await axios.get("https://dineinn-tier2.vercel.app/api/restaurant/qrcode", {
+        const res = await axios.get(`${REQUEST_URL}/api/restaurant/qrcode`, {
           withCredentials: true,
         });
         setQrData(res.data);
