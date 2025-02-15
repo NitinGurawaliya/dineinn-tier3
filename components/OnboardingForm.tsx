@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
+import { REQUEST_URL } from "@/config";
 
 const RestaurantOnboardingForm = () => {
     const [restaurantName, setRestaurantName] = useState("");
@@ -41,7 +42,7 @@ const RestaurantOnboardingForm = () => {
         }
 
         try {
-            const response = await axios.post("https://dineinn-tier2.vercel.app/api/restaurant/onboarding", formData, {
+            const response = await axios.post(`${REQUEST_URL}/api/restaurant/onboarding`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
