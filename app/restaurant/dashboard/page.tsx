@@ -57,7 +57,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
             </div>
 
 
-            <div className="flex mt-4 justify-center">
+            <div  className="flex mt-4 justify-center">
               <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105">
                 Add Today's Special
               </button>
@@ -73,9 +73,6 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
     <div>
       <Navbar id={details.id} restaurantName={details.restaurantName} logo={details.logo} />
    
-        {/* Sidebar */}
-
-        {/* Main Content */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto">{content}</main>
      
     </div>
