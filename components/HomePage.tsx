@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Instagram, MapPin, Phone, MessageCircle, InstagramIcon } from "lucide-react"
+import { REQUEST_URL } from "@/config"
 
 interface RestaurantHomePageProps {
     id: string,
@@ -56,7 +57,7 @@ const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, ins
             {/* Action Buttons */}
             <div className="flex flex-col gap-6 w-full max-w-md">
                 <Link
-                    href={`https://dineinn-tier2.vercel.app/restaurant/menu/${id}`}
+                    href={`${REQUEST_URL}/restaurant/menu/${id}`}
                     className="border-2 border-black px-8 py-4 text-center hover:bg-black hover:text-white transition-colors"
                 >
                     VIEW DINE INN MENU
