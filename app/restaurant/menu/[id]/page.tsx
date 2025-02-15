@@ -9,6 +9,7 @@ import HamburgerMenu from "@/components/HambergerMenu";
 import { Button } from "@/components/ui/button";
 import { PencilIcon, Search } from "lucide-react";
 import Link from "next/link";
+import { REQUEST_URL } from "@/config";
 
 interface RestaurantDetails {
   restaurantName: string;
@@ -47,7 +48,7 @@ export default function RestaurantMenuPage() {
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const res = await axios.get(`https://dineinn-tier2.vercel.app/api/menu/${id}`);
+        const res = await axios.get(`${REQUEST_URL}/api/menu/${id}`);
         const menuData = res.data;
 
         setRestaurantData(menuData);
