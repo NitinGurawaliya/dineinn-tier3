@@ -16,6 +16,7 @@ async function getData(id:string) {
 }
 
 export default async function RestaurantHomePage({params}:{params:{id:string}}){
+    
 
     const details = await getData(params.id)
     console.log(details)
