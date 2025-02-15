@@ -18,7 +18,7 @@ const DishesForm = () => {
     useEffect(() => {
         async function getCategory() {
             try {
-                const res = await axios.get<{ allCategories: Category[] }>("https://dineinn-tier2.vercel.app/api/menu/category", {
+                const res = await axios.get(`${REQUEST_URL}/api/menu/category`, {
                     withCredentials: true
                 });
                 setCategories(res.data.allCategories);
@@ -54,7 +54,7 @@ const DishesForm = () => {
             const formData = new FormData();
             formData.append("name", dish.name);
             formData.append("price", dish.price);
-            formData.append("image", dish.image); // Image is always `File | ""`, so no type error.
+            formData.append("image", dish.image); 
 
             const res = await axios.post(`${REQUEST_URL}/api/menu/dishes/${categoryId}`, formData, {
                 withCredentials: true,
