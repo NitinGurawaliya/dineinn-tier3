@@ -1,5 +1,6 @@
 "use client"
 
+import { REQUEST_URL } from "@/config";
 import axios from "axios";
 import { use, useState } from "react"
 
@@ -8,7 +9,7 @@ export default function SigninComponent(){
     const[email,setEmail] = useState("")
 
     async function signupHandler() {
-        const res = await axios.post("https://dineinn-tier2.vercel.app/api/auth/signin",{
+        const res = await axios.post(`${REQUEST_URL}/api/auth/signin`,{
             password,
             email
         })
