@@ -7,7 +7,7 @@ export default function AddSpecialButton  (){
                 Add Today's Special
               </button>
 
-              <AddSpecialDialog isOpen />
+              {/* <AddSpecialDialog isOpen /> */}
     </div>
 
 }
