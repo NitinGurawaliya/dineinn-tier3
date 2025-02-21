@@ -4,6 +4,7 @@ import EditMenu from "@/components/EditMenu";
 import GenerateQRCode from "@/components/QrCode";
 import MenuPage from "@/components/MyMenu";
 import { REQUEST_URL } from "@/config";
+import AddSpecialButton from "@/components/AddSpecialButton";
 
 export const dynamic = "force-dynamic"; // Ensures SSR and disables static generation
 
@@ -58,9 +59,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
 
 
             <div  className="flex mt-4 justify-center">
-              <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105">
-                Add Today's Special
-              </button>
+              <AddSpecialButton />
             </div>
           </div>
         </div>
