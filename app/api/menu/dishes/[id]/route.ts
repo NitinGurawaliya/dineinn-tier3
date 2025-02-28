@@ -24,6 +24,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
         return NextResponse.json({ msg: "User ID or Restaurant ID not found" }, { status: 400 });
     }
 
+    
     try {
         // Read form data
         const formData = await req.formData();
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
                 price: parseFloat(price),
                 image: imageUrl,
                 categoryId: parseInt(id),
+                
                 restaurantId: parseInt(restaurantId),
             }
         });
@@ -66,4 +68,30 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
         console.error("Error uploading image:", error);
         return NextResponse.json({ msg: "Error uploading image" }, { status: 500 });
     }
+}
+
+
+
+export async function DELETE(req:NextRequest, context:{params:{id:string}}) {
+
+    const {id} = context.params;
+
+     // Authenticate user
+     const authResult = await authMiddleware(req);
+     if (authResult.error) {
+         return authResult.error;
+     }
+
+    console.log("is send to backend",id)
+
+    const deleteDish = await prisma.dishes.delete({
+        where:{
+            id:parseInt(id)
+        }
+    })
+
+    console.log(`dish with id ${id} is deleted`)
+
+    return NextResponse.json({msg:"Dish is deleted"})
+    
 }
