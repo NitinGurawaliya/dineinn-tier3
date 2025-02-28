@@ -51,7 +51,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
       <CardContent className="p-2 bg-white flex-1">
         <div>
           <div className="flex justify-between items-start mb-1">
-          <h3 className="text-xl font-medium tracking-wide mb-1">{name}</h3>
+          <h3 className="text-lg font-medium tracking-wide mb-1">{name}</h3>
           <motion.button
               whileTap={{ scale: 0.9 }}
               className={`group flex items-center gap-0 transition-colors ${
