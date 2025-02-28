@@ -53,7 +53,7 @@ const DishCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
         >
             <img src={image} className="w-40 h-40 bg-gray-300" alt={name} />
 
-            <CardContent className="flex-1 flex flex-col justify-between">
+            <CardContent className="flex-1 px-4 flex flex-col justify-between">
                 <div>
                     <h2 className="text-lg font-medium mb-1">{name}</h2>
                     <p className="text-gray-600 text-sm mb-3">
