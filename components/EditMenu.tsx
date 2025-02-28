@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import DishesCard from "./DishesCard";
 import axios from "axios";
 import { REQUEST_URL } from "@/config";
-import { Edit2 } from "lucide-react";
+import { Delete, DeleteIcon, Edit2, Trash2Icon } from "lucide-react";
 import { AddDishDialog } from "./AddDishDialog";
 import CategoryComponent from "./CategoryBar";
 import { AddCategoryDialog } from "./AddCategoryDialog";
@@ -80,8 +80,11 @@ export default function EditMenu() {
           <div key={dish.id} className="relative">
             <DishesCard {...dish} />
 
-            <button className="absolute top-1 bg-red-600 right-1 p-2 rounded-full shadow-md hover:bg-red-700 text-white">
-              <Edit2 size={18} />
+            <button onClick={async()=>{
+              alert(`Are you sure you want to delete ${dish.name} from your menu `)
+              const res  = await axios.delete(`${REQUEST_URL}/api/menu/dishes/${dish.id}`)
+            }} className="absolute top-1 bg-red-600 right-1 p-2 rounded-full shadow-md hover:bg-red-700 text-white">
+              <Trash2Icon size={18} />
             </button>
           </div>
         ))}
