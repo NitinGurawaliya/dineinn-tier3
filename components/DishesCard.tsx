@@ -11,6 +11,8 @@ interface DishCardProps {
     name: string;
     price: number;
     image: string;
+    categoryId: number; // Add this line
+    restaurantId: number;
 }
 
 const DishCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
