@@ -101,7 +101,7 @@ export function AddSpecialDialog({ isOpen, onClose }: AddDishDialogProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div ref={dialogRef} className="bg-white rounded-lg p-6 w-96">
+      <div ref={dialogRef} className="bg-gray-100 rounded-lg p-6 w-96">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Add New Dish</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
@@ -129,7 +129,7 @@ export function AddSpecialDialog({ isOpen, onClose }: AddDishDialogProps) {
             </div>
             <div>
               <Label htmlFor="name">Dish Name</Label>
-              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+              <Input  id="name" value={name} onChange={(e) => setName(e.target.value)} required />
             </div>
             <div>
               <Label htmlFor="image">Image</Label>
