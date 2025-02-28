@@ -51,7 +51,7 @@ const DishCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="relative flex bg-white mt-0 rounded-lg h-full overflow-hidden w-full border shadow-md p-4"
         >
-            <img src={image} className="w-40 h-40 bg-gray-300" alt={name} />
+               <img src={image} className="w-40 h-40 bg-gray-300" alt={name} />
 
             <CardContent className="flex-1 px-4 flex flex-col justify-between">
                 <div>
@@ -71,13 +71,6 @@ const DishCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
                             <ThumbsUp className="h-4 w-4" />
                             <span className="text-xs font-medium tabular-nums">{upvotes}</span>
                         </button>
-                        
-                        {/* <button
-                            className="group flex items-center gap-1 transition-colors p-1 border rounded-md bg-blue-500 text-white"
-                        >
-                            <MessageSquare className="h-4 w-4" />
-                            <span className="text-xs font-medium">Add Review</span>
-                        </button> */}
                     </div>
                 </div>
             </CardContent>
