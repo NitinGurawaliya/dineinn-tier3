@@ -39,7 +39,7 @@ const CategoryComponent: React.FC<CategoryProps> = ({ categories, onCategorySele
             <button
               key={category.id}
               onClick={() => onCategorySelect(category.id)}
-              className="flex-shrink-0 my-2 text-md font-serif font-light bg-white text-gray-600  py-2 px-4 rounded-3xl focus:text-violet-800 "
+              className="flex-shrink-0 my-2 text-lg font-serif font-light bg-white text-gray-600  py-2 px-4 rounded-3xl focus:text-violet-800 "
             >
               {category.name.toUpperCase()}
             </button>
