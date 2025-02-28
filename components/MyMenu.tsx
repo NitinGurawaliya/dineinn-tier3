@@ -6,6 +6,7 @@ import { REQUEST_URL } from "@/config";
 import axios from "axios";
 import { cookies } from "next/headers";
 import { Button } from "./ui/button";
+import { ChefHatIcon, Loader2Icon } from "lucide-react";
 
 interface Category {
     id: number;
@@ -50,6 +51,15 @@ export default async function MenuPage() {
 
     } catch (error) {
         console.error("Error fetching menu data:", error);
+    }
+
+
+    if(!menuData){
+        return (
+            <div className="flex  justify-center items-center my-40">
+            <ChefHatIcon size={80} className="animate-spin flex text-gray-900" />
+          </div>
+        )
     }
 
 
