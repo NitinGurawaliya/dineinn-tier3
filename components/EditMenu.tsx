@@ -75,7 +75,7 @@ export default function EditMenu() {
 
        {/* {category && <CategoryComponent  categories={category} />} */}
 
-      <div className="grid grid-cols-2 p-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      <div className="grid grid-cols-1 bg-gray-100 p-4 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {dishes.map((dish: Dish) => (
           <div key={dish.id} className="relative">
             <DishesCard {...dish} />
