@@ -1,9 +1,15 @@
+
+
+
+
+
 "use client"
 
 import { motion, useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-import { Heart, ThumbsUp } from "lucide-react"
+import {  Heart, ThumbsUp } from "lucide-react"
 import { CardContent } from "@/components/ui/card"
+import { Badge } from "./ui/badge"
 import { Separator } from "@/components/ui/separator"
 
 interface DishCardProps {
@@ -43,16 +49,46 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="flex bg-white mt-0 rounded-lg h-full overflow-hidden w-full border shadow-md"
+      className="flex bg-white mt-0 rounded-lg h-full p-1 overflow-hidden w-full"
     >
-      <img src={image} className="w-40 h-40 bg-white" alt={name} />
+      
 
       {/* Right side - Content */}
       <CardContent className="p-2 bg-white flex-1">
         <div>
           <div className="flex justify-between items-start mb-1">
           <h3 className="text-lg font-medium tracking-wide mb-1">{name}</h3>
-          <motion.button
+          </div>
+
+          <span className="text-md  font-normal text-black">₹{price}</span>
+
+          <p className="text-xs pt-2 text-gray-500 text-muted-foreground line-clamp-2">
+            Fresh Atlantic salmon grilled to perfection and topped with our signature lemon butter sauce.
+          </p>
+        </div>
+
+        <div className="mt-8  ">
+         
+
+          <div className="flex justify-start items-start">
+          
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              className={`group flex items-center mr-6 gap-1 transition-colors ${
+                hasUpvoted ? "text-amber-600" : "text-muted-foreground"
+              }`}
+              onClick={handleUpvote}
+            >
+              <motion.div whileHover={{ scale: 1.1 }}>
+                <ThumbsUp
+                  className={`h-5 w-5 mr-2 transition-all ${
+                    hasUpvoted ? "fill-amber-500" : "group-hover:text-amber-400"
+                  }`}
+                />
+              </motion.div>
+            </motion.button>
+
+            <motion.button
               whileTap={{ scale: 0.9 }}
               className={`group flex items-center gap-0 transition-colors ${
                 isFavorite ? "text-red-500" : "text-muted-foreground"
@@ -68,38 +104,11 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
               </motion.div>
               <span className="text-sm ml-1 font-medium">{isFavorite ? "Saved" : "Save"}</span>
             </motion.button>
-           
-            
-          </div>
-
-          <p className="text-xs text-muted-foreground line-clamp-2">
-            Fresh Atlantic salmon grilled to perfection and topped with our signature lemon butter sauce.
-          </p>
-        </div>
-
-        <div className="mt-4">
-          <Separator className="mb-4" />
-
-          <div className="flex justify-between items-center">
-          <span className="text-lg ml-4 font-bold text-amber-500">₹{price}</span>
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className={`group flex items-center gap-1 transition-colors ${
-                hasUpvoted ? "text-amber-600" : "text-muted-foreground"
-              }`}
-              onClick={handleUpvote}
-            >
-              <motion.div whileHover={{ scale: 1.1 }}>
-                <ThumbsUp
-                  className={`h-5 w-5 mr-2 transition-all ${
-                    hasUpvoted ? "fill-amber-500" : "group-hover:text-amber-400"
-                  }`}
-                />
-              </motion.div>
-            </motion.button>
           </div>
         </div>
+        
       </CardContent>
+      <img src={image} className="w-40 h-40 ml-3 rounded-xl bg-white" alt={name} />
     </motion.div>
   )
 }
