@@ -7,7 +7,7 @@ import DishesCard from "@/components/DishesCard";
 import axios from "axios";
 import HamburgerMenu from "@/components/HambergerMenu";
 import { Button } from "@/components/ui/button";
-import { ChefHat, ChefHatIcon, PencilIcon, Search } from "lucide-react";
+import { ArrowBigDown, ChefHat, ChefHatIcon, PencilIcon, Search } from "lucide-react";
 import Link from "next/link";
 import { REQUEST_URL } from "@/config";
 
@@ -47,6 +47,20 @@ export default function RestaurantMenuPage() {
   const [logo, setLogo] = useState("");
   const [restaurantData, setRestaurantData] = useState<RestaurantDetails | null>(null);
   const[loading,setLoading] = useState(false)
+  // Inside your component
+const [showScrollText, setShowScrollText] = useState(true);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setShowScrollText(false);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
 
   useEffect(() => {
     const fetchMenuData = async () => {
@@ -127,6 +141,11 @@ export default function RestaurantMenuPage() {
         </div>
         </>
        )}
+      {showScrollText && (<div className="fixed flex font-bold  bottom-5 left-1/2 transform -translate-x-1/2 text-sm text-black opacity-80 animate-bounce">
+      <ArrowBigDown />
+      Scroll Here
+</div>)}
+
     </div>
   );
 }
