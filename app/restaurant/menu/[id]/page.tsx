@@ -141,7 +141,7 @@ useEffect(() => {
         </div>
         </>
        )}
-      {showScrollText && ( <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 flex items-center mr-4 justify-center text-sm text-black opacity-80 animate-bounce">
+      {showScrollText && ( <div className="fixed bottom-2 transform -translate-x-1/2 flex items-center ml-40 justify-center font-semibold text-lg text-black opacity-80 animate-bounce">
       <ArrowBigDown />
         Scroll Here
       </div>)}
