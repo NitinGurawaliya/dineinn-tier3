@@ -5,6 +5,7 @@ import DishesCard from "@/components/DishesCard";
 import { REQUEST_URL } from "@/config";
 import axios from "axios";
 import { cookies } from "next/headers";
+import { Button } from "./ui/button";
 
 interface Category {
     id: number;
@@ -61,11 +62,11 @@ export default async function MenuPage() {
                 <img src={menuData?.logo} className="w-24 h-24 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-300 "></img>
              </div>
              <h1 className="text-2xl text-center font-bold">{menuData?.restaurantName}</h1> */}
-
-             {/* {menuData?.categories && <CategoryComponent  categories={menuData.categories} />} */}
+{/* 
+             {menuData?.categories && <CategoryComponent  categories={menuData.categories} />} */}
 
             {/* Dishes List */}
-            <div className="grid grid-cols-2 p-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            <div className="grid grid-cols-1 bg-gray-100 p-4 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 {menuData?.dishes.map((dish) => (
                     <DishesCard
                     key={dish.id}
