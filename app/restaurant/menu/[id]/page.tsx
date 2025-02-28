@@ -126,18 +126,21 @@ useEffect(() => {
        : (
         <>
        <CategoryComponent categories={categories} onCategorySelect={handleCategorySelect} />
-        <div className="grid grid-cols-1 bg-gray-100 p-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-        {filteredDishes.map((dish) => (
-          <DishesCard
-            key={dish.id}
-            id={dish.id}
-            name={dish.name}
-            price={dish.price}
-            image={dish.image}
-            categoryId={dish.categoryId}
-            restaurantId={dish.restaurantId}
-          />
-        ))}
+       <div className="grid grid-cols-1  bg-white md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          {filteredDishes.map((dish) => (
+            <div key={dish.id} className="relative pb-4">
+              <DishesCard
+                id={dish.id}
+                name={dish.name}
+                price={dish.price}
+                image={dish.image}
+                categoryId={dish.categoryId}
+                restaurantId={dish.restaurantId}
+              />
+              {/* Dotted Line */}
+              <div className="w-[calc(100%-44px)] mx-auto border-t-2 border-dotted border-gray-300 mt-4"></div>
+            </div>
+          ))}
         </div>
         </>
        )}
@@ -149,3 +152,5 @@ useEffect(() => {
     </div>
   );
 }
+
+
