@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import DishesCard from "./DishesCard";
 import axios from "axios";
 import { REQUEST_URL } from "@/config";
-import { Delete, DeleteIcon, Edit2, Trash2Icon } from "lucide-react";
+import { ChefHatIcon, Delete, DeleteIcon, Edit2, Loader2Icon, Trash2Icon } from "lucide-react";
 import { AddDishDialog } from "./AddDishDialog";
 import CategoryComponent from "./CategoryBar";
 import { AddCategoryDialog } from "./AddCategoryDialog";
@@ -30,15 +30,18 @@ export default function EditMenu() {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [isDishModalOpen, setIsDishModalOpen] = useState(false);
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false)
+  const[loading,setLoading] = useState(false)
 
   useEffect(() => {
     async function getData() {
+      setLoading(true)
       try {
         const res = await axios.get(`${REQUEST_URL}/api/menu`, {
           withCredentials: true,
         });
         setCategory(res.data.categories || []);
         setDishes(res.data.dishes || []);
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching menu:", error);
       }
@@ -46,15 +49,21 @@ export default function EditMenu() {
     getData();
   }, []);
 
-  const handleAddDish = () => {
-    setIsDishModalOpen(true);
-  };
+
 
   
 
   const handleCategorySubmit = (category: { name: string }) => {
     // Handle the submitted category data here
     console.log("Submitted category:", category)
+  }
+
+  if(loading){
+    return (
+      <div className="flex  justify-center items-center my-40">
+            <ChefHatIcon size={80} className="animate-spin flex text-gray-900" />
+          </div>
+    )
   }
 
   return (
@@ -79,13 +88,25 @@ export default function EditMenu() {
         {dishes.map((dish: Dish) => (
           <div key={dish.id} className="relative">
             <DishesCard {...dish} />
-
-            <button onClick={async()=>{
-              alert(`Are you sure you want to delete ${dish.name} from your menu `)
-              const res  = await axios.delete(`${REQUEST_URL}/api/menu/dishes/${dish.id}`)
-            }} className="absolute top-1 bg-red-600 right-1 p-2 rounded-full shadow-md hover:bg-red-700 text-white">
+            <button
+              onClick={async () => {
+                const confirmDelete = confirm(`Are you sure you want to delete ${dish.name} from your menu?`);
+                
+                if (confirmDelete) {
+                  try {
+                    await axios.delete(`${REQUEST_URL}/api/menu/dishes/${dish.id}`);
+                    alert(`${dish.name} has been deleted successfully.`);
+                    setDishes((prevDishes) => prevDishes.filter((d) => d.id !== dish.id)); 
+                  } catch (error) {
+                    console.error("Error deleting dish:", error);
+                    alert("Failed to delete the dish. Please try again.");
+                  }
+                }
+              }}
+              className="absolute top-1 bg-red-600 right-1 p-2 rounded-full shadow-md hover:bg-red-700 text-white"
+              >
               <Trash2Icon size={18} />
-            </button>
+              </button>
           </div>
         ))}
       </div>
