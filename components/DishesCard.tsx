@@ -81,7 +81,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
           <Separator className="mb-4" />
 
           <div className="flex justify-between items-center">
-          <span className="text-lg mr-4 font-bold text-amber-500">₹{price}</span>
+          <span className="text-lg ml-4 font-bold text-amber-500">₹{price}</span>
             <motion.button
               whileTap={{ scale: 0.9 }}
               className={`group flex items-center gap-1 transition-colors ${
