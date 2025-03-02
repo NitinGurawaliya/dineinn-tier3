@@ -17,7 +17,7 @@ const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, ins
     return (
         <main className="flex min-h-screen flex-col items-center bg-white  px-4 py-8">
             {/* Logo Section */}
-            <div className="relative w-full max-w-[300px] h-[150px] mb-4">
+            <div className="relative  w-52 h-52 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56">
                 <Image 
                     src={logo} 
                     alt={`${restaurantName} Logo`} 
