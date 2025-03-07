@@ -55,14 +55,16 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
           <h3 className="text-lg font-medium tracking-wide mb-1">{name}</h3>
           </div>
 
-          <span className="text-md  font-normal text-black">₹{price}</span>
 
           <p className="text-xs pt-2 text-gray-500 text-muted-foreground line-clamp-2">
             Fresh Atlantic salmon grilled to perfection and topped with our signature lemon butter sauce.
           </p>
         </div>
 
-        <div className="mt-8  ">
+        <span className="text-md  font-normal text-black">₹{price}</span>
+
+
+        {/* <div className="mt-8  ">
          
 
           <div className="flex justify-start items-start">
@@ -100,16 +102,15 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
               <span className="text-sm ml-1 font-medium">{isFavorite ? "Saved" : "Save"}</span>
             </motion.button>
           </div>
-        </div>
+        </div> */}
         
       </CardContent>
-      <div className="relative">
+      {/* <div className="relative">
         <img src={image} className="w-40 h-40 ml-3 rounded-xl bg-white" alt={name} />
-        {/* Add + Button */}
         <button className="absolute bottom-1 w-20 h-10  border-red-600 border-2 left-1/2 transform -translate-x-1/2 bg-pink-100  p-2 rounded-md shadow-md ">
          <label className="font-bold text-lg text-red-600 text-center "> ADD +</label>
         </button>
-      </div>
+      </div> */}
     </motion.div>
   )
 }
