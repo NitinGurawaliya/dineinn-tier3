@@ -56,7 +56,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
           </div>
 
 
-          <p className="text-xs pt-2 mb-6 text-gray-500 text-muted-foreground line-clamp-2">
+          <p className="text-sm pt-2 mb-6 text-gray-500 text-muted-foreground line-clamp-2">
             Fresh Atlantic salmon grilled to perfection and topped with our signature lemon butter sauce.
           </p>
 
