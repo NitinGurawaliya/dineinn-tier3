@@ -44,7 +44,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="flex bg-white mt-0 rounded-lg h-full  overflow-hidden w-full"
+      className="flex bg-white mt-0 rounded-lg h-full p-2  overflow-hidden w-full"
     >
       
 
