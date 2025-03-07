@@ -105,12 +105,12 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
         </div> */}
         
       </CardContent>
-      {/* <div className="relative">
+      <div className="relative">
         <img src={image} className="w-40 h-40 ml-3 rounded-xl bg-white" alt={name} />
-        <button className="absolute bottom-1 w-20 h-10  border-red-600 border-2 left-1/2 transform -translate-x-1/2 bg-pink-100  p-2 rounded-md shadow-md ">
+        {/* <button className="absolute bottom-1 w-20 h-10  border-red-600 border-2 left-1/2 transform -translate-x-1/2 bg-pink-100  p-2 rounded-md shadow-md ">
          <label className="font-bold text-lg text-red-600 text-center "> ADD +</label>
-        </button>
-      </div> */}
+        </button> */}
+      </div>
     </motion.div>
   )
 }
