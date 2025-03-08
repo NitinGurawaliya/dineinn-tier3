@@ -31,6 +31,7 @@ interface Category {
 interface Dish {
   id: number;
   name: string;
+  description:string,
   price: number;
   image: string;
   categoryId: number;
@@ -132,6 +133,7 @@ useEffect(() => {
               <DishesCard
                 id={dish.id}
                 name={dish.name}
+                description={dish.description}
                 price={dish.price}
                 image={dish.image}
                 categoryId={dish.categoryId}
