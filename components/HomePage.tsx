@@ -1,7 +1,11 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Instagram, MapPin, Phone, MessageCircle, InstagramIcon } from "lucide-react"
 import { REQUEST_URL } from "@/config"
+import { useEffect } from "react"
+import axios from "axios"
 
 interface RestaurantHomePageProps {
     id: string,
@@ -14,6 +18,15 @@ interface RestaurantHomePageProps {
 }
 //bg-[#ceccc9]
 const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, instagram, location, whatsapp, contactNumber, logo }) => {
+
+    useEffect(()=>{
+        async function name() {
+            console.log("hello from home page")
+        const res  = await axios.get(`${REQUEST_URL}/api/restaurant/qrcode/scan-count/${id}`)
+        console.log(res.data.msg)
+        }
+        name()
+    },[id]) 
     return (
         <main className="flex min-h-screen flex-col items-center bg-white  px-4 py-8">
             {/* Logo Section */}
