@@ -6,6 +6,7 @@ import {  Heart, Plus, ThumbsUp } from "lucide-react"
 import { CardContent } from "@/components/ui/card"
 import { Badge } from "./ui/badge"
 import { Separator } from "@/components/ui/separator"
+import ToogleButton from "./ToogleButton"
 
 interface DishCardProps {
     id: number;
@@ -17,10 +18,6 @@ interface DishCardProps {
 }
 
 const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
-  const [isFavorite, setIsFavorite] = useState(false)
-  const [upvotes, setUpvotes] = useState(42)
-  const [hasUpvoted, setHasUpvoted] = useState(false)
-
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: "-100px" })
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -30,12 +27,6 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
       setHasAnimated(true)
     }
   }, [isInView, hasAnimated])
-
-  const handleFavorite = () => setIsFavorite(!isFavorite)
-  const handleUpvote = () => {
-    setUpvotes(hasUpvoted ? upvotes - 1 : upvotes + 1)
-    setHasUpvoted(!hasUpvoted)
-  }
 
   return (
     <motion.div
@@ -61,6 +52,11 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image }) => {
           </p>
 
           <span className="text-lg font-normal text-black">₹{price}</span>
+
+
+          
+
+
 
         </div>
 
