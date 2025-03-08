@@ -31,6 +31,7 @@ model RestaurantDetail {
   logo            String?
   instagram       String?
   facebook        String?
+  qrScans        Int         @default(0) // New field to store scan count
   userId          Int        @unique
   user            User       @relation(fields: [userId], references: [id])
 
@@ -51,7 +52,8 @@ model Dishes {
   id              Int         @id @default(autoincrement())
   name            String
   price           Float
-  image           String?     
+  image           String?   
+  description      String   @default("no description")
   categoryId      Int
   restaurantId    Int         
   restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
