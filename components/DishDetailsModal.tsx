@@ -23,27 +23,27 @@ interface DishDetailPopupProps {
 }
 
 export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPopupProps) {
-  // const [quantity, setQuantity] = useState(1)
-  // const [isFavorite, setIsFavorite] = useState(false)
-  // const [hasUpvoted, setHasUpvoted] = useState(false)
+  const [quantity, setQuantity] = useState(1)
+  const [isFavorite, setIsFavorite] = useState(false)
+  const [hasUpvoted, setHasUpvoted] = useState(false)
 
-  // const handleIncrement = () => {
-  //   setQuantity((prev) => prev + 1)
-  // }
+  const handleIncrement = () => {
+    setQuantity((prev) => prev + 1)
+  }
 
-  // const handleDecrement = () => {
-  //   if (quantity > 1) {
-  //     setQuantity((prev) => prev - 1)
-  //   }
-  // }
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1)
+    }
+  }
 
-  // const handleFavorite = () => {
-  //   setIsFavorite(!isFavorite)
-  // }
+  const handleFavorite = () => {
+    setIsFavorite(!isFavorite)
+  }
 
-  // const handleUpvote = () => {
-  //   setHasUpvoted(!hasUpvoted)
-  // }
+  const handleUpvote = () => {
+    setHasUpvoted(!hasUpvoted)
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -56,9 +56,9 @@ export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPop
 
         <div className="flex flex-col gap-4">
           {/* Image Section */}
-          <div className="relative w-full h-64 overflow-hidden rounded-lg">
+          <div className="relative w-full h-64  rounded-lg">
             <img src={dish.image || "/placeholder.svg"} alt={dish.name} className="w-full h-full object-cover" />
-            {/* <div className="absolute bottom-3 right-3">
+            <div className="absolute bottom-3 right-3">
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 className={`bg-white p-2 rounded-full shadow-md ${isFavorite ? "text-red-500" : "text-gray-500"}`}
@@ -66,7 +66,7 @@ export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPop
               >
                 <Heart className={`h-5 w-5 ${isFavorite ? "fill-red-500" : ""}`} />
               </motion.button>
-            </div> */}
+            </div>
           </div>
 
           {/* Dish Info */}
@@ -84,7 +84,7 @@ export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPop
           <Separator />
 
           {/* Actions */}
-          {/* <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <motion.button
                 whileTap={{ scale: 0.9 }}
@@ -109,7 +109,7 @@ export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPop
 
           <Button className="w-full bg-primary hover:bg-primary/90">
             Add to Order • ₹{(dish.price * quantity).toFixed(2)}
-          </Button> */}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
