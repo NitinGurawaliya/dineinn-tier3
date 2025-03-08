@@ -1,4 +1,4 @@
-export const REQUEST_URL ="https://dineinn-tier2.vercel.app"
+export const REQUEST_URL ="https://dineinn-tier2-iota.vercel.app"
 
 //https://dineinn-tier2.vercel.app
 
