@@ -11,9 +11,7 @@ export async function GET(
     console.log("id is ", id);
 
     if (!id) {
-        return NextResponse.json({ msg:"is not avialble" },{status:401})
-         
-
+        return NextResponse.json({ msg:"is not available" },{status:401})
     }
 
     try {
