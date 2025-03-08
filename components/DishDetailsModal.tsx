@@ -29,11 +29,13 @@ export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPop
         <div className="flex flex-col gap-4">
           {/* Image Section */}
           <div className="relative w-full h-64 overflow-hidden rounded-lg">
-          <img src={dish.image || "/placeholder.svg"} 
-     alt={dish.name} 
-     className="w-full h-full object-contain" />
+  <img 
+    src={dish.image || "/placeholder.svg"} 
+    alt={dish.name} 
+    className="absolute inset-0 w-full h-full object-cover"
+  />
+</div>
 
-          </div>
 
           {/* Dish Info */}
           <div className="">
