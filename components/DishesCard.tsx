@@ -61,7 +61,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
           </div>
         </CardContent>
         <div className="relative">
-          <img src={image || "/placeholder.svg"} className="w-40 h-40 ml-3 rounded-xl bg-white" alt={name} />
+          <img src={image || "/placeholder.svg"} className="w-40 h-40 object-cover ml-3 rounded-xl bg-white" alt={name} />
         </div>
       </motion.div>
 
