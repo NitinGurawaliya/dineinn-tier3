@@ -25,17 +25,18 @@ interface DishDetailPopupProps {
 export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPopupProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] p-8 overflow-auto">
-        
-
+      <DialogContent className="sm:max-w-md max-h-[90vh]  overflow-auto">
         <div className="flex flex-col gap-4">
           {/* Image Section */}
           <div className="relative w-full h-64 overflow-hidden rounded-lg">
-            <img src={dish.image || "/placeholder.svg"} alt={dish.name} className="w-full h-full object-cover" />
+          <img src={dish.image || "/placeholder.svg"} 
+     alt={dish.name} 
+     className="w-full h-full object-contain" />
+
           </div>
 
           {/* Dish Info */}
-          <div>
+          <div className="">
             <div className="flex justify-between items-start">
               <DialogTitle className="text-xl font-bold">{dish.name}</DialogTitle>
               <div  className=" text-lg">
