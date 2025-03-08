@@ -19,6 +19,7 @@ interface Dish {
     name: string;
     price: number;
     image: string;
+    description:string,
     categoryId: number;
     restaurantId: number;
 }
@@ -82,6 +83,7 @@ export default async function MenuPage() {
                     key={dish.id}
                     id={dish.id}
                     name={dish.name}
+                    description={dish.description}
                     price={dish.price}
                     image={dish.image}
                     categoryId={dish.categoryId}
