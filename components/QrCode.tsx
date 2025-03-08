@@ -20,7 +20,7 @@ export default function GenerateQRCode() {
   useEffect(() => {
     const fetchQRCode = async () => {
       try {
-        const res = await axios.get(`${REQUEST_URL}/api/restaurant/qrcode`, {
+        const res = await axios.get(`${REQUEST_URL}/api/restaurant/qrcode/generate-qr`, {
           withCredentials: true,
         });
         setQrData(res.data);
