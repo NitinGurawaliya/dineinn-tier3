@@ -39,17 +39,13 @@ export default function DishDetailPopup({ isOpen, onClose, dish }: DishDetailPop
           <div className="">
             <div className="flex justify-between items-start">
               <DialogTitle className="text-xl font-bold">{dish.name}</DialogTitle>
-              <div  className=" text-lg">
+              <Badge variant="outline" className="bg-primary/10 text-primary">
                 ₹{dish.price}
-              </div>
+              </Badge>
             </div>
 
             <DialogDescription className="mt-4 text-sm">{dish.description}</DialogDescription>
-          </div>
-
-          <Separator />
-
-          
+          </div>          
         </div>
       </DialogContent>
     </Dialog>
