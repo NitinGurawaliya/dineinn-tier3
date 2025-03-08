@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     response.cookies.set("token", token, {
         path: "/",
-        maxAge: 3 * 24 * 60 * 60, 
+        maxAge: 7 * 24 * 60 * 60, 
         httpOnly: true, // Prevents access from frontend JavaScript
         secure: process.env.NODE_ENV === "production", // Use secure cookies in production
         sameSite: "strict",
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     response.cookies.set("userId", findUser.id.toString(), {
         path: "/",
-        maxAge: 3 * 24 * 60 * 60, // 3 days
+        maxAge: 7 * 24 * 60 * 60, // 3 days
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
