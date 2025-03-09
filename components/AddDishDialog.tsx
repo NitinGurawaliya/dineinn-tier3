@@ -24,7 +24,8 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  const [loading,setLoading] = useState(false)
+  const [loading,setLoading] = useState(false);
+  const[description, setDescription] = useState("")
 
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +80,7 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
       formData.append("name", name);
       formData.append("price", price);
       formData.append("image", image);
+      formData.append("description",description)
 
       const res = await axios.post(`${REQUEST_URL}/api/menu/dishes/${categoryId}`, formData, {
         withCredentials: true,
@@ -130,6 +132,11 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
             <div>
               <Label htmlFor="name">Dish Name</Label>
               <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+
+            <div>
+              <Label htmlFor="description">Add description</Label>
+              <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} required />
             </div>
             <div>
               <Label htmlFor="image">Image</Label>
