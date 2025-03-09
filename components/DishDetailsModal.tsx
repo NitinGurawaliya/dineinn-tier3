@@ -83,7 +83,7 @@ const DishDetailsModal: React.FC<DishDetailsModalProps> = ({ dish, isOpen, onClo
                 <div className="text-lg font-bold text-black">₹{dish.price}</div>
               </div>
 
-              <p className="text-gray-600 leading-relaxed mb-4">{dish.description}</p>
+              <p className="text-gray-600 line-clamp-2 leading-relaxed mb-4">{dish.description}</p>
 
               {/* Nutritional Information */}
              
