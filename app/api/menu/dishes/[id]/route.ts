@@ -31,6 +31,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
         const name = formData.get("name") as string;
         const price = formData.get("price") as string;
         const file = formData.get("image") as File;
+        const description = formData.get("description") as string;
 
         if (!name || !price || !file) {
             return NextResponse.json({ msg: "Missing required fields" }, { status: 400 });
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
                 price: parseFloat(price),
                 image: imageUrl,
                 categoryId: parseInt(id),
-                
+                description:description,
                 restaurantId: parseInt(restaurantId),
             }
         });
