@@ -39,12 +39,8 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
 
   return (
     <>
-      <motion.div
-        ref={ref}
-        key={id}
-        initial={{ opacity: 0, y: 30 }}
-        animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      <div
+       
         className="flex bg-white mt-0 rounded-lg h-full  overflow-hidden w-full cursor-pointer"
         onClick={handleCardClick}
       >
@@ -74,7 +70,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
         <div className="relative">
           <img src={image || "/placeholder.svg"} className="w-40 h-40 object-cover ml-3 rounded-xl bg-white" alt={name} />
         </div>
-      </motion.div>
+      </div>
 
       <DishDetailsModal
         isOpen={isPopupOpen}
