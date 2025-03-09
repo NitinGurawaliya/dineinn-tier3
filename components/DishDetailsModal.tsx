@@ -29,7 +29,7 @@ const DishDetailsModal: React.FC<DishDetailsModalProps> = ({ dish, isOpen, onClo
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/60  backdrop-blur-sm flex justify-center items-end z-50"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-end z-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -73,7 +73,7 @@ const DishDetailsModal: React.FC<DishDetailsModalProps> = ({ dish, isOpen, onClo
 
             {/* Dish Info */}
             <motion.div
-              className="px-6 m-2 pb-8"
+              className="px-6 pb-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -83,11 +83,11 @@ const DishDetailsModal: React.FC<DishDetailsModalProps> = ({ dish, isOpen, onClo
                 <div className="text-lg font-bold text-black">₹{dish.price}</div>
               </div>
 
-              <p className="text-gray-600 line-clamp-2 leading-relaxed mb-4">{dish.description}</p>
+              <p className="text-gray-600 line-clamp-2  mb-4">{dish.description}</p>
 
               {/* Nutritional Information */}
              
-  <div className="mt-8">
+  <div className="mt-6">
    <div className="flex flex-wrap gap-2">
       <div className="px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs font-medium text-amber-700">
         500 calories
