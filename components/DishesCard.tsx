@@ -60,10 +60,10 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
             <span className="text-lg font-normal text-black">₹{price}</span>
             <div className="mt-6">
   <div className="flex items-center gap-2">
-    <div className="px-1 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs font-medium text-amber-700">
+    <div className="px-2 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs font-medium text-amber-700">
       500 calories
     </div>
-    <div className="px-1 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs font-medium text-emerald-700">
+    <div className="px-2 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs font-medium text-emerald-700">
       20g protein
     </div>
   </div>
