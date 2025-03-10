@@ -47,7 +47,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
         <CardContent className="bg-white flex-1">
           <div>
             <div className="flex justify-between items-start">
-              <h3 className="text-xl font-bold tracking-wide mb-1">{name}</h3>
+              <h3 className="text-xl font-semibold tracking-wide mb-1">{name}</h3>
             </div>
 
             <p className="text-sm pt-2 mb-6 text-gray-500 text-muted-foreground line-clamp-2">{description}</p>
