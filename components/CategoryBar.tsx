@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type React from "react"
 
 interface Category {
   id: number
@@ -9,29 +8,44 @@ interface Category {
   restaurantId: number
 }
 
-interface CategoryProps {
+interface CategoryComponentProps {
   categories: Category[]
   onCategorySelect: (categoryId: number) => void
 }
 
-const CategoryComponent: React.FC<CategoryProps> = ({ categories, onCategorySelect }) => {
+export default function CategoryComponent({ categories, onCategorySelect }: CategoryComponentProps) {
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(
+    categories.length > 0 ? categories[0].id : null,
+  )
   const [isSticky, setIsSticky] = useState(false)
   const categoryRef = useRef<HTMLDivElement>(null)
   const stickyThreshold = useRef<number>(0)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Set initial selected category when categories are loaded
+    if (categories.length > 0 && !selectedCategory) {
+      setSelectedCategory(categories[0].id)
+      onCategorySelect(categories[0].id)
+    }
+  }, [categories, selectedCategory, onCategorySelect])
 
   useEffect(() => {
     const handleScroll = () => {
       if (categoryRef.current) {
+        // Store the initial position of the category bar if not already set
         if (stickyThreshold.current === 0) {
           stickyThreshold.current = categoryRef.current.offsetTop
         }
-        setIsSticky(window.scrollY > stickyThreshold.current)
+
+        // Check if we've scrolled past the category bar's original position
+        const shouldBeSticky = window.scrollY > stickyThreshold.current
+        setIsSticky(shouldBeSticky)
       }
     }
 
     window.addEventListener("scroll", handleScroll)
 
+    // Set the initial threshold after component mounts
     if (categoryRef.current) {
       stickyThreshold.current = categoryRef.current.offsetTop
     }
@@ -41,36 +55,32 @@ const CategoryComponent: React.FC<CategoryProps> = ({ categories, onCategorySele
     }
   }, [])
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === "left" ? -200 : 200
-      scrollContainerRef.current.scrollBy({
-        left: scrollAmount,
-        behavior: "smooth",
-      })
-    }
+  const handleCategoryClick = (categoryId: number) => {
+    setSelectedCategory(categoryId)
+    onCategorySelect(categoryId)
   }
 
   return (
-    <div className={`bg-white w-full z-10 transition-all duration-200 ${isSticky ? "fixed top-0 left-0 shadow-md" : ""}`} ref={categoryRef}>
-      <div className="relative flex items-center bg-white border-b-2 border-gray-200 px-4 py-2 shadow-sm">
-        
-        <div ref={scrollContainerRef} className="flex overflow-x-auto hide-scrollbar space-x-4 mx-2">
+    <>
+      <div ref={categoryRef} className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 left-0 shadow-md" : ""}`}>
+        <div className="flex overflow-x-auto py-4 px-2">
           {categories.map((category) => (
-            <button
+            <div
               key={category.id}
-              onClick={() => onCategorySelect(category.id)}
-              className="flex-shrink-0 text-lg font-serif font-light bg-white text-gray-600 py-2 px-4 rounded-3xl focus:text-violet-800"
+              data-category-id={category.id}
+              className={`px-4 py-2 mx-2 rounded-full cursor-pointer whitespace-nowrap ${
+                selectedCategory === category.id ? "bg-stone-500 text-white" : "bg-gray-200 text-black"
+              }`}
+              onClick={() => handleCategoryClick(category.id)}
             >
-              {category.name.toUpperCase()}
-            </button>
+              {category.name}
+            </div>
           ))}
         </div>
-        
       </div>
+      {/* Add a placeholder div with the same height when sticky to prevent content jump */}
       {isSticky && <div style={{ height: "56px" }}></div>}
-    </div>
+    </>
   )
 }
 
-export default CategoryComponent
