@@ -48,7 +48,18 @@ export default function RestaurantMenuPage() {
   const [loading, setLoading] = useState(false)
   // Inside your component
   const [showScrollText, setShowScrollText] = useState(true)
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+  
+    const filtered = dishes.filter((dish) =>
+      dish.name.toLowerCase().includes(query)
+    );
+    setFilteredDishes(filtered);
+  };
+  
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollText(false)
@@ -108,7 +119,13 @@ export default function RestaurantMenuPage() {
 
       <div className="flex w-full h-14  bg-center rounded-lg items-center px-4">
         <Search className="text-black mr-2 h-12" />
-        <input className="w-full text-black h-14  bg-white focus:outline-none px-2" placeholder="Search dishes..." />
+        <input
+  className="w-full text-black h-14 bg-white focus:outline-none px-2"
+  placeholder="Search dishes..."
+  value={searchQuery}
+  onChange={handleSearch}
+/>
+
       </div>
 
       <div className="flex w-full h-40 bg-[url('https://res.cloudinary.com/dixjcb4on/image/upload/v1739046120/dishes_image/res%20image.jpg')] bg-cover bg-center  items-center"></div>
