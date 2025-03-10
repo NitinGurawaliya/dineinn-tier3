@@ -109,7 +109,7 @@ export default function RestaurantMenuPage() {
           contactNumber={restaurantData?.contactNumber ?? ""}
         />
 
-        <Link href={`https://dineinn-tier2.vercel.app/restaurant/menu/${id}/feedback`}>
+        <Link href={`https://dineinn-tier2-iota.vercel.app/restaurant/menu/${id}/feedback`}>
           <Button className="rounded-2xl  flex items-center gap-2 px-4 ">
             <PencilIcon size={18} />
             <span>Feedback</span>
