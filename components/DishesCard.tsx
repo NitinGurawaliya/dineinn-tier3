@@ -40,7 +40,6 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
   return (
     <>
       <div
-       
         className="flex bg-white mt-0 rounded-lg h-full  overflow-hidden w-full cursor-pointer"
         onClick={handleCardClick}
       >
@@ -48,7 +47,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
         <CardContent className="bg-white flex-1">
           <div>
             <div className="flex justify-between items-start">
-              <h3 className="text-lg font-medium tracking-wide mb-1">{name}</h3>
+              <h3 className="text-lg font-semibold tracking-wide mb-1">{name}</h3>
             </div>
 
             <p className="text-sm pt-2 mb-6 text-gray-500 text-muted-foreground line-clamp-2">{description}</p>
