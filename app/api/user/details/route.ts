@@ -40,6 +40,7 @@ export async function GET(req:NextRequest) {
             facebook:true,
             weekdaysWorking:true,
             weekendWorking:true,
+            qrScans:true
         }
         
     })
