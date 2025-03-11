@@ -66,13 +66,8 @@ export default async function MenuPage() {
 
     
     return (
-        <div className="">
-            {/* Restaurant Name & Logo */}
-            
-            {/* <div className="flex flex-col items-center mb-6">
-                <img src={menuData?.logo} className="w-24 h-24 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-300 "></img>
-             </div>
-             <h1 className="text-2xl text-center font-bold">{menuData?.restaurantName}</h1> */}
+        <div>
+           
 {/* 
              {menuData?.categories && <CategoryComponent  categories={menuData.categories} />} */}
 
