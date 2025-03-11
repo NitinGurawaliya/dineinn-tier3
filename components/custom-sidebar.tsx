@@ -65,16 +65,8 @@ export function CustomSidebar() {
             </ul>
           </nav>
           <div className="px-4 py-4 border-t border-gray-700">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full px-4 py-2 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-            </div>
+            
           </div>
-          <div className="px-4 py-4 text-sm text-gray-400">© 2024 My App Inc.</div>
         </div>
       </aside>
     </>
