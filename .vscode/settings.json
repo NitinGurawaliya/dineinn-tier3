@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "autoincrement"
-    ]
+    ],
+    "postman.settings.dotenv-detection-notification-visibility": false
 }
