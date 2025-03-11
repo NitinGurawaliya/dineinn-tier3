@@ -128,7 +128,7 @@ export default function RestaurantMenuPage() {
 
       </div>
 
-      <div className="flex w-full h-40 bg-[url('https://res.cloudinary.com/dixjcb4on/image/upload/v1739046120/dishes_image/res%20image.jpg')] bg-cover bg-center  items-center"></div>
+      <img className="flex w-full h-40 bg-[url('https://res.cloudinary.com/dixjcb4on/image/upload/v1739046120/dishes_image/res%20image.jpg')] bg-cover bg-center  items-center"></img>
 
       {loading ? (
         <div className="flex  justify-center items-center my-40">
