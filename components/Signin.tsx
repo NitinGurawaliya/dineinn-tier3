@@ -11,7 +11,7 @@ export default function SigninComponent(){
     const router  = useRouter()
 
     async function signinHandler() {
-        const res = await axios.post(`${REQUEST_URL}/api/auth/signin`,{
+        const res = await axios.post(`/api/auth/signin`,{
             password,
             email
         })
