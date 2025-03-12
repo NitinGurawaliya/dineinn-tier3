@@ -40,7 +40,7 @@ export default async function UserRestaurantCard() {
     try {
         const cookieHeader = cookies().toString();
 
-        const res = await fetch(`${REQUEST_URL}/api/user/details`, {
+        const res = await fetch(`/api/user/details`, {
             headers: {
               Cookie: cookieHeader,
             },
