@@ -32,7 +32,7 @@ export function AddSpecialDialog({ isOpen, onClose }: AddDishDialogProps) {
   useEffect(() => {
     async function getCategory() {
       try {
-        const res = await axios.get(`${REQUEST_URL}/api/menu/category`, {
+        const res = await axios.get(`/api/menu/category`, {
           withCredentials: true,
         });
         setCategories(res.data.allCategories);
@@ -82,7 +82,7 @@ export function AddSpecialDialog({ isOpen, onClose }: AddDishDialogProps) {
       formData.append("image", image);
       formData.append("description",description)
 
-      const res = await axios.post(`${REQUEST_URL}/api/menu/dishes/${categoryId}`, formData, {
+      const res = await axios.post(`/api/menu/dishes/${categoryId}`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
