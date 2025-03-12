@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic"; // Ensures SSR and disables static gener
 async function getData() {
   try {
     const cookieHeader = cookies().toString();
-    const res = await fetch(`${REQUEST_URL}/api/menu`, {
+    const res = await fetch(`/api/menu`, {
 
       headers: { Cookie: cookieHeader },
       credentials: "include",
