@@ -38,7 +38,7 @@ export function AddCategoryDialog({ isOpen, onClose, onSubmit }: AddCategoryDial
   const handleSubmit =async (e: React.FormEvent) => {
     setLoading(true)
     e.preventDefault()
-    const res = await axios.post(`${REQUEST_URL}/api/menu/category`,{
+    const res = await axios.post(`/api/menu/category`,{
       category:category
     },{
       withCredentials:true
