@@ -71,7 +71,7 @@ const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, ins
             <div className="flex flex-col gap-6 w-full max-w-md">
                 <Link
                     href={`${REQUEST_URL}/restaurant/menu/${id}`}
-                    className="border-2  px-8 py-4 text-center bg-black"
+                    className="border-2  px-8 py-4 text-center bg-black text-white font-semibold"
                 >
                     VIEW DINE INN MENU
                 </Link>
