@@ -10,7 +10,7 @@ const CategoryForm = ()=>{
 
     async function categoryHandler() {
         try {
-            const res = await axios.post(`${REQUEST_URL}/api/menu/category`, {
+            const res = await axios.post(`/api/menu/category`, {
                 category: category  
             }, {
                 withCredentials: true  
