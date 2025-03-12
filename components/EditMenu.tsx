@@ -37,7 +37,7 @@ export default function EditMenu() {
     async function getData() {
       setLoading(true)
       try {
-        const res = await axios.get(`${REQUEST_URL}/api/menu`, {
+        const res = await axios.get(`/api/menu`, {
           withCredentials: true,
         });
         setCategory(res.data.categories || []);
