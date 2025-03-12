@@ -76,7 +76,7 @@ export default function RestaurantMenuPage() {
     const fetchMenuData = async () => {
       setLoading(true)
       try {
-        const res = await axios.get(`${REQUEST_URL}/api/menu/${id}`)
+        const res = await axios.get(`/api/menu/${id}`)
         const menuData = res.data
 
         setRestaurantData(menuData)
