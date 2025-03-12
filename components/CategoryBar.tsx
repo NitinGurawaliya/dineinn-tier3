@@ -22,7 +22,6 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
   const stickyThreshold = useRef<number>(0)
 
   useEffect(() => {
-    // Set initial selected category when categories are loaded
     if (categories.length > 0 && !selectedCategory) {
       setSelectedCategory(categories[0].id)
       onCategorySelect(categories[0].id)
@@ -32,12 +31,10 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
   useEffect(() => {
     const handleScroll = () => {
       if (categoryRef.current) {
-        // Store the initial position of the category bar if not already set
         if (stickyThreshold.current === 0) {
           stickyThreshold.current = categoryRef.current.offsetTop
         }
 
-        // Check if we've scrolled past the category bar's original position
         const shouldBeSticky = window.scrollY > stickyThreshold.current
         setIsSticky(shouldBeSticky)
       }
@@ -45,7 +42,6 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
 
     window.addEventListener("scroll", handleScroll)
 
-    // Set the initial threshold after component mounts
     if (categoryRef.current) {
       stickyThreshold.current = categoryRef.current.offsetTop
     }
@@ -63,7 +59,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
   return (
     <>
       <div ref={categoryRef} className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 left-0 shadow-md" : ""}`}>
-        <div className="flex overflow-x-auto py-4 px-2">
+        <div className="flex overflow-x-auto py-4 px-2 scrollbar-hide">
           {categories.map((category) => (
             <div
               key={category.id}
@@ -78,9 +74,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
           ))}
         </div>
       </div>
-      {/* Add a placeholder div with the same height when sticky to prevent content jump */}
       {isSticky && <div style={{ height: "56px" }}></div>}
     </>
   )
 }
-
