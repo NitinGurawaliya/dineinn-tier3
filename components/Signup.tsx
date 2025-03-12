@@ -10,7 +10,7 @@ export default function SignupComponent(){
     const[email,setEmail] = useState("")
 
     async function signupHandler() {
-        const res = await axios.post(`${REQUEST_URL}/api/auth/signup`,{
+        const res = await axios.post(`/api/auth/signup`,{
             name,
             password,
             email
