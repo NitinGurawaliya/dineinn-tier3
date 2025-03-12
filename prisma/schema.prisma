@@ -59,3 +59,5 @@ model Dishes {
   restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
   category        Category     @relation(fields: [categoryId], references: [id])
 }
+
+
