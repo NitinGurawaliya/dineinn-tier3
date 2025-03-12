@@ -42,7 +42,7 @@ const RestaurantOnboardingForm = () => {
         }
 
         try {
-            const response = await axios.post(`${REQUEST_URL}/api/restaurant/onboarding`, formData, {
+            const response = await axios.post(`/api/restaurant/onboarding`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
