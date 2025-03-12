@@ -37,7 +37,7 @@ export default async function MenuPage() {
     try {
         const cookieHeader = cookies().toString();
 
-        const res = await axios.get(`/api/menu`, {
+        const res = await axios.get(`${REQUEST_URL}/api/menu`, {
             headers: {
               Cookie: cookieHeader, 
             },
