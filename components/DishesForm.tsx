@@ -18,7 +18,7 @@ const DishesForm = () => {
     useEffect(() => {
         async function getCategory() {
             try {
-                const res = await axios.get(`${REQUEST_URL}/api/menu/category`, {
+                const res = await axios.get(`/api/menu/category`, {
                     withCredentials: true
                 });
                 setCategories(res.data.allCategories);
