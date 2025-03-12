@@ -22,7 +22,7 @@ const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, ins
     useEffect(()=>{
         async function name() {
             console.log("hello from home page")
-        const res  = await axios.get(`${REQUEST_URL}/api/restaurant/qrcode/scan-count/${id}`)
+        const res  = await axios.get(`/api/restaurant/qrcode/scan-count/${id}`)
         console.log(res.data.msg)
         }
         name()
