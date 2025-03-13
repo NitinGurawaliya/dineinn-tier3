@@ -29,8 +29,11 @@ export async function GET(
                 logo: true,
                 categories: true,
                 dishes: true,
+                galleryImages:true
             },
         });
+
+
 
         if (!menu) {
             return NextResponse.json({ msg: "Menu not found" }, { status: 404 });
