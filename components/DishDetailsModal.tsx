@@ -3,6 +3,8 @@
 import type React from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
+import { useEffect } from "react"
+import axios from "axios"
 
 interface DishDetailsModalProps {
   dish: {
@@ -25,6 +27,25 @@ interface DishDetailsModalProps {
 }
 
 const DishDetailsModal: React.FC<DishDetailsModalProps> = ({ dish, isOpen, onClose }) => {
+
+  useEffect(() => {
+    if (!isOpen || !dish?.id) return; // Ensure modal is open and dish ID is valid
+  
+    console.log("popup opened, incrementing view count for dish ID:", dish.id);
+  
+    async function incrementView() {
+      try {
+        const res = await axios.post(`/api/menu/analytics/dish/${dish.id}`);
+        console.log("This dish is viewed times ", res.data.dishView.id);
+      } catch (error) {
+        console.error("Error recording dish view:", error);
+      }
+    }
+  
+    incrementView();
+  }, [isOpen, dish?.id]); // Run only when `isOpen` changes
+  
+  
   return (
     <AnimatePresence>
       {isOpen && (
