@@ -20,6 +20,12 @@ interface RestaurantDetails {
   logo: string
 }
 
+interface GalleryImages{
+  id:number,
+  restaurantId:number,
+  imageUrl:string
+}
+
 interface Category {
   id: number
   name: string
@@ -45,7 +51,11 @@ export default function RestaurantMenuPage() {
   const [filteredDishes, setFilteredDishes] = useState<Dish[]>([])
   const [logo, setLogo] = useState("")
   const [restaurantData, setRestaurantData] = useState<RestaurantDetails | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const[galleryImages,setGalleryImages] = useState<GalleryImages []>([])
+  const[currentIndex,setCurrentIndex] = useState(0);
+  const [isForward, setIsForward] = useState(true); // Track direction (forward/backward)
+
   // Inside your component
   const [showScrollText, setShowScrollText] = useState(true)
   const [searchQuery, setSearchQuery] = useState("");
@@ -59,6 +69,34 @@ export default function RestaurantMenuPage() {
     );
     setFilteredDishes(filtered);
   };
+
+  useEffect(() => {
+    if (galleryImages.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        if (isForward) {
+          // Move forward until last image
+          if (prevIndex < galleryImages.length - 1) {
+            return prevIndex + 1;
+          } else {
+            setIsForward(false); // Switch to backward mode
+            return prevIndex - 1;
+          }
+        } else {
+          // Move backward until first image
+          if (prevIndex > 0) {
+            return prevIndex - 1;
+          } else {
+            setIsForward(true); // Switch to forward mode
+            return prevIndex + 1;
+          }
+        }
+      });
+    }, 3000); 
+    return () => clearInterval(interval);
+  }, [galleryImages, isForward]);
+
   
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +122,7 @@ export default function RestaurantMenuPage() {
         setCategories(menuData.categories)
         setDishes(menuData.dishes)
         setFilteredDishes(menuData.dishes)
+        setGalleryImages(menuData.galleryImages)
       } catch (error) {
         console.error("Error fetching menu data:", error)
       } finally {
@@ -119,16 +158,30 @@ export default function RestaurantMenuPage() {
 
       <div className="flex w-full h-14  bg-center rounded-lg items-center px-4">
         <Search className="text-black mr-2 h-12" />
-        <input
-  className="w-full text-black h-14 bg-white focus:outline-none px-2"
-  placeholder="Search dishes..."
-  value={searchQuery}
-  onChange={handleSearch}
-/>
-
+        <input className="w-full text-black h-14 bg-white focus:outline-none px-2"
+          placeholder="Search dishes..."
+          value={searchQuery}
+          onChange={handleSearch}/>
       </div>
 
-      <img className="flex w-full h-40 bg-[url('https://res.cloudinary.com/dixjcb4on/image/upload/v1739046120/dishes_image/res%20image.jpg')] bg-cover bg-center  items-center"></img>
+
+<div className="relative w-full h-40 overflow-hidden">
+      <div
+        className="flex transition-transform duration-1000 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {galleryImages.map((image, index) => (
+          <img
+            key={index}
+            src={image.imageUrl}
+            alt={`Gallery Image ${index}`}
+            className="w-full h-40 object-cover flex-shrink-0"
+            style={{ minWidth: "100%" }}
+          />
+        ))}
+      </div>
+    </div>
+
 
       {loading ? (
         <div className="flex  justify-center items-center my-40">
