@@ -74,7 +74,7 @@ model DishView{
 
   id      Int    @id @default(autoincrement())
   dishId  Int
-  createdAt DateTime @default(now()) 
+  timestamp DateTime @default(now()) 
   dish    Dishes   @relation(fields: [dishId],references: [id])
 
 }
