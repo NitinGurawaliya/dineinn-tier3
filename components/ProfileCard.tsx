@@ -96,7 +96,7 @@ export default async function UserRestaurantCard() {
                       
                       <Badge variant="secondary" className="flex gap-1 items-center text-xs">
                         <QrCode className="h-3 w-3" />
-                        {restaurantData?.qrScans}
+                        {restaurantData?.qrScans} Scans
                       </Badge>
                     </div>
                   </div>
