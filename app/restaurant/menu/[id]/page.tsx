@@ -203,7 +203,7 @@ export default function RestaurantMenuPage() {
                   restaurantId={dish.restaurantId}
                 />
                 {/* Dotted Line */}
-                <div className="w-[calc(100%-44px)] mx-auto border-t-2 border-dotted border-gray-300 mt-4"></div>
+                <div className="w-[calc(100%-44px)] mx-auto border-t-2 border-dotted border-gray-300 mt-1"></div>
               </div>
             ))}
           </div>
