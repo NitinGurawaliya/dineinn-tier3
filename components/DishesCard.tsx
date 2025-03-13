@@ -40,7 +40,7 @@ const DishesCard: React.FC<DishCardProps> = ({ id, name, price, image, descripti
   return (
     <>
       <div
-        className="flex bg-white mt-0 rounded-lg h-full p-2  overflow-hidden w-full cursor-pointer"
+        className="flex bg-white mt-0 rounded-lg h-full px-2  overflow-hidden w-full cursor-pointer"
         onClick={handleCardClick}
       >
         {/* Right side - Content */}
