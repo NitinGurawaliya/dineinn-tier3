@@ -35,8 +35,17 @@ model RestaurantDetail {
   userId          Int        @unique
   user            User       @relation(fields: [userId], references: [id])
 
+
+  galleryImages   RestaurantGallery[]
   categories      Category[]
   dishes          Dishes[]  
+}
+
+model RestaurantGallery{
+  id            Int     @id @default(autoincrement())
+  restaurantId  Int      
+  imageUrl      String
+  restaurant    RestaurantDetail   @relation(fields: [restaurantId],references: [id])
 }
 
 model Category {
@@ -58,6 +67,15 @@ model Dishes {
   restaurantId    Int         
   restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
   category        Category     @relation(fields: [categoryId], references: [id])
+  views         DishView[]
 }
 
+model DishView{
+
+  id      Int    @id @default(autoincrement())
+  dishId  Int
+  createdAt DateTime @default(now()) 
+  dish    Dishes   @relation(fields: [dishId],references: [id])
+
+}
 
