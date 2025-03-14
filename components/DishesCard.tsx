@@ -4,7 +4,7 @@ import type React from "react"
 import { useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import { CardContent } from "@/components/ui/card"
-import { Star, ThumbsUp, Share2 } from "lucide-react"
+import { Star, ThumbsUp, Share2, Badge } from "lucide-react"
 import DishDetailsModal from "./DishDetailsModal"
 
 interface DishCardProps {
@@ -123,9 +123,13 @@ const DishesCard: React.FC<DishCardProps> = ({
 
         {/* Right side - Content */}
         <CardContent className="bg-white flex-1">
+
           <div>
+        
+
             <div className="flex justify-between items-start">
-              <h3 className="text-md font-semibold tracking-wide mb-1">{name}</h3>
+              
+              <h3 className="text-md font-semibold tracking-wide mb-3">{name}</h3>
             </div>
 
             {/* Star rating */}
@@ -135,7 +139,7 @@ const DishesCard: React.FC<DishCardProps> = ({
             </div>
 
             {/* Description with read more functionality */}
-            <div className="text-sm pt-2 mb-6 text-gray-500 text-muted-foreground">
+            <div className="text-sm pt-2 mb-4 text-gray-500 text-muted-foreground">
               {isDescriptionExpanded ? description : truncatedDescription}
               {shouldTruncate && !isDescriptionExpanded && (
                 <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
@@ -149,7 +153,7 @@ const DishesCard: React.FC<DishCardProps> = ({
               )}
             </div>
 
-            <span className="text-lg font-normal text-black">₹{price}</span>
+            <span className="text-md font-semibold text-black">₹{price}</span>
 
             {/* Upvote and Share buttons */}
             <div className="mt-3 flex gap-3">
@@ -168,7 +172,7 @@ const DishesCard: React.FC<DishCardProps> = ({
             </div>
           </div>
         </CardContent>
-        <div className="relative">
+        <div className="relative mt-4">
           <img
             src={image || "/placeholder.svg"}
             className="w-40 h-40 object-cover ml-3 rounded-xl bg-white"
