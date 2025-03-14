@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { Home, Edit, QrCode, User2, Menu, X, Search, MenuIcon, MenuSquare, HomeIcon } from "lucide-react";
+import { Home, Edit, QrCode, User2, Menu, X, Search, MenuIcon, MenuSquare, HomeIcon, View, GitGraph, LineChart } from "lucide-react";
 
 type NavItem = {
   section: string;
@@ -17,6 +17,7 @@ const navItems: NavItem[] = [
   { section: "edit-menu", label: "Edit your Menu", icon: Edit },
   { section: "generate-qr", label: "Manage QR Code", icon: QrCode },
   { section: "edit-profile", label: "Edit your Profile", icon: User2 },
+  {section:"analytics",label:"View Analytics",icon:LineChart}
 ];
 
 export function CustomSidebar() {
