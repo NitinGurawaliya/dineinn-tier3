@@ -111,15 +111,12 @@ const DishesCard: React.FC<DishCardProps> = ({
   return (
     <>
       <div
-        className="flex bg-white mt-0 rounded-lg h-full px-2 overflow-hidden w-full cursor-pointer relative"
+        className="flex bg-white mt-0 rounded-lg h-full px-0 overflow-hidden w-full cursor-pointer relative"
         onClick={handleCardClick}
         ref={ref}
       >
         {/* Veg/Non-veg indicator and New tag */}
-        <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
-          
-          {isNew && <div className="bg-red-500 text-white text-xs px-2 py-0.5 rounded">NEW</div>}
-        </div>
+        
 
         {/* Right side - Content */}
         <CardContent className="bg-white flex-1">
@@ -129,7 +126,7 @@ const DishesCard: React.FC<DishCardProps> = ({
 
             <div className="flex justify-between items-start">
               
-              <h3 className="text-md font-semibold tracking-wide mb-3">{name}</h3>
+              <h3 className="text-md font-bold tracking-wide mb-3">{name}</h3>
             </div>
 
             {/* Star rating */}
