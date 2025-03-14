@@ -69,7 +69,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
               }`}
               onClick={() => handleCategoryClick(category.id)}
             >
-              {category.name}
+              {category.name.toUpperCase()}
             </div>
           ))}
         </div>
