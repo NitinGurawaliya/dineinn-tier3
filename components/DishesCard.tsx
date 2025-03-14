@@ -167,7 +167,7 @@ const DishesCard: React.FC<DishCardProps> = ({
                 className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
                 onClick={handleShare}
               >
-                <Share2 className="w-4 h-4" />
+                <Share2  />
               </button>
             </div>
           </div>
