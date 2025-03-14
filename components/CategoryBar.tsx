@@ -59,7 +59,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
   return (
     <>
       <div ref={categoryRef} className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 py-4 left-0 shadow-md" : ""}`}>
-        <div className="flex overflow-x-auto py-4 px-2 scrollbar-hide">
+        <div className="flex overflow-x-auto py-3 px-2 scrollbar-hide">
           {categories.map((category) => (
             <div
               key={category.id}
