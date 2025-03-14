@@ -111,12 +111,15 @@ const DishesCard: React.FC<DishCardProps> = ({
   return (
     <>
       <div
-        className="flex bg-white mt-0 rounded-lg h-full px-0 overflow-hidden w-full cursor-pointer relative"
+        className="flex bg-white mt-0 rounded-lg h-full  overflow-hidden w-full cursor-pointer relative"
         onClick={handleCardClick}
         ref={ref}
       >
         {/* Veg/Non-veg indicator and New tag */}
-        
+        <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
+          
+          {isNew && <div className="bg-red-500 text-white text-xs px-2 py-0.5 rounded">NEW</div>}
+        </div>
 
         {/* Right side - Content */}
         <CardContent className="bg-white flex-1">
@@ -140,12 +143,12 @@ const DishesCard: React.FC<DishCardProps> = ({
               {isDescriptionExpanded ? description : truncatedDescription}
               {shouldTruncate && !isDescriptionExpanded && (
                 <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
-                  read more
+                  <div className="font-bold text-gray-800">... read more</div>
                 </button>
               )}
               {isDescriptionExpanded && (
                 <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
-                  show less
+                  <div className="font-bold text-gray-800">... show less</div>
                 </button>
               )}
             </div>
