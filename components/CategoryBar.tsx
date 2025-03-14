@@ -58,8 +58,8 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
 
   return (
     <>
-      <div ref={categoryRef} className={`bg-white p-2 w-full z-10 ${isSticky ? "fixed top-0 left-0 shadow-md" : ""}`}>
-        <div className="flex overflow-x-auto py-4 px-4 scrollbar-hide">
+      <div ref={categoryRef} className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 left-0 shadow-md" : ""}`}>
+        <div className="flex overflow-x-auto py-4 px-2 scrollbar-hide">
           {categories.map((category) => (
             <div
               key={category.id}
@@ -69,7 +69,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
               }`}
               onClick={() => handleCategoryClick(category.id)}
             >
-              {category.name.toUpperCase()}
+              {category.name}
             </div>
           ))}
         </div>
