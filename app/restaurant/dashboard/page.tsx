@@ -8,6 +8,7 @@ import MenuPage from "@/components/MyMenu";
 import { REQUEST_URL } from "@/config";
 import AddSpecialButton from "@/components/AddSpecialButton";
 import UserRestaurantCard from "@/components/ProfileCard";
+import AnalyticsDashboard from "@/components/AnalyticsComponent";
 
 export const dynamic = "force-dynamic"; // Ensures SSR and disables static generation
 
@@ -49,6 +50,9 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
       case "edit-profile":
         content = <UserRestaurantCard />;
         break;
+        case "analytics":
+          content = <AnalyticsDashboard />
+        break
     default:
       content = (
         <main className="flex-1 overflow-x-hidden overflow-y-auto ">
