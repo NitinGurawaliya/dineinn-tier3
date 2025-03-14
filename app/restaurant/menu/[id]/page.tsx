@@ -93,7 +93,7 @@ export default function RestaurantMenuPage() {
           }
         }
       });
-    }, 1000); 
+    }, 3000); 
     return () => clearInterval(interval);
   }, [galleryImages, isForward]);
 
