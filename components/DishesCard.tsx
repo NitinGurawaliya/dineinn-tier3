@@ -111,75 +111,76 @@ const DishesCard: React.FC<DishCardProps> = ({
   return (
     <>
       <div
-        className="flex bg-white mt-0 rounded-lg h-full  overflow-hidden w-full cursor-pointer relative"
-        onClick={handleCardClick}
-        ref={ref}
-      >
-        {/* Veg/Non-veg indicator and New tag */}
-        <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
-          
-          {isNew && <div className="bg-red-500 text-white text-xs px-2 py-0.5 rounded">NEW</div>}
+  className="flex bg-white mt-0 rounded-lg h-full overflow-hidden w-full cursor-pointer relative"
+  onClick={handleCardClick}
+  ref={ref}
+>
+  {/* Veg/Non-veg indicator and New tag */}
+  <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
+    {isNew && <div className="bg-red-500 text-white text-xs px-2 py-0.5 rounded">NEW</div>}
+  </div>
+
+  {/* Main content wrapper */}
+  <div className="flex w-full justify-between items-center">
+    {/* Right side - Content */}
+    <CardContent className="bg-white w-full">
+      <div>
+        <div className="flex justify-between items-start">
+          <h3 className="text-md font-bold tracking-wide mb-3">{name}</h3>
         </div>
 
-        {/* Right side - Content */}
-        <CardContent className="bg-white flex-1">
+        {/* Star rating */}
+        <div className="flex items-center gap-1 mt-1 mb-2">
+          {renderStars(rating)}
+          <span className="text-xs text-muted-foreground ml-1">({reviewCount})</span>
+        </div>
 
-          <div>
-        
+        {/* Description with read more functionality */}
+        <div className="text-sm pt-2 mb-4 text-gray-700 text-muted-foreground">
+          {isDescriptionExpanded ? description : truncatedDescription}
+          {shouldTruncate && !isDescriptionExpanded && (
+            <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
+              <div className="font-bold text-gray-800">... read more</div>
+            </button>
+          )}
+          {isDescriptionExpanded && (
+            <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
+              <div className="font-bold text-gray-800">... show less</div>
+            </button>
+          )}
+        </div>
 
-            <div className="flex justify-between items-start">
-              
-              <h3 className="text-md font-bold tracking-wide mb-3">{name}</h3>
-            </div>
+        <span className="text-md font-semibold text-black">₹{price}</span>
 
-            {/* Star rating */}
-            <div className="flex items-center gap-1 mt-1 mb-2">
-              {renderStars(rating)}
-              <span className="text-xs text-muted-foreground ml-1">({reviewCount})</span>
-            </div>
-
-            {/* Description with read more functionality */}
-            <div className="text-sm pt-2 mb-4 text-gray-700 text-muted-foreground">
-              {isDescriptionExpanded ? description : truncatedDescription}
-              {shouldTruncate && !isDescriptionExpanded && (
-                <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
-                  <div className="font-bold text-gray-800">... read more</div>
-                </button>
-              )}
-              {isDescriptionExpanded && (
-                <button className="text-primary font-medium ml-1" onClick={handleReadMoreClick}>
-                  <div className="font-bold text-gray-800">... show less</div>
-                </button>
-              )}
-            </div>
-
-            <span className="text-md font-semibold text-black">₹{price}</span>
-
-            {/* Upvote and Share buttons */}
-            <div className="mt-3 flex gap-3">
-              <button
-                className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
-                onClick={handleUpvote}
-              >
-               <ArrowBigUpDashIcon />
-              </button>
-              <button
-                className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
-                onClick={handleShare}
-              >
-                <Share2  />
-              </button>
-            </div>
-          </div>
-        </CardContent>
-        <div className="relative mt-4">
-          <img
-            src={image || "/placeholder.svg"}
-            className="w-44 h-48 object-cover ml-3 rounded-xl bg-white"
-            alt={name}
-          />
+        {/* Upvote and Share buttons */}
+        <div className="mt-3 flex gap-3">
+          <button
+            className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
+            onClick={handleUpvote}
+          >
+            <ArrowBigUpDashIcon />
+          </button>
+          <button
+            className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
+            onClick={handleShare}
+          >
+            <Share2 />
+          </button>
         </div>
       </div>
+    </CardContent>
+
+    {/* Image container */}
+    <div className="flex-none">
+      <img
+        src={image || "/placeholder.svg"}
+        className="w-44 h-48 object-cover rounded-xl bg-white"
+        alt={name}
+      />
+    </div>
+  </div>
+</div>
+
 
       <DishDetailsModal
         isOpen={isPopupOpen}
