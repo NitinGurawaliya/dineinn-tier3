@@ -95,7 +95,7 @@ export default function EditMenu() {
                 
                 if (confirmDelete) {
                   try {
-                    await axios.delete(`${REQUEST_URL}/api/menu/dishes/${dish.id}`);
+                    await axios.delete(`/api/menu/dishes/${dish.id}`);
                     alert(`${dish.name} has been deleted successfully.`);
                     setDishes((prevDishes) => prevDishes.filter((d) => d.id !== dish.id)); 
                   } catch (error) {
