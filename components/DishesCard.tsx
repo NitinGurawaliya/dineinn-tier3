@@ -123,10 +123,10 @@ const DishesCard: React.FC<DishCardProps> = ({
           </div>
 
           {/* Star rating */}
-          <div className="flex items-center gap-1 mt-1 mb-2">
+          {/* <div className="flex items-center gap-1 mt-1 mb-2">
             {renderStars(rating)}
             <span className="text-xs text-muted-foreground ml-1">({reviewCount})</span>
-          </div>
+          </div> */}
 
           {/* Description */}
           <div className="text-sm pt-2 mb-4 text-gray-700 text-muted-foreground">
