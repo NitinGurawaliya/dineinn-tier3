@@ -4,8 +4,9 @@ import type React from "react";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { CardContent } from "@/components/ui/card";
-import { Star, Share2, ArrowBigUpDashIcon } from "lucide-react";
+import { Star, Share2, ArrowBigUpDashIcon, Circle } from "lucide-react";
 import DishDetailsModal from "./DishDetailsModal";
+import { NonVegLabel, VegLabel } from "./Foodlabel";
 
 interface DishCardProps {
   id: number;
@@ -102,12 +103,16 @@ const DishesCard: React.FC<DishCardProps> = ({
   const shouldTruncate = words.length > 8;
 
   return (
-    <>
+    <div className=" pt-4">
+      <div className=" ml-6 mb-1"><VegLabel /></div>
       <div
         className="flex flex-row-reverse bg-white mt-0 rounded-lg h-full w-full cursor-pointer relative overflow-hidden"
         onClick={handleCardClick}
         ref={ref}
       >
+        
+        
+      
         {/* Image on the Right */}
         <img
           src={image || "/placeholder.svg"}
@@ -144,7 +149,7 @@ const DishesCard: React.FC<DishCardProps> = ({
           </div>
 
           {/* Price */}
-          <span className="text-md font-semibold text-black">₹{price}</span>
+          <span className="text-md font-normal text-black">₹{price}</span>
 
           {/* Upvote and Share */}
           <div className="mt-3 flex gap-3">
@@ -169,7 +174,7 @@ const DishesCard: React.FC<DishCardProps> = ({
         onClose={handleClosePopup}
         dish={{ id, name, price, image, description, categoryId, restaurantId }}
       />
-    </>
+    </div>
   );
 };
 
