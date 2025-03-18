@@ -10,7 +10,7 @@ interface Category {
 
 interface CategoryComponentProps {
   categories: Category[]
-  onCategorySelect: (categoryId: number) => void
+  onCategorySelect: (categoryId: number, headerHeight: number) => void
 }
 
 export default function CategoryComponent({ categories, onCategorySelect }: CategoryComponentProps) {
@@ -24,7 +24,8 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
   useEffect(() => {
     if (categories.length > 0 && !selectedCategory) {
       setSelectedCategory(categories[0].id)
-      onCategorySelect(categories[0].id)
+      const headerHeight = categoryRef.current?.offsetHeight || 0
+      onCategorySelect(categories[0].id, headerHeight)
     }
   }, [categories, selectedCategory, onCategorySelect])
 
@@ -53,12 +54,18 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategory(categoryId)
-    onCategorySelect(categoryId)
+    // Pass the current header height to the parent
+    const headerHeight = categoryRef.current?.offsetHeight || 0
+    onCategorySelect(categoryId, headerHeight)
   }
 
   return (
     <>
-      <div ref={categoryRef} className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : ""}`}>
+      <div
+        ref={categoryRef}
+        className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : ""}`}
+        id="category-bar"
+      >
         <div className="flex overflow-x-auto py-4 px-2 scrollbar-hide">
           {categories.map((category) => (
             <div
@@ -74,7 +81,8 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
           ))}
         </div>
       </div>
-      {isSticky && <div style={{ height: "56px" }}></div>}
+      {isSticky && <div style={{ height: `${categoryRef.current?.offsetHeight || 0}px` }}></div>}
     </>
   )
 }
+
