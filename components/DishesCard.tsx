@@ -103,8 +103,8 @@ const DishesCard: React.FC<DishCardProps> = ({
   const shouldTruncate = words.length > 8;
 
   return (
-    <div className=" pt-4">
-      <div className=" ml-6 mb-1"><VegLabel /></div>
+    <div className=" pt-2">
+      <div className=" ml-6 mb-2"><VegLabel /></div>
       <div
         className="flex flex-row-reverse bg-white mt-0 rounded-lg h-full w-full cursor-pointer relative overflow-hidden"
         onClick={handleCardClick}
