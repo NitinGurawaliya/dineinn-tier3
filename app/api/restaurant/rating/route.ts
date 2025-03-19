@@ -1,10 +1,17 @@
-// import { RatingSchema } from "@/zod";
-// import { NextRequest, NextResponse } from "next/server";
-// import prisma from "@/app/lib/prisma";
+import { RatingSchema } from "@/zod";
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/app/lib/prisma";
 
 
-export default async function POST(){
-console.log("from rating route")
+export  async function POST(req:NextRequest){
+
+    const body  = await req.json()
+
+    const {success}  =  RatingSchema.safeParse(body)
+
+    if(!success){
+        return NextResponse.json({ msg: "Invalid data" }, { status: 401 });
+    }
 
 
 
