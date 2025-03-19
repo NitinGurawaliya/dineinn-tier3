@@ -35,10 +35,21 @@ model RestaurantDetail {
   userId          Int        @unique
   user            User       @relation(fields: [userId], references: [id])
 
-
+  rating      RestaurantRating[]
   galleryImages   RestaurantGallery[]
   categories      Category[]
   dishes          Dishes[]  
+}
+
+model RestaurantRating{
+  id          Int @id @default(autoincrement())
+  rating      Int 
+  message     String?
+  restaurantId Int
+  createdAt     DateTime @default(now())
+
+  restaurant    RestaurantDetail @relation(fields: [restaurantId], references: [id])
+
 }
 
 model RestaurantGallery{
