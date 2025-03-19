@@ -13,6 +13,7 @@ export const signinSchema = zod.object({
 })
 
 
+
 export const restaurantOnboardingSchema = zod.object({
   restaurantName: zod.string(),
   contactNumber: zod.string(),
@@ -23,3 +24,8 @@ export const restaurantOnboardingSchema = zod.object({
   facebook: zod.string().optional(),
   logo: zod.string().optional(),
 });
+
+export const RatingSchema = zod.object({
+  stars:zod.number(),
+  message:zod.string().optional(),
+})
