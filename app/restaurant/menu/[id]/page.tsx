@@ -11,6 +11,7 @@ import HamburgerMenu from "@/components/HambergerMenu"
 import { Button } from "@/components/ui/button"
 import { ArrowBigDown, ChefHatIcon, PencilIcon, Search } from "lucide-react"
 import Link from "next/link"
+import { RatingDialog } from "@/components/rating-dialog"
 
 interface RestaurantDetails {
   restaurantName: string
@@ -56,6 +57,7 @@ export default function RestaurantMenuPage() {
   const [galleryImages, setGalleryImages] = useState<GalleryImages[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isForward, setIsForward] = useState(true) // Track direction (forward/backward)
+  const [showRatingDialog, setShowRatingDialog] = useState(false);
   const dishesContainerRef = useRef<HTMLDivElement>(null)
   const categoryBarRef = useRef<HTMLDivElement>(null)
 
@@ -132,6 +134,15 @@ export default function RestaurantMenuPage() {
 
     if (id) fetchMenuData() // Ensure `id` is available before making API call
   }, [id])
+
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowRatingDialog(true);
+    }, 5000); // Open after 5 seconds
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
 
   const handleCategorySelect = (categoryId: number, headerHeight = 0) => {
     // First filter the dishes
@@ -239,6 +250,8 @@ export default function RestaurantMenuPage() {
               </div>
             ))}
           </div>
+          <RatingDialog open={showRatingDialog} setOpen={setShowRatingDialog} />
+
         </>
       )}
       {showScrollText && (
