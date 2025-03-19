@@ -139,7 +139,7 @@ export default function RestaurantMenuPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowRatingDialog(true);
-    }, 5000); // Open after 5 seconds
+    }, 10000); // Open after 5 seconds
 
     return () => clearTimeout(timer); // Cleanup on unmount
   }, []);
