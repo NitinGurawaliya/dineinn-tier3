@@ -20,6 +20,7 @@ interface DishCardProps {
   reviewCount?: number;
   isVeg?: boolean;
   isNew?: boolean;
+  type:string
 }
 
 const DishesCard: React.FC<DishCardProps> = ({
@@ -29,11 +30,13 @@ const DishesCard: React.FC<DishCardProps> = ({
   image,
   description,
   categoryId,
+  type,
   restaurantId,
   rating = 4.5,
   reviewCount = 24,
   isVeg = true,
   isNew = false,
+  
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-100px" });
@@ -78,7 +81,7 @@ const DishesCard: React.FC<DishCardProps> = ({
 
   return (
     <div className="pt-2">
-      <div className="ml-6 mb-2">{isVeg ? <VegLabel /> : <NonVegLabel />}</div>
+      <div className="ml-6 mb-2">{type ==="VEG"?<VegLabel />:<NonVegLabel />}</div>
       <div
         className="flex flex-row-reverse bg-white mt-0 rounded-lg h-full w-full cursor-pointer relative overflow-hidden"
         onClick={handleCardClick}
@@ -93,7 +96,7 @@ const DishesCard: React.FC<DishCardProps> = ({
         <CardContent className="bg-white flex-1">
           <div className="flex justify-between items-start">
             <h3 className="text-md font-bold tracking-wide">{name}</h3>
-            {isNew && <div className="bg-red-500 text-white text-xs px-2 py-0.5 rounded">NEW</div>}
+            
           </div>
 
           <div className="text-sm pt-2 mb-4 text-gray-700 text-muted-foreground">
