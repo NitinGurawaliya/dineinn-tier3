@@ -42,6 +42,7 @@ interface Dish {
   image: string
   categoryId: number
   restaurantId: number
+  type:string
 }
 
 export default function RestaurantMenuPage() {
@@ -237,6 +238,7 @@ export default function RestaurantMenuPage() {
             {filteredDishes.map((dish) => (
               <div key={dish.id} className="relative pb-4" data-category-id={dish.categoryId}>
                 <DishesCard
+
                   id={dish.id}
                   name={dish.name}
                   description={dish.description}
@@ -244,6 +246,7 @@ export default function RestaurantMenuPage() {
                   image={dish.image}
                   categoryId={dish.categoryId}
                   restaurantId={dish.restaurantId}
+                  type={dish.type}
                 />
                 {/* Dotted Line */}
                 <div className="w-[calc(100%-44px)] mx-auto border-t-2 border-dotted border-gray-300 mt-1"></div>
