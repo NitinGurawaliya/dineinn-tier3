@@ -238,7 +238,6 @@ export default function RestaurantMenuPage() {
             {filteredDishes.map((dish) => (
               <div key={dish.id} className="relative pb-4" data-category-id={dish.categoryId}>
                 <DishesCard
-
                   id={dish.id}
                   name={dish.name}
                   description={dish.description}
