@@ -20,6 +20,7 @@ interface Dish {
     image: string;
     description:string
     categoryId: number;
+    type:string;
     restaurantId: number;
 }
 
@@ -72,6 +73,7 @@ export default async function MenuPage() {
                     <DishesCard
                     key={dish.id}
                     id={dish.id}
+                    type={dish.type}
                     name={dish.name}
                     price={dish.price}
                     image={dish.image}
