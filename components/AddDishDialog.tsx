@@ -24,8 +24,9 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  const [loading,setLoading] = useState(false);
-  const[description, setDescription] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("VEG");
 
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -62,25 +63,26 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
-    setLoading(true)
     e.preventDefault();
+    setLoading(true);
+
     if (!categoryId) {
       alert("Please select a category!");
       return;
     }
 
-    if (!name || !price || !image) {
+    if (!name || !price || !image || !type) {
       alert("Please fill in all fields");
       return;
     }
 
     try {
       const formData = new FormData();
-     
       formData.append("name", name);
       formData.append("price", price);
       formData.append("image", image);
-      formData.append("description",description)
+      formData.append("description", description);
+      formData.append("type", type);
 
       const res = await axios.post(`/api/menu/dishes/${categoryId}`, formData, {
         withCredentials: true,
@@ -93,12 +95,12 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
       setName("");
       setPrice("");
       setImage(null);
+      setType("VEG");
       setCategoryId("");
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.error("Error adding dish:", error);
     }
-
   };
 
   return (
@@ -129,15 +131,17 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
                 ))}
               </select>
             </div>
+
             <div>
               <Label htmlFor="name">Dish Name</Label>
               <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
             </div>
 
             <div>
-              <Label htmlFor="description">Add description</Label>
+              <Label htmlFor="description">Add Description</Label>
               <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} required />
             </div>
+
             <div>
               <Label htmlFor="image">Image</Label>
               <Input
@@ -148,6 +152,7 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
                 required
               />
             </div>
+
             <div>
               <Label htmlFor="price">Price</Label>
               <Input
@@ -159,8 +164,23 @@ export function AddDishDialog({ isOpen, onClose }: AddDishDialogProps) {
                 required
               />
             </div>
+
+            <div>
+              <Label htmlFor="type">Dish Type</Label>
+              <select
+                id="type"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                required
+                className="w-full border p-2 rounded"
+              >
+                <option value="VEG">Veg</option>
+                <option value="NON_VEG">Non-Veg</option>
+              </select>
+            </div>
+
             <Button type="submit" className="w-full">
-                {loading ?"Adding Dish": "Add Dish"}
+              {loading ? "Adding Dish" : "Add Dish"}
             </Button>
           </div>
         </form>
