@@ -44,7 +44,7 @@ export async function GET(
          
     } catch (error) {
         console.error("Error fetching menu:", error);
-         NextResponse.json({ msg: "Internal server error" }, { status: 500 });
+         NextResponse.json({ msg: "Internal server error from this api" }, { status: 500 });
          return
     }
 }
