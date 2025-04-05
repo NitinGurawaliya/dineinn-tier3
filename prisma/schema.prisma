@@ -74,11 +74,16 @@ model Dishes {
   price           Float
   image           String?   
   description      String   @default("no description")
+  type            DishType @default(VEG)
   categoryId      Int
-  restaurantId    Int         
+  restaurantId    Int        
   restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
   category        Category     @relation(fields: [categoryId], references: [id])
   views          DishView[]
+}
+enum DishType {
+  VEG
+  NON_VEG
 }
 
 model DishView{
