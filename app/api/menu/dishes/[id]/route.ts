@@ -2,6 +2,7 @@ import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import { v2 as cloudinary } from "cloudinary";
+import { DishType } from "@prisma/client";
 
 // Cloudinary Configuration
 cloudinary.config({
@@ -31,6 +32,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
         const name = formData.get("name") as string;
         const price = formData.get("price") as string;
         const file = formData.get("image") as File;
+        const type = formData.get("type")as DishType;
         const description = formData.get("description") as string;
 
         if (!name || !price || !file) {
@@ -59,6 +61,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
                 image: imageUrl,
                 categoryId: parseInt(id),
                 description:description,
+                type:type,
                 restaurantId: parseInt(restaurantId),
             }
         });
@@ -95,4 +98,37 @@ export async function DELETE(req:NextRequest, context:{params:{id:string}}) {
 
     return NextResponse.json({msg:"Dish is deleted"})
     
+}
+
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
+
+  const authResult = await authMiddleware(req);
+  if (authResult.error) {
+    return authResult.error;
+  }
+
+  try {
+    const body = await req.json();
+    const { name, description, price, type } = body;
+
+    if (!name || !description || !price || !type) {
+      return NextResponse.json({ error: "Please provide all required fields." }, { status: 400 });
+    }
+
+    const updatedDish = await prisma.dishes.update({
+      where: { id: parseInt(id) },
+      data: {
+        name,
+        description,
+        price: parseFloat(price),
+        type,
+      },
+    });
+
+    return NextResponse.json({ success: true, updatedDish }, { status: 200 });
+  } catch (error) {
+    console.error("Error updating dish:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }
