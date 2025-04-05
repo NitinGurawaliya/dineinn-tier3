@@ -9,6 +9,7 @@ import { ChefHatIcon, Delete, DeleteIcon, Edit2, Loader2Icon, Trash2Icon } from 
 import { AddDishDialog } from "./AddDishDialog";
 import CategoryComponent from "./CategoryBar";
 import { AddCategoryDialog } from "./AddCategoryDialog";
+import DashboardDishesCard from "./dashboard-dish-card";
 
 interface Category {
   id: number;
@@ -23,6 +24,7 @@ interface Dish {
   description:string,
   image: string;
   categoryId: number;
+  type:string;
   restaurantId: number;
 }
 
@@ -88,7 +90,7 @@ export default function EditMenu() {
       <div className="grid grid-cols-1 bg-gray-100 p-4 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
         {dishes.map((dish: Dish) => (
           <div key={dish.id} className="relative">
-            <DishesCard {...dish} />
+            <DashboardDishesCard {...dish} />
             <button
               onClick={async () => {
                 const confirmDelete = confirm(`Are you sure you want to delete ${dish.name} from your menu?`);
