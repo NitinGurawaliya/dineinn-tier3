@@ -42,7 +42,7 @@ interface Dish {
   image: string
   categoryId: number
   restaurantId: number
-  type:string
+  type?:string
 }
 
 export default function RestaurantMenuPage() {
@@ -246,7 +246,7 @@ export default function RestaurantMenuPage() {
                   image={dish.image}
                   categoryId={dish.categoryId}
                   restaurantId={dish.restaurantId}
-                  type={dish.type}
+                  type={dish.type ||"VEG"}
                 />
                 {/* Dotted Line */}
                 <div className="w-[calc(100%-44px)] mx-auto border-t-2 border-dotted border-gray-300 mt-1"></div>
