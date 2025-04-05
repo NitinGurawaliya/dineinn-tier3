@@ -82,7 +82,7 @@ export default async function MenuPage() {
                     description={dish.description}
                     price={dish.price}
                     image={dish.image}
-                    type={dish.type}
+                    type={dish.type||"VEG"}
                     categoryId={dish.categoryId}
                     restaurantId={dish.restaurantId}
                 />
