@@ -13,10 +13,7 @@ export async function POST(req: NextRequest) {
 
     const userId = req.cookies.get("userId")?.value;
     const restaurantId  = req.cookies.get("userId")?.value
-
-
-
-
+    
     console.log("User ID:", userId);
     console.log("Restaurant ID:", restaurantId);
 
