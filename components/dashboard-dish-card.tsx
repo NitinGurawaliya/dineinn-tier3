@@ -139,11 +139,11 @@ const DashboardDishesCard: React.FC<DishCardProps> = ({
         </CardContent>
       </div>
 
-      <DishDetailsModal
+      {/* <DishDetailsModal
         isOpen={isPopupOpen}
         onClose={handleClosePopup}
         dish={{ id, name, price, image, description, categoryId, restaurantId }}
-      />
+      /> */}
       <EditDishDialog
   isOpen={isEditOpen}
   onClose={() => setIsEditOpen(false)}
