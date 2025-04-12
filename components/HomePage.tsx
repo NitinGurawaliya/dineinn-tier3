@@ -48,7 +48,7 @@ const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, ins
             </h1>
 
             {/* Social Icons */}
-            <div className="flex justify-center mt-4 gap-8 mb-12">
+            <div className="flex justify-center mt-2 gap-8 mb-12">
                 <Link
                 href={instagram}
                 className="flex flex-col items-center text-black hover:opacity-75 transition-opacity"
