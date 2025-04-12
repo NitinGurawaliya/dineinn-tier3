@@ -49,7 +49,6 @@ model RestaurantRating{
   createdAt     DateTime @default(now())
 
   restaurant    RestaurantDetail @relation(fields: [restaurantId], references: [id])
-
 }
 
 model RestaurantGallery{
@@ -81,17 +80,16 @@ model Dishes {
   category        Category     @relation(fields: [categoryId], references: [id])
   views          DishView[]
 }
+
 enum DishType {
   VEG
   NON_VEG
 }
 
 model DishView{
-
   id      Int    @id @default(autoincrement())
   dishId  Int
   timestamp DateTime @default(now()) 
   dish    Dishes   @relation(fields: [dishId],references: [id])
-
 }
 
