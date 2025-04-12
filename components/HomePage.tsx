@@ -49,21 +49,30 @@ const   HomePage: React.FC<RestaurantHomePageProps> = ({ restaurantName, id, ins
 
             {/* Social Icons */}
             <div className="flex justify-center gap-8 mb-12">
-                <Link href={instagram} className="text-black hover:opacity-75 transition-opacity" target="_blank">
-                    <InstagramIcon className="w-7 h-7" />
-                    <span className="sr-only">{instagram}</span>
+                <Link
+                href={instagram}
+                className="flex flex-col items-center text-black hover:opacity-75 transition-opacity"
+                target="_blank"
+                >
+                <InstagramIcon className="w-7 h-7" />
+                <span className="sr-only">{instagram}</span>
+                <div className="text-sm mt-1">Our Socials</div>
                 </Link>
-                <Link href="#" className="text-black hover:opacity-75 transition-opacity">
+                <Link href="#" className="flex flex-col items-center text-black hover:opacity-75 transition-opacity">
                     <MapPin className="w-7 h-7" />
                     <span className="sr-only">{location}</span>
+                    <div className="text-sm mt-1">Directions</div>
                 </Link>
-                <Link href={`https://wa.me/${whatsapp}`} className="text-black hover:opacity-75 transition-opacity" target="_blank">
+                <Link href={`https://wa.me/${whatsapp}`} className="flex flex-col items-center text-black hover:opacity-75 transition-opacity" target="_blank">
                     <MessageCircle className="w-7 h-7" />
                     <span className="sr-only">{whatsapp}</span>
+                    <div className="text-sm mt-1">Whatsapp</div>
+
                 </Link>
-                <Link href={`tel:${contactNumber}`} className="text-black hover:opacity-75 transition-opacity">
+                <Link href={`tel:${contactNumber}`} className= "flex flex-col items-center text-black hover:opacity-75 transition-opacity">
                     <Phone className="w-7 h-7" />
                     <span className="sr-only">{contactNumber}</span>
+                    <div className="text-sm mt-1">Call us </div>
                 </Link>
             </div>
 
