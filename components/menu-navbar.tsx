@@ -15,7 +15,7 @@ export default function TabsComponent({ tabs, activeTab, setActiveTab }: TabsCom
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200
+              className={`px-4 py-2 rounded-full text-md sm:text-base font-medium transition-all duration-200
                 ${
                   activeTab === tab
                     ? "bg-white text-teal-500 "
