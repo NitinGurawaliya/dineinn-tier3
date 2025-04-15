@@ -85,7 +85,7 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
               className="absolute right-2 top-2 z-50 bg-background/50 hover:bg-background/80 rounded-full"
               onClick={closeModal}
             >
-              <X className="h-5 w-5" />
+              <X className="h-10 w-10 bg-white" />
             </Button>
 
             {/* Full Image View */}
