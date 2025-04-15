@@ -52,7 +52,7 @@
       const params = useParams()
       const { id } = params
 
-      const [activeTab, setActiveTab] = useState("Menu")
+      const [activeTab, setActiveTab] = useState("Gallery")
 
       const [categories, setCategories] = useState<Category[]>([])
       const [dishes, setDishes] = useState<Dish[]>([])
@@ -226,6 +226,7 @@
                     contactNumber={restaurantData?.contactNumber ?? ""} />}
                     
                   {activeTab === "Gallery" && <RestaurantGallery images={galleryImages}/>}
+                  {activeTab  ==="Updates"&&<p className="text-center">No updates as of now</p>}
                   {activeTab === "Reviews" && <p>See what others are saying!</p>}
                 </div>
               )}
