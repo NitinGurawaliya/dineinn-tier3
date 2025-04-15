@@ -35,7 +35,7 @@ export default function UserRestaurantCard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${REQUEST_URL}/api/restaurant/details`, {
+        const res = await fetch(`/api/restaurant/details`, {
           credentials: "include",
         })
         const data = await res.json()
