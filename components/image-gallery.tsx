@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,8 @@ interface RestaurantGalleryProps {
 export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   const openModal = (index: number) => {
     setCurrentImageIndex(index)
@@ -51,32 +53,48 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
     }
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX)
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    setTouchEnd(e.changedTouches[0].clientX)
+    if (touchStart - touchEnd > 150) {
+      goToNextImage()
+    }
+    if (touchStart - touchEnd < -150) {
+      goToPrevImage()
+    }
+  }
+
   const currentImage = images[currentImageIndex]
 
   return (
     <div className="columns-2 sm:columns-3 md:columns-4 gap-2 space-y-2">
-    {images.map((image, index) => (
-      <div
-        key={image.id}
-        className="break-inside-avoid mb-2 cursor-pointer overflow-hidden rounded-lg"
-        onClick={() => openModal(index)}
-      >
-        <Image
-          src={image.imageUrl || "/placeholder.svg"}
-          alt={`Image ${index + 1}`}
-          width={600}
-          height={400}
-          className="w-full h-auto object-cover rounded-md"
-        />
-      </div>
-    ))}
+      {images.map((image, index) => (
+        <div
+          key={image.id}
+          className="break-inside-avoid mb-2 cursor-pointer overflow-hidden rounded-lg"
+          onClick={() => openModal(index)}
+        >
+          <Image
+            src={image.imageUrl || "/placeholder.svg"}
+            alt={`Image ${index + 1}`}
+            width={600}
+            height={400}
+            className="w-full h-auto object-cover rounded-md"
+          />
+        </div>
+      ))}
 
-     {/* Modal */}
-     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      {/* Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent
           className="max-w-4xl p-0 bg-background/95 backdrop-blur-sm"
           onKeyDown={handleKeyDown}
           onInteractOutside={closeModal}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <div className="relative h-[80vh] w-full">
             <Button
@@ -126,9 +144,6 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
           </div>
         </DialogContent>
       </Dialog>
-  </div>
-
-
-  
+    </div>
   )
 }
