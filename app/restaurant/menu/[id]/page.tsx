@@ -122,7 +122,7 @@
       useEffect(() => {
         const timer = setTimeout(() => {
           setShowRatingDialog(true)
-        }, 8000)
+        }, 12000)
 
         return () => clearTimeout(timer)
       }, [])
