@@ -20,6 +20,7 @@ interface RestaurantDetails {
   location: string
   contactNumber: string
   logo: string
+  id:number
   
 }
 
@@ -265,7 +266,14 @@ export default function RestaurantMenuPage() {
         </div>
       )}
       
-      <RatingDialog open={showRatingDialog} setOpen={setShowRatingDialog} />
+      {restaurantData && (
+  <RatingDialog
+    open={showRatingDialog}
+    setOpen={setShowRatingDialog}
+    restaurantId={restaurantData.id}
+  />
+)}
+
 
     </div>
   )
