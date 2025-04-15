@@ -4,10 +4,10 @@ import prisma from "@/app/lib/prisma";
 import { editRestaurantDetailsSchema } from "@/zod";
 export async function GET(req:NextRequest) {
 
-    // const authResult = await authMiddleware(req);
-    // if (authResult.error) {
-    //     return authResult.error;
-    // }
+    const authResult = await authMiddleware(req);
+    if (authResult.error) {
+        return authResult.error;
+    }
 
     const userId = req.cookies.get("userId")?.value
 
