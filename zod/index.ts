@@ -25,6 +25,17 @@ export const restaurantOnboardingSchema = zod.object({
   logo: zod.string().optional(),
 });
 
+export const editRestaurantDetailsSchema = zod.object({
+  restaurantName: zod.string(),
+  contactNumber: zod.string(),
+  location: zod.string(),
+  weekdaysWorking: zod.string().optional(),
+  weekendWorking: zod.string().optional(),
+  instagram: zod.string().optional(),
+  facebook: zod.string().optional(),
+  logo: zod.string().optional(),
+})
+
 export const RatingSchema = zod.object({
   stars:zod.number(),
   message:zod.string().optional(),
