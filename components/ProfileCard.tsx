@@ -51,7 +51,7 @@ export default function UserRestaurantCard() {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`${REQUEST_URL}/api/restaurant/details`, {
+      const res = await fetch(`/api/restaurant/details`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
