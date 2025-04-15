@@ -86,7 +86,7 @@ const HomePage: React.FC<RestaurantHomePageProps> = ({
       </div>
 
       {/* Rating Badge */}
-      <div className="mt-4 flex flex-col items-center">
+      <div className="mt-1 flex flex-col items-center">
         <div className="flex items-center gap-1">{renderStars(averageRating)}</div>
         <div className="text-sm font-medium mt-1">
           {averageRating.toFixed(1)} ({totalRatings} {totalRatings === 1 ? "rating" : "ratings"})
