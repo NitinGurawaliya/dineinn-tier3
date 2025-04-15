@@ -85,7 +85,7 @@ enum DishType {
   VEG
   NON_VEG
 }
-
+//for auth user
 model DishView{
   id      Int    @id @default(autoincrement())
   dishId  Int
