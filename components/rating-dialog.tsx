@@ -40,7 +40,7 @@ export function RatingDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       </DialogTrigger>
       <DialogContent
         className={cn(
-          "sm:max-w-[350px] border rounded-xl p-0 overflow-hidden shadow-lg",
+          "sm:max-w-[250px] border rounded-xl p-0 overflow-hidden shadow-lg",
           "animate-in slide-in-from-bottom duration-300",
         )}
       >
