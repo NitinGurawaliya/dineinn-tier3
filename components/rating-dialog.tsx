@@ -40,8 +40,8 @@ export function RatingDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       </DialogTrigger>
       <DialogContent
         className={cn(
-          "sm:max-w-[250px] border rounded-xl p-0 overflow-hidden shadow-lg",
-          "animate-in slide-in-from-bottom duration-300",
+          "max-w-[350px] border rounded-xl p-0 overflow-hidden shadow-lg",
+          "animate-in slide-in-from-bottom duration-600",
         )}
       >
         {!submitted ? (
@@ -50,7 +50,7 @@ export function RatingDialog({ open, setOpen }: { open: boolean; setOpen: (open:
               <DialogHeader className="space-y-1">
                 <DialogTitle className="text-lg font-medium text-center">
                   <span className="flex items-center justify-center gap-1.5">
-                    <SmilePlus className="h-5 w-5" />
+                    <SmilePlus className="h-5 text-md w-5" />
                     How was your meal?
                   </span>
                 </DialogTitle>
@@ -107,14 +107,14 @@ export function RatingDialog({ open, setOpen }: { open: boolean; setOpen: (open:
                     setRating(0)
                     setMessage("")
                   }}
-                  className="h-8 text-xs border-gray-200"
+                  className="h-8 text-md border-gray-200"
                 >
                   Clear
                 </Button>
                 <Button
                   onClick={handleSubmit}
                   disabled={rating === 0}
-                  className="h-8 text-xs bg-teal-500 hover:bg-teal-600 text-white"
+                  className="h-12 text-md bg-teal-500 hover:bg-teal-600 text-white"
                 >
                   Submit
                 </Button>
