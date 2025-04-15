@@ -20,6 +20,7 @@ interface RestaurantDetails {
   location: string
   contactNumber: string
   logo: string
+  
 }
 
 interface GalleryImages {
@@ -58,7 +59,7 @@ export default function RestaurantMenuPage() {
   const [galleryImages, setGalleryImages] = useState<GalleryImages[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isForward, setIsForward] = useState(true) // Track direction (forward/backward)
-  // const [showRatingDialog, setShowRatingDialog] = useState(false);
+  const [showRatingDialog, setShowRatingDialog] = useState(false);
   const dishesContainerRef = useRef<HTMLDivElement>(null)
   const categoryBarRef = useRef<HTMLDivElement>(null)
 
@@ -137,13 +138,13 @@ export default function RestaurantMenuPage() {
   }, [id])
 
   
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowRatingDialog(true);
-  //   }, 10000); // Open after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowRatingDialog(true);
+    }, 5000); // Open after 5 seconds
 
-  //   return () => clearTimeout(timer); // Cleanup on unmount
-  // }, []);
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
 
   const handleCategorySelect = (categoryId: number, headerHeight = 0) => {
     // First filter the dishes
@@ -221,6 +222,7 @@ export default function RestaurantMenuPage() {
         </div>
       </div>
 
+
       {loading ? (
         <div className="flex justify-center items-center my-40">
           <ChefHatIcon size={80} className="animate-spin flex text-gray-900" />
@@ -255,12 +257,16 @@ export default function RestaurantMenuPage() {
 
         </>
       )}
+      
       {showScrollText && (
         <div className="fixed bottom-2 transform -translate-x-1/2 flex items-center ml-40 justify-center font-semibold text-lg text-black opacity-80 animate-bounce">
           <ArrowBigDown />
           Scroll Here
         </div>
       )}
+      
+      <RatingDialog open={showRatingDialog} setOpen={setShowRatingDialog} />
+
     </div>
   )
 }
