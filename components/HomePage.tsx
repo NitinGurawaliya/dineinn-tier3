@@ -143,12 +143,12 @@ const HomePage: React.FC<RestaurantHomePageProps> = ({
         >
           VIEW DINE INN MENU
         </Link>
-        {/* <Link
+        <Link
           href="#"
           className="border-2 border-black px-8 py-4 text-center hover:bg-black hover:text-white transition-colors"
         >
           RATE OUR RESTAURANT
-        </Link> */}
+        </Link>
       </div>
     </main>
   )
