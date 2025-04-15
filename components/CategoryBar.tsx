@@ -63,7 +63,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
     <>
       <div
         ref={categoryRef}
-        className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : ""}`}
+        className={`bg-white mb-2 w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : ""}`}
         id="category-bar"
       >
         <div className="flex overflow-x-auto py-4 px-2 scrollbar-hide">
@@ -85,4 +85,3 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
     </>
   )
 }
-
