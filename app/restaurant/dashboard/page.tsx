@@ -68,9 +68,9 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
             </div>
 
 
-            <div  className="flex mt-4 justify-center">
+            {/* <div  className="flex mt-4 justify-center">
               <AddSpecialButton />
-            </div>
+            </div> */}
           </div>
         </div>
       </main>
