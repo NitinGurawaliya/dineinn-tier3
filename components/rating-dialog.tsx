@@ -15,24 +15,41 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-export function RatingDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
+export function RatingDialog({ open, setOpen ,restaurantId}: { open: boolean;restaurantId:number, setOpen: (open: boolean) => void }) {
   const [rating, setRating] = useState<number>(0)
   const [hoverRating, setHoverRating] = useState<number>(0)
   const [message, setMessage] = useState<string>("")
   const [submitted, setSubmitted] = useState(false)
-
   const ratingLabels = ["", "Not great", "Could be better", "Good", "Great", "Amazing!"]
 
-  const handleSubmit = () => {
-    console.log({ rating, message })
-    setSubmitted(true)
-    setTimeout(() => {
-      setRating(0)
-      setMessage("")
-      setSubmitted(false)
-      setOpen(false)
-    }, 2500)
-  }
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch("/api/user/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rating,
+          message,
+          restaurantId, // replace with actual restaurantId dynamically
+        }),
+      });
+  
+      if (!res.ok) throw new Error("Failed to submit");
+  
+      setSubmitted(true);
+      setTimeout(() => {
+        setRating(0);
+        setMessage("");
+        setSubmitted(false);
+        setOpen(false);
+      }, 2500);
+    } catch (error) {
+      console.error("Rating submission error:", error);
+    }
+  };
+  
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
