@@ -22,7 +22,7 @@ export default async function RestaurantHomePage({params}:{params:{id:string}}){
     console.log(details)
 
     return <div>
-            <HomePage logo={details.logo} restaurantName={details?.restaurantName} id={details.id} instagram={details.instagram} location={details.location} whatsapp={details.contactNumber} contactNumber={details.contactNumber}  />
+            <HomePage logo={details.logo} restaurantName={details?.restaurantName} id={details.id} instagram={details.instagram} location={details.location} whatsapp={details.contactNumber} contactNumber={details.contactNumber} averageRating={details.averageRating} totalRatings={details.totalRatings}  />
     </div>
 }
 
