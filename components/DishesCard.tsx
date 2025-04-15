@@ -80,7 +80,7 @@
     };
 
     return (
-      <div className="pt-2">
+      <div className="pt-0">
         <div className="ml-6 mb-2">{type ==="VEG"?<VegLabel />:<NonVegLabel />}</div>
         <div
           className="flex flex-row-reverse bg-white mt-0 rounded-lg h-full w-full cursor-pointer relative overflow-hidden"
@@ -89,7 +89,7 @@
         >
           <img
             src={image || "/placeholder.svg"}
-            className="w-44 h-48 object-cover rounded-xl bg-white"
+            className="w-40 h-40 object-cover rounded-xl bg-white"
             alt={name}
           />
 
