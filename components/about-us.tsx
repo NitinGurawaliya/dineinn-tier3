@@ -15,7 +15,7 @@ interface AboutUsProps {
   weekendWorking: string
   contactNumber: string
   email?: string
-  address?: string
+  location?: string
   mapUrl?: string
   instagram:string
   socialMedia?: {
@@ -33,7 +33,7 @@ const AboutUsComponent: React.FC<AboutUsProps> = ({
   contactNumber,
   instagram,
   email = "contact@restaurant.com",
-  address = "123 Gourmet Street, Foodville, FC 12345",
+  location,
   mapUrl = "https://maps.google.com",
   socialMedia = {
     facebook: "https://facebook.com/restaurant",
@@ -187,7 +187,7 @@ const AboutUsComponent: React.FC<AboutUsProps> = ({
             <h3 className="font-semibold text-lg">Find Us</h3>
           </div>
 
-          <p className="text-sm pl-7">{address}</p>
+          <p className="text-sm pl-7">{location}</p>
 
           <div className="pl-7">
             <Button variant="outline" size="sm" className="text-xs" asChild>
