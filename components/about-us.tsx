@@ -103,33 +103,30 @@ const AboutUsComponent: React.FC<AboutUsProps> = ({
       
       <CardHeader className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-t-lg">
         
-        <div className="flex justify-between items-center">
-          <CardTitle className="text-2xl font-bold text-amber-800">{restaurantName}</CardTitle>
-          <CardFooter className="flex justify-start border-t pt-4 bg-amber-50/30">
-        <div className="flex gap-1">
-          {instagram && (
-            <a
-              href={`https://www.instagram.com/${instagram}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-amber-700 hover:text-amber-900"
-            >
-              <Instagram className="h-5 w-5" />
-            </a>
-          )}
-          
-        </div>
+      <div className="flex items-center justify-between">
+  <div className="flex items-center gap-2">
+    <CardTitle className="text-2xl font-bold text-amber-800">{restaurantName}</CardTitle>
+    {instagram && (
+      <a
+        href={`https://www.instagram.com/${instagram}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-amber-700 hover:text-amber-900"
+      >
+        <Instagram className="h-5 w-5" />
+      </a>
+    )}
+  </div>
+  {isOpen !== null && (
+    <Badge
+      variant={isOpen ? "default" : "outline"}
+      className={isOpen ? "bg-green-500 hover:bg-green-600" : "text-red-500 border-red-500"}
+    >
+      {isOpen ? "Open Now" : "Closed"}
+    </Badge>
+  )}
+</div>
 
-      </CardFooter>
-          {isOpen !== null && (
-            <Badge
-              variant={isOpen ? "default" : "outline"}
-              className={isOpen ? "bg-green-500 hover:bg-green-600" : "text-red-500 border-red-500"}
-            >
-              {isOpen ? "Open Now" : "Closed"}
-            </Badge>
-          )}
-        </div>
         <CardDescription className="text-amber-700 mt-2">{description}</CardDescription>
       </CardHeader>
 
