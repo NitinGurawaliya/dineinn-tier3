@@ -20,6 +20,7 @@
       weekendWorking: string
       location: string
       contactNumber: string
+      instagram:string
       logo: string
       id: number
     }
@@ -220,6 +221,7 @@
                 <div className="py-2 text-lg text-gray-800">
                   {activeTab === "About Us" && 
                   <AboutUsComponent 
+                    instagram={restaurantData?.instagram ??""}
                     restaurantName={restaurantData?.restaurantName ?? "Loading..."}
                     weekdaysWorking={restaurantData?.weekdaysWorking ?? ""}
                     weekendWorking={restaurantData?.weekendWorking ?? ""}
