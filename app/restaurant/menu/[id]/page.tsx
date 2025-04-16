@@ -222,6 +222,7 @@
                   {activeTab === "About Us" && 
                   <AboutUsComponent 
                     instagram={restaurantData?.instagram ??""}
+                    location={restaurantData?.location??""}
                     restaurantName={restaurantData?.restaurantName ?? "Loading..."}
                     weekdaysWorking={restaurantData?.weekdaysWorking ?? ""}
                     weekendWorking={restaurantData?.weekendWorking ?? ""}
