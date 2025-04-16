@@ -53,7 +53,7 @@
       const params = useParams()
       const { id } = params
 
-      const [activeTab, setActiveTab] = useState("Gallery")
+      const [activeTab, setActiveTab] = useState("Overview")
 
       const [categories, setCategories] = useState<Category[]>([])
       const [dishes, setDishes] = useState<Dish[]>([])
@@ -186,7 +186,7 @@
 
           {/* Tabs */}
           <TabsComponent
-            tabs={[ "Menu","Gallery","Updates", "About Us", "Reviews",]}
+            tabs={[ "Overview","Menu","Gallery","Updates", "Reviews",]}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
@@ -219,7 +219,7 @@
                 </>
               ) : (
                 <div className="py-2 text-lg text-gray-800">
-                  {activeTab === "About Us" && 
+                  {activeTab === "Overview" && 
                   <AboutUsComponent 
                     instagram={restaurantData?.instagram ??""}
                     location={restaurantData?.location??""}
