@@ -30,8 +30,8 @@ export default function SigninComponent() {
   }
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+    <div className="bg-white border-black-2  dark:bg-gray-900 min-h-screen flex justify-center items-start">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg p-4 mt-4">
         <div className="flex flex-col items-center mb-6">
           <img
             className="w-44 h-44"
@@ -91,16 +91,7 @@ export default function SigninComponent() {
             </label>
           </div>
 
-            <button
-                onClick={signinHandler}
-                disabled={loading}
-                className="w-full py-2.5 mt-4 rounded-lg text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition duration-300 ease-in-out shadow-md disabled:opacity-50"
-                >
-                {loading ? "Signing In..." : "Sign In"}
-            </button>
-
-
-          <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+          <p className="text-sm  text-center text-gray-600 dark:text-gray-400">
             Don't have an account?{" "}
             <a
               href="/signup"
@@ -109,6 +100,16 @@ export default function SigninComponent() {
               Create one
             </a>
           </p>
+
+          <button
+            onClick={signinHandler}
+            disabled={loading}
+            className="w-full py-2.5 mt-10 rounded-lg text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition duration-300 ease-in-out shadow-md disabled:opacity-50"
+          >
+            {loading ? "Signing In..." : "Sign In"}
+          </button>
+
+          
         </div>
       </div>
     </div>
