@@ -94,7 +94,7 @@ export default function SigninComponent() {
           <p className="text-sm  text-center text-gray-600 dark:text-gray-400">
             Don't have an account?{" "}
             <a
-              href="/signup"
+              href="/onboarding/auth/signup"
               className="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >
               Create one
