@@ -90,6 +90,6 @@ model DishView{
   id      Int    @id @default(autoincrement())
   dishId  Int
   timestamp DateTime @default(now()) 
-  dish    Dishes   @relation(fields: [dishId],references: [id])
+  dish    Dishes   @relation(fields: [dishId],references: [id],onDelete: Cascade)
 }
 
