@@ -104,7 +104,7 @@ export default function SigninComponent() {
           <button
             onClick={signinHandler}
             disabled={loading}
-            className="w-full py-2.5 mt-10 rounded-lg text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition duration-300 ease-in-out shadow-md disabled:opacity-50"
+            className="w-full py-2.5 rounded-lg text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition duration-300 ease-in-out shadow-md disabled:opacity-50"
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>
