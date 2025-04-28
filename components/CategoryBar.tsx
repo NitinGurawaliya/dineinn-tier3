@@ -19,6 +19,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
   )
   const [isSticky, setIsSticky] = useState(false)
   const categoryRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)  // New ref
   const stickyThreshold = useRef<number>(0)
 
   useEffect(() => {
@@ -54,9 +55,20 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategory(categoryId)
-    // Pass the current header height to the parent
     const headerHeight = categoryRef.current?.offsetHeight || 0
     onCategorySelect(categoryId, headerHeight)
+
+    // Scroll the clicked category to left
+    const element = document.querySelector(`[data-category-id="${categoryId}"]`) as HTMLElement
+    const scrollContainer = scrollContainerRef.current
+
+    if (element && scrollContainer) {
+      const elementLeft = element.offsetLeft
+      scrollContainer.scrollTo({
+        left: elementLeft - 16, // Adjusting a little padding
+        behavior: "smooth",
+      })
+    }
   }
 
   return (
@@ -66,7 +78,10 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
         className={`bg-white mb-2 w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : ""}`}
         id="category-bar"
       >
-        <div className="flex overflow-x-auto py-4 px-2 scrollbar-hide">
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto py-4 px-2 space-x-4 scrollbar-hide"
+        >
           {categories.map((category) => (
             <div
               key={category.id}
@@ -81,6 +96,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
           ))}
         </div>
       </div>
+      {/* Placeholder div to prevent layout shift when sticky */}
       {isSticky && <div style={{ height: `${categoryRef.current?.offsetHeight || 0}px` }}></div>}
     </>
   )
