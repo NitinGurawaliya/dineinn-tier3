@@ -41,9 +41,9 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
     case "my-menu":
       content = <MenuPage />;
       break;
-    case "edit-menu":
-      content = <EditMenu />;
-      break;
+    // case "edit-menu":
+    //   content = <EditMenu />;
+    //   break;
     case "generate-qr":
       content = <GenerateQRCode />;
       break;
