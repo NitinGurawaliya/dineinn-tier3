@@ -13,6 +13,7 @@
     import AboutUsComponent from "@/components/about-us"
     import TabsComponent from "@/components/menu-navbar"
     import RestaurantGallery from "@/components/image-gallery"
+import BackToTop from "@/components/back-to-top"
 
     interface RestaurantDetails {
       restaurantName: string
@@ -153,6 +154,7 @@
 
       return (
         <div className="bg-white">
+          
           {/* Gallery Image Slider */}
           <div className="relative w-full h-52 overflow-hidden">
             <div
@@ -183,6 +185,7 @@
               />
             </div>
           )}
+
 
           {/* Tabs */}
           <TabsComponent
@@ -252,6 +255,10 @@
               restaurantId={restaurantData.id}
             />
           )}
+
+          
+{/* Back to Top Button */}
+<BackToTop /> 
         </div>
       )
     }
