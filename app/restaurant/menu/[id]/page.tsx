@@ -256,9 +256,7 @@ import BackToTop from "@/components/back-to-top"
             />
           )}
 
-          
-{/* Back to Top Button */}
-<BackToTop /> 
+          <BackToTop /> 
         </div>
       )
     }
