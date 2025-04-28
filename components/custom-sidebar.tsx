@@ -13,7 +13,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {section: "home", label: "Home", icon: HomeIcon},
-  // { section: "my-menu", label: "View your Menu", icon: MenuSquare },
+  { section: "my-menu", label: "View your Menu", icon: MenuSquare },
   { section: "edit-menu", label: "Edit your Menu", icon: Edit },
   { section: "generate-qr", label: "Manage QR Code", icon: QrCode },
   { section: "edit-profile", label: "Edit your Profile", icon: User2 },
