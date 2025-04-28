@@ -75,7 +75,7 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
     <>
       <div
         ref={categoryRef}
-        className={`bg-white mb-2 w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : ""}`}
+        className={`bg-transparent mb-2 w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 shadow-md" : "bg-transparent"}`}
         id="category-bar"
       >
         <div
