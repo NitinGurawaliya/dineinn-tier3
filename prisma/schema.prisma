@@ -39,12 +39,14 @@ model RestaurantDetail {
   galleryImages   RestaurantGallery[]
   categories      Category[]
   dishes          Dishes[]  
+  announcements   Announcement[]
+  // polls           Poll[]
 }
 
 model RestaurantRating{
   id          Int @id @default(autoincrement())
   rating      Int 
-  message     String?
+  message     String? 
   restaurantId Int
   createdAt     DateTime @default(now())
 
@@ -81,11 +83,49 @@ model Dishes {
   views          DishView[]
 }
 
+model Announcement {
+  id              Int               @id @default(autoincrement())
+  title           String
+  content         String
+  createdAt       DateTime          @default(now())
+  restaurantId    Int
+  restaurant      RestaurantDetail  @relation(fields: [restaurantId], references: [id])
+}
+
+// model Poll {
+//   id              Int               @id @default(autoincrement())
+//   question        String
+//   createdAt       DateTime          @default(now())
+//   expiresAt       DateTime
+//   restaurantId    Int
+//   restaurant      RestaurantDetail  @relation(fields: [restaurantId], references: [id])
+//   options         PollOption[]
+//   votes           PollVote[]
+// }
+
+// model PollOption {
+//   id         Int      @id @default(autoincrement())
+//   text       String
+//   pollId     Int
+//   poll       Poll     @relation(fields: [pollId], references: [id])
+//   votes      PollVote[]
+// }
+
+// model PollVote {
+//   id         Int        @id @default(autoincrement())
+//   optionId   Int
+//   pollId     Int                     
+//   poll       Poll       @relation(fields: [pollId], references: [id]) 
+//   pollOption PollOption @relation(fields: [optionId], references: [id])
+//   voterEmail String
+//   createdAt  DateTime   @default(now())
+// }
+
 enum DishType {
   VEG
   NON_VEG
 }
-//for auth user
+
 model DishView{
   id      Int    @id @default(autoincrement())
   dishId  Int
