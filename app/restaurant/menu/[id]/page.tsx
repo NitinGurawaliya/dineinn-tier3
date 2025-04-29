@@ -14,6 +14,7 @@
     import TabsComponent from "@/components/menu-navbar"
     import RestaurantGallery from "@/components/image-gallery"
 import BackToTop from "@/components/back-to-top"
+import AnnouncementList from "@/components/updates-section"
 
     interface RestaurantDetails {
       restaurantName: string
@@ -49,6 +50,13 @@ import BackToTop from "@/components/back-to-top"
       type?: string
     }
 
+    interface Announcements{
+      id:number,
+      title:string,
+      content:string,
+      createdAt:string
+    }
+
 
     export default function RestaurantMenuPage() {
       const params = useParams()
@@ -57,11 +65,13 @@ import BackToTop from "@/components/back-to-top"
       const [activeTab, setActiveTab] = useState("Overview")
 
       const [categories, setCategories] = useState<Category[]>([])
+
       const [dishes, setDishes] = useState<Dish[]>([])
       const [filteredDishes, setFilteredDishes] = useState<Dish[]>([])
       const [restaurantData, setRestaurantData] = useState<RestaurantDetails | null>(null)
       const [loading, setLoading] = useState(false)
       const [galleryImages, setGalleryImages] = useState<GalleryImages[]>([])
+      const[announcement,setAnnouncement] = useState<Announcements[]>([])
       const [currentIndex, setCurrentIndex] = useState(0)
       const [isForward, setIsForward] = useState(true)
       const [showRatingDialog, setShowRatingDialog] = useState(false)
@@ -111,6 +121,7 @@ import BackToTop from "@/components/back-to-top"
             setDishes(menuData.dishes)
             setFilteredDishes(menuData.dishes)
             setGalleryImages(menuData.galleryImages)
+            setAnnouncement(menuData.announcements)
           } catch (error) {
             console.error("Error fetching menu data:", error)
           } finally {
@@ -232,7 +243,9 @@ import BackToTop from "@/components/back-to-top"
                     contactNumber={restaurantData?.contactNumber ?? ""} />}
                     
                   {activeTab === "Gallery" && <RestaurantGallery images={galleryImages}/>}
-                  {activeTab  ==="Updates"&&<p className="text-center">No updates as of now</p>}
+                  {activeTab  ==="Updates"&&  <div className="min-h-screen ">
+      <AnnouncementList updates={announcement} />
+    </div>}
                   {activeTab === "Reviews" && <p>See what others are saying!</p>}
                 </div>
               )}
