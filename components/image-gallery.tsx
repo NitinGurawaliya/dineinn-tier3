@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, Camera } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -25,6 +25,25 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [isButtonColorChanged, setIsButtonColorChanged] = useState(false)
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+
+    if (isModalOpen) {
+      // Reset to initial color when modal opens
+      setIsButtonColorChanged(false)
+
+      // Change color after 1 second
+      timer = setTimeout(() => {
+        setIsButtonColorChanged(true)
+      }, 1000)
+    }
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [isModalOpen, currentImageIndex])
 
   const openModal = (index: number) => {
     setCurrentImageIndex(index)
@@ -130,7 +149,12 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 top-4 z-50 bg-black/50 hover:bg-black/80 rounded-full text-white border border-white/20"
+              className={cn(
+                "absolute right-4 top-4 z-50 rounded-full text-white border transition-all duration-1000",
+                isButtonColorChanged
+                  ? "bg-white/30 hover:bg-white/50 border-white/50"
+                  : "bg-black/50 hover:bg-black/80 border-white/20",
+              )}
               onClick={closeModal}
             >
               <X className="h-5 w-5" />
@@ -164,7 +188,12 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-black/50 hover:bg-black/80 rounded-full h-12 w-12 text-white border border-white/20"
+              className={cn(
+                "absolute left-4 top-1/2 -translate-y-1/2 z-50 rounded-full h-12 w-12 text-white border transition-all duration-1000",
+                isButtonColorChanged
+                  ? "bg-white/30 hover:bg-white/50 border-white/50"
+                  : "bg-black/50 hover:bg-black/80 border-white/20",
+              )}
               onClick={goToPrevImage}
             >
               <ChevronLeft className="h-6 w-6" />
@@ -173,7 +202,12 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-black/50 hover:bg-black/80 rounded-full h-12 w-12 text-white border border-white/20"
+              className={cn(
+                "absolute right-4 top-1/2 -translate-y-1/2 z-50 rounded-full h-12 w-12 text-white border transition-all duration-1000",
+                isButtonColorChanged
+                  ? "bg-white/30 hover:bg-white/50 border-white/50"
+                  : "bg-black/50 hover:bg-black/80 border-white/20",
+              )}
               onClick={goToNextImage}
             >
               <ChevronRight className="h-6 w-6" />
@@ -181,7 +215,12 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
 
             {/* Image counter and thumbnails */}
             <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center gap-4">
-              <div className="bg-black/70 px-4 py-2 rounded-full text-white text-sm font-medium">
+              <div
+                className={cn(
+                  "px-4 py-2 rounded-full text-white text-sm font-medium transition-all duration-1000",
+                  isButtonColorChanged ? "bg-white/30" : "bg-black/70",
+                )}
+              >
                 {currentImageIndex + 1} / {images.length}
               </div>
 
