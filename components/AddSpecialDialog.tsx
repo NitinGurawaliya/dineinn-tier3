@@ -26,20 +26,6 @@ export function AddAnnouncementDialog({ isOpen, onClose }: AddDishDialogProps) {
   
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   async function getCategory() {
-  //     try {
-  //       const res = await axios.get(`/api/menu/category`, {
-  //         withCredentials: true,
-  //       });
-  //       setCategories(res.data.allCategories);
-  //     } catch (error) {
-  //       console.error("Error fetching categories:", error);
-  //     }
-  //   }
-  //   getCategory();
-  // }, []);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
