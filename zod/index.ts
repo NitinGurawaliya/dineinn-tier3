@@ -40,3 +40,8 @@ export const RatingSchema = zod.object({
   stars:zod.number(),
   message:zod.string().optional(),
 })
+
+export const AnnouncementSchema = zod.object({
+  title:zod.string(),
+  content:zod.string()
+})
