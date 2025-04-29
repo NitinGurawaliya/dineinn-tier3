@@ -48,3 +48,26 @@ try {
 }
     
 }
+
+
+export async function DELETE(req:NextRequest,context:{params:{id:string}}) {
+
+    const {id} = context.params;
+
+    // Authenticate user
+    const authResult = await authMiddleware(req);
+    if (authResult.error) {
+        return authResult.error;
+    }
+
+    const deleteAnnouncement = await prisma.announcement.delete({
+        where:{
+            id:parseInt(id)
+        }
+    })
+
+    console.log(`Announcement with id ${id} is deleted`,deleteAnnouncement)
+
+    return NextResponse.json({msg:"Announcement is deleted"})
+    
+}
