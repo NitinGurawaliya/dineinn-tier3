@@ -50,9 +50,8 @@ try {
 }
 
 
-export async function DELETE(req:NextRequest,context:{params:{id:string}}) {
+export async function DELETE(req:NextRequest) {
 
-    const {id} = context.params;
 
     // Authenticate user
     const authResult = await authMiddleware(req);
@@ -60,13 +59,15 @@ export async function DELETE(req:NextRequest,context:{params:{id:string}}) {
         return authResult.error;
     }
 
+    const body = await req.json()
+
     const deleteAnnouncement = await prisma.announcement.delete({
         where:{
-            id:parseInt(id)
+            id:parseInt(body.id)
         }
     })
 
-    console.log(`Announcement with id ${id} is deleted`,deleteAnnouncement)
+    console.log(`Announcement with id ${body.id} is deleted`,deleteAnnouncement)
 
     return NextResponse.json({msg:"Announcement is deleted"})
     
