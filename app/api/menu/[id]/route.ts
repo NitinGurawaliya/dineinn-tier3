@@ -28,6 +28,7 @@ export async function GET(
         dishes: true,
         galleryImages: true,
         rating: true,
+        announcements:true
       },
     });
 
