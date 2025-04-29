@@ -1,10 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import type React from "react"
+
+import { useState } from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, X, Camera } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { cn } from "@/lib/utils"
 
 interface GalleryImages {
   id: number
@@ -21,10 +24,12 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   const openModal = (index: number) => {
     setCurrentImageIndex(index)
     setIsModalOpen(true)
+    setIsLoading(true)
   }
 
   const closeModal = () => {
@@ -32,15 +37,13 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
   }
 
   const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    )
+    setIsLoading(true)
+    setCurrentImageIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1))
   }
 
   const goToPrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    )
+    setIsLoading(true)
+    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1))
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -59,87 +62,153 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     setTouchEnd(e.changedTouches[0].clientX)
-    if (touchStart - touchEnd > 150) {
+    if (touchStart - touchEnd > 100) {
       goToNextImage()
     }
-    if (touchStart - touchEnd < -150) {
+    if (touchStart - touchEnd < -100) {
       goToPrevImage()
     }
+  }
+
+  const handleImageLoad = () => {
+    setIsLoading(false)
   }
 
   const currentImage = images[currentImageIndex]
 
   return (
-    <div className="columns-2 sm:columns-3 md:columns-4 gap-2 space-y-2">
-      {images.map((image, index) => (
-        <div
-          key={image.id}
-          className="break-inside-avoid mb-2 cursor-pointer overflow-hidden rounded-lg"
-          onClick={() => openModal(index)}
+    <div className="space-y-8 px-4 md:px-6 py-6">
+      {/* Header with CTA Button */}
+      <div className="flex flex-col items-center space-y-4">
+        <h2 className="text-2xl font-bold text-center">Our Restaurant Gallery</h2>
+        <p className="text-muted-foreground text-center max-w-md">Explore our venue through the eyes of our guests</p>
+        <Button
+          size="lg"
+          className="group relative overflow-hidden rounded-full transition-all duration-300 hover:shadow-lg"
         >
-          <Image
-            src={image.imageUrl || "/placeholder.svg"}
-            alt={`Image ${index + 1}`}
-            width={600}
-            height={400}
-            className="w-full h-auto object-cover rounded-md"
-          />
-        </div>
-      ))}
+          <span className="absolute inset-0 bg-gradient-to-r from-pink-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <span className="relative flex items-center gap-2">
+            <Camera className="h-4 w-4" />
+            Share your memories with us
+          </span>
+        </Button>
+      </div>
 
-      {/* Modal */}
+      {/* Image Grid - Original columns style */}
+      <div className="columns-2 sm:columns-3 md:columns-4 gap-2 space-y-2">
+        {images.map((image, index) => (
+          <div
+            key={image.id}
+            className="break-inside-avoid mb-2 cursor-pointer overflow-hidden rounded-lg group"
+            onClick={() => openModal(index)}
+          >
+            <div className="relative">
+              <Image
+                src={image.imageUrl || "/placeholder.svg"}
+                alt={`Restaurant image ${index + 1}`}
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover rounded-md transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-md"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Enhanced Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent
-          className="max-w-4xl p-0 bg-background/95 backdrop-blur-sm"
+          className="max-w-5xl p-0 bg-black/95 backdrop-blur-sm border-none"
           onKeyDown={handleKeyDown}
           onInteractOutside={closeModal}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="relative h-[80vh] w-full">
+          <div className="relative h-[85vh] w-full flex flex-col">
+            {/* Close button */}
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 top-2 z-50 bg-background/50 hover:bg-background/80 rounded-full"
+              className="absolute right-4 top-4 z-50 bg-black/50 hover:bg-black/80 rounded-full text-white border border-white/20"
               onClick={closeModal}
             >
-              <X className="h-10 w-10 bg-white" />
+              <X className="h-5 w-5" />
             </Button>
 
-            {/* Full Image View */}
-            <div className="relative h-full w-full">
+            {/* Main image container */}
+            <div className="relative flex-1 w-full">
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-white/20 border-t-white"></div>
+                </div>
+              )}
+
               {currentImage && (
                 <Image
                   src={currentImage.imageUrl || "/placeholder.svg"}
                   alt={`Image ${currentImageIndex + 1}`}
                   fill
-                  className="object-contain"
+                  className={cn(
+                    "object-contain transition-opacity duration-300",
+                    isLoading ? "opacity-0" : "opacity-100",
+                  )}
                   sizes="100vw"
+                  onLoad={handleImageLoad}
+                  priority
                 />
               )}
             </div>
 
-            {/* Navigation Buttons */}
+            {/* Navigation buttons with improved styling */}
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-50 bg-background/50 hover:bg-background/80 rounded-full"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-black/50 hover:bg-black/80 rounded-full h-12 w-12 text-white border border-white/20"
               onClick={goToPrevImage}
             >
-              <ChevronLeft className="h-10 w-10" />
+              <ChevronLeft className="h-6 w-6" />
             </Button>
 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-50 bg-background/50 hover:bg-background/80 rounded-full"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-black/50 hover:bg-black/80 rounded-full h-12 w-12 text-white border border-white/20"
               onClick={goToNextImage}
             >
-              <ChevronRight className="h-10 w-10" />
+              <ChevronRight className="h-6 w-6" />
             </Button>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background/70 px-3 py-1 rounded-full text-sm">
-              {currentImageIndex + 1} / {images.length}
+            {/* Image counter and thumbnails */}
+            <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center gap-4">
+              <div className="bg-black/70 px-4 py-2 rounded-full text-white text-sm font-medium">
+                {currentImageIndex + 1} / {images.length}
+              </div>
+
+              {/* Thumbnails row */}
+              <div className="hidden md:flex gap-2 px-4 overflow-x-auto max-w-full">
+                {images.map((img, idx) => (
+                  <button
+                    key={img.id}
+                    onClick={() => {
+                      setIsLoading(true)
+                      setCurrentImageIndex(idx)
+                    }}
+                    className={cn(
+                      "h-16 w-16 relative rounded-md overflow-hidden transition-all duration-200",
+                      currentImageIndex === idx ? "ring-2 ring-white scale-105" : "opacity-70 hover:opacity-100",
+                    )}
+                  >
+                    <Image
+                      src={img.imageUrl || "/placeholder.svg"}
+                      alt={`Thumbnail ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </DialogContent>
