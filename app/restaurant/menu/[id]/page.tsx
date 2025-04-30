@@ -15,6 +15,7 @@
     import RestaurantGallery from "@/components/image-gallery"
 import BackToTop from "@/components/back-to-top"
 import AnnouncementList from "@/components/updates-section"
+import FormModal from "@/components/OptFormModal"
 
     interface RestaurantDetails {
       restaurantName: string
@@ -80,6 +81,16 @@ import AnnouncementList from "@/components/updates-section"
 
       const dishesContainerRef = useRef<HTMLDivElement>(null)
       const categoryBarRef = useRef<HTMLDivElement>(null)
+      const [showForm, setShowForm] = useState(false)
+
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          setShowForm(true)
+        }, 4000)
+      
+        return () => clearTimeout(timer)
+      }, [])
+
 
       const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const query = event.target.value.toLowerCase()
@@ -252,6 +263,7 @@ import AnnouncementList from "@/components/updates-section"
             </>
           )}
 
+
           {/* Scroll Text */}
           {showScrollText && activeTab === "Menu" && (
             <div className="fixed bottom-2 transform -translate-x-1/2 flex items-center ml-40 justify-center font-semibold text-lg text-black opacity-80 animate-bounce">
@@ -260,14 +272,17 @@ import AnnouncementList from "@/components/updates-section"
             </div>
           )}
 
+          <FormModal open={showForm} setOpen={setShowForm} />
+
+
           {/* Rating Dialog */}
-          {restaurantData && (
+          {/* {restaurantData && (
             <RatingDialog
               open={showRatingDialog}
               setOpen={setShowRatingDialog}
               restaurantId={restaurantData.id}
             />
-          )}
+          )} */}
 
           <BackToTop /> 
         </div>
