@@ -19,7 +19,9 @@ export default function FormStepOne({
   onChange,
   onCheckboxChange,
   onNext,
+  onClose, // ✅ ADD THIS
 }: Props) {
+
   return (
     <div className="p-6 space-y-4 bg-white">
       <div className="flex items-center justify-between">
@@ -60,12 +62,16 @@ export default function FormStepOne({
         </p>
 
         <Button
-          className="w-full bg-teal-500 active:bg-teal-700 hover:bg-teal-600 mt-4"
-          onClick={onNext}
-          disabled={!formData.name || !formData.mobile || !formData.acceptPolicy}
-        >
-          Confirm
-        </Button>
+  className="w-full bg-teal-500 active:bg-teal-700 hover:bg-teal-600 mt-4"
+  onClick={() => {
+    onNext();   // go to next step (if needed)
+    onClose();  // close the modal
+  }}
+  disabled={!formData.name || !formData.mobile || !formData.acceptPolicy}
+>
+  Confirm
+</Button>
+
       </div>
     </div>
   )
