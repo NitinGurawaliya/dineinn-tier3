@@ -92,6 +92,44 @@ model Announcement {
   restaurant      RestaurantDetail  @relation(fields: [restaurantId], references: [id])
 }
 
+
+
+enum DishType {
+  VEG
+  NON_VEG
+}
+
+model DishView{
+  id      Int    @id @default(autoincrement())
+  dishId  Int
+  timestamp DateTime @default(now()) 
+  dish    Dishes   @relation(fields: [dishId],references: [id],onDelete: Cascade)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // model Poll {
 //   id              Int               @id @default(autoincrement())
 //   question        String
@@ -120,16 +158,3 @@ model Announcement {
 //   voterEmail String
 //   createdAt  DateTime   @default(now())
 // }
-
-enum DishType {
-  VEG
-  NON_VEG
-}
-
-model DishView{
-  id      Int    @id @default(autoincrement())
-  dishId  Int
-  timestamp DateTime @default(now()) 
-  dish    Dishes   @relation(fields: [dishId],references: [id],onDelete: Cascade)
-}
-
