@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import FormStepOne from "./step-one-form"
-import FormStepTwo from "./form-step-two"
+// import FormStepTwo from "./form-step-two"
 
 interface FormModalProps {
   open: boolean
@@ -42,19 +42,18 @@ export default function FormModal({ open, setOpen }: FormModalProps) {
       <Sheet open={open} onOpenChange={setOpen}>
         
         <SheetContent side="bottom" className="p-0 rounded-t-xl max-h-[900px] border-t-teal-200">
-          {step === 1 ? (
-            <FormStepOne
-              formData={formData}
-              onChange={handleInputChange}
-              onCheckboxChange={handleCheckboxChange}
-              onClose={handleClose}
-              onNext={handleNext}
-            />
-          ) : (
-            <FormStepTwo mobile={formData.mobile} onBack={handleBack} onClose={handleClose} onVerify={handleVerify} />
-          )}
+        <FormStepOne
+          formData={formData}
+          onChange={handleInputChange}
+          onCheckboxChange={handleCheckboxChange}
+          onClose={handleClose}
+          onNext={handleNext}
+        />
         </SheetContent>
       </Sheet>
     </div>
   )
 }
+
+
+{/* <FormStepTwo mobile={formData.mobile} onBack={handleBack} onClose={handleClose} onVerify={handleVerify} /> */}
