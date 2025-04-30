@@ -97,22 +97,6 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
 
   return (
     <div className="space-y-8 px-4 md:px-6 py-6">
-      {/* Header with CTA Button */}
-      <div className="flex flex-col items-center space-y-4">
-        <h2 className="text-2xl font-bold text-center">Our Restaurant Gallery</h2>
-        <p className="text-muted-foreground text-center max-w-md">Explore our venue through the eyes of our guests</p>
-        <Button
-          size="lg"
-          className="group relative overflow-hidden rounded-full transition-all duration-300 hover:shadow-lg"
-        >
-          <span className="absolute inset-0 bg-gradient-to-r from-pink-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          <span className="relative flex items-center gap-2">
-            <Camera className="h-4 w-4" />
-            Share your memories with us
-          </span>
-        </Button>
-      </div>
-
       {/* Image Grid - Original columns style */}
       <div className="columns-2 sm:columns-3 md:columns-4 gap-2 space-y-2">
         {images.map((image, index) => (
