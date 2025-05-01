@@ -31,7 +31,7 @@ model RestaurantDetail {
   logo            String?
   instagram       String?
   facebook        String?
-  qrScans        Int         @default(0) // New field to store scan count
+  qrScans        Int         @default(0)
   userId          Int        @unique
   user            User       @relation(fields: [userId], references: [id])
 
@@ -40,6 +40,7 @@ model RestaurantDetail {
   categories      Category[]
   dishes          Dishes[]  
   announcements   Announcement[]
+  customer        Customer []
   // polls           Poll[]
 }
 
@@ -90,6 +91,17 @@ model Announcement {
   createdAt       DateTime          @default(now())
   restaurantId    Int
   restaurant      RestaurantDetail  @relation(fields: [restaurantId], references: [id])
+}
+
+model Customer{
+  id              Int       @id @default(autoincrement())
+  name            String
+  mobile          String    @unique
+  email           String?    @unique 
+  DOB             DateTime?
+
+  restaurant      RestaurantDetail[]
+
 }
 
 
