@@ -1,32 +1,56 @@
-import { NextResponse } from "next/server"
-import prisma from "@/app/lib/prisma" // Adjust the import path to your prisma client
+import { sign } from "jsonwebtoken";
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/app/lib/prisma";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { name, mobile, email, dob, restaurantId } = body
+    const body = await req.json();
+    const { name, mobile, email, dob, restaurantId } = body;
 
-    if (!restaurantId) {
-      return NextResponse.json({ error: "Restaurant ID is required" }, { status: 400 })
+    if (!mobile || !restaurantId) {
+      return NextResponse.json({ msg: "Mobile and Restaurant ID are required" }, { status: 400 });
     }
 
-    const customer = await prisma.customer.create({
-      data: {
-        name,
-        mobile,
-        email,
-        DOB: dob ? new Date(dob) : undefined,
-        restaurant: {
-          connect: {
-            id: restaurantId,
+    // Check if customer already exists
+    let customer = await prisma.customer.findUnique({
+      where: { mobile },
+    });
+
+    // If not, create customer
+    if (!customer) {
+      customer = await prisma.customer.create({
+        data: {
+          name,
+          mobile,
+          email,
+          DOB: dob ? new Date(dob) : undefined,
+          restaurant: {
+            connect: { id: restaurantId },
           },
         },
-      },
-    })
+      });
+    }
 
-    return NextResponse.json(customer, { status: 201 })
+    // Create a JWT token with just the customer ID
+    const token = sign(
+      { id: customer.id },
+      process.env.NEXTAUTH_SECRET as string,
+      { expiresIn: "7d" } // Valid for 1 week
+    );
+
+    const response = NextResponse.json({ msg: "Authenticated", customer });
+
+    // Set token cookie only
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      sameSite: "strict",
+    });
+
+    return response;
   } catch (error) {
-    console.error(error)
-    return NextResponse.json({ error: "Failed to create customer" }, { status: 500 })
+    console.error(error);
+    return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
 }
