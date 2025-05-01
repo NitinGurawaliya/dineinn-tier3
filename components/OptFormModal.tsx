@@ -1,15 +1,16 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
 import FormStepOne from "./step-one-form"
-// import FormStepTwo from "./form-step-two"
+import { FaSpinner } from "react-icons/fa" // Import a spinner icon
 
 interface FormModalProps {
   open: boolean
   setOpen: (value: boolean) => void
+  restaurantId?: number
 }
 
-export default function FormModal({ open, setOpen }: FormModalProps) {
+export default function FormModal({ open, setOpen, restaurantId }: FormModalProps) {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: "",
@@ -18,6 +19,7 @@ export default function FormModal({ open, setOpen }: FormModalProps) {
     dob: "",
     acceptPolicy: false,
   })
+  const [loading, setLoading] = useState(false) // Added loading state
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -31,29 +33,76 @@ export default function FormModal({ open, setOpen }: FormModalProps) {
   const handleNext = () => setStep(2)
   const handleBack = () => setStep(1)
   const handleClose = () => setOpen(false)
-  const handleVerify = () => {
-    setStep(1)
-    setOpen(false)
-    setFormData({ name: "", mobile: "", email: "", dob: "", acceptPolicy: false })
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    if (!restaurantId) {
+      console.error("Restaurant ID is required")
+      return
+    }
+
+    setLoading(true) // Set loading to true when the request starts
+
+    try {
+      const response = await fetch("/api/customers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          restaurantId, // Add the restaurantId to the request body
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to create customer")
+      }
+
+      const customer = await response.json()
+      console.log("Customer created:", customer)
+
+      // Reset form and close modal
+      setFormData({
+        name: "",
+        mobile: "",
+        email: "",
+        dob: "",
+        acceptPolicy: false,
+      })
+      setStep(1)
+      setOpen(false)
+    } catch (error) {
+      console.error("Error:", error)
+    } finally {
+      setLoading(false) // Set loading to false once the request completes
+    }
   }
 
   return (
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
-        
         <SheetContent side="bottom" className="p-0 rounded-t-xl max-h-[900px] border-t-teal-200">
-        <FormStepOne
-          formData={formData}
-          onChange={handleInputChange}
-          onCheckboxChange={handleCheckboxChange}
-          onClose={handleClose}
-          onNext={handleNext}
-        />
+          <FormStepOne
+            formData={formData}
+            onChange={handleInputChange}
+            onCheckboxChange={handleCheckboxChange}
+            onClose={handleClose}
+            onNext={handleNext}
+          />
+          <Button
+            className="w-full bg-teal-500 active:bg-teal-700 hover:bg-teal-600 mt-4"
+            onClick={handleSubmit}
+            disabled={!formData.name || !formData.mobile || !formData.acceptPolicy || loading} // Disable button if loading
+          >
+            {loading ? (
+              <FaSpinner className="animate-spin" /> // Show spinner when loading
+            ) : (
+              "Confirm"
+            )}
+          </Button>
         </SheetContent>
       </Sheet>
     </div>
   )
 }
-
-
-{/* <FormStepTwo mobile={formData.mobile} onBack={handleBack} onClose={handleClose} onVerify={handleVerify} /> */}
