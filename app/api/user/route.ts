@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({ msg: "Authenticated", customer });
 
     // Set token cookie only
-    response.cookies.set("token", token, {
+    response.cookies.set("user_token", token, {
       httpOnly: true,
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 days
