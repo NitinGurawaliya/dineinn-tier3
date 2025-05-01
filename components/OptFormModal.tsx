@@ -44,7 +44,7 @@ export default function FormModal({ open, setOpen, restaurantId }: FormModalProp
     setLoading(true) // Set loading to true when the request starts
 
     try {
-      const response = await fetch("/api/customers", {
+      const response = await fetch("/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
