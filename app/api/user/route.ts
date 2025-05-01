@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const token = sign(
       { id: customer.id },
       process.env.NEXTAUTH_SECRET as string,
-      { expiresIn: "7d" } // Valid for 1 week
+      { expiresIn: "365d" } // Valid for 1 year
     );
 
     const response = NextResponse.json({ msg: "Authenticated", customer });
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     response.cookies.set("user_token", token, {
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 365, // 7 days
       sameSite: "strict",
     });
 
