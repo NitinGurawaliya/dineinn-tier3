@@ -60,17 +60,16 @@ export default function FormStepOne({
         <p className="text-xs text-gray-500 pt-1">
           Yes, I would like to receive updates on WhatsApp/SMS/Email.
         </p>
-
+{/* 
         <Button
-  className="w-full bg-teal-500 active:bg-teal-700 hover:bg-teal-600 mt-4"
-  onClick={() => {
-    onNext();   // go to next step (if needed)
-    onClose();  // close the modal
-  }}
-  disabled={!formData.name || !formData.mobile || !formData.acceptPolicy}
->
-  Confirm
-</Button>
+          className="w-full bg-teal-500 active:bg-teal-700 hover:bg-teal-600 mt-4"
+          onClick={() => {
+            onNext();   // go to next step (if needed)
+            onClose();  // close the modal
+          }}
+          disabled={!formData.name || !formData.mobile || !formData.acceptPolicy}>
+          Confirm
+        </Button> */}
 
       </div>
     </div>
