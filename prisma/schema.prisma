@@ -97,7 +97,7 @@ model Customer{
   id              Int       @id @default(autoincrement())
   name            String
   mobile          String    @unique
-  email           String?    @unique 
+  email           String?    
   DOB             DateTime?
 
   restaurant      RestaurantDetail[]
