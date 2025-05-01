@@ -272,7 +272,7 @@ import FormModal from "@/components/OptFormModal"
             </div>
           )}
 
-          <FormModal open={showForm} setOpen={setShowForm} />
+          <FormModal restaurantId={restaurantData?.id} open={showForm} setOpen={setShowForm} />
 
 
           {/* Rating Dialog */}
