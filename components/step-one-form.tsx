@@ -45,7 +45,7 @@ export default function FormStepOne({
       </div>
 
       <div className="space-y-6 pt-2">
-        <Input className="text-teal-900" name="name" placeholder="Customer Name" value={formData.name} onChange={onChange} />
+        <Input className="text-teal-600" name="name" placeholder="Customer Name" value={formData.name} onChange={onChange} />
         <div className="relative ">
           <Input
             name="mobile"
@@ -53,14 +53,14 @@ export default function FormStepOne({
             type="tel"
             value={formData.mobile}
             onChange={onChange}
-            className="pl-9 text-teal-900"
+            className="pl-9 text-teal-600"
           />
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
             <FaWhatsapp />
           </div>
         </div>
-        <Input className="text-teal-900" name="email" placeholder="Email (optional)" type="email" value={formData.email} onChange={onChange} />
-        <Input className="text-teal-900" name="dob" placeholder="YYYY-MM-DD (optional)" value={formData.dob} onChange={onChange} />
+        <Input className="text-teal-600" name="email" placeholder="Email (optional)" type="email" value={formData.email} onChange={onChange} />
+        <Input className="text-teal-600" name="dob" placeholder="YYYY-MM-DD (optional)" value={formData.dob} onChange={onChange} />
 
         <div className="flex items-start space-x-2 pt-2">
           <Checkbox
