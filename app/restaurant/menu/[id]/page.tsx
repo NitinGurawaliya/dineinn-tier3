@@ -15,7 +15,7 @@
     import RestaurantGallery from "@/components/image-gallery"
 import BackToTop from "@/components/back-to-top"
 import AnnouncementList from "@/components/updates-section"
-import FormModal from "@/components/OptFormModal"
+import FormModal from "@/components/FormModal"
 
     interface RestaurantDetails {
       restaurantName: string
