@@ -15,7 +15,7 @@
     import RestaurantGallery from "@/components/image-gallery"
 import BackToTop from "@/components/back-to-top"
 import AnnouncementList from "@/components/updates-section"
-import FormModal from "@/components/FormModal"
+import FormModal from "@/components/OptFormModal"
 
     interface RestaurantDetails {
       restaurantName: string
@@ -255,8 +255,8 @@ import FormModal from "@/components/FormModal"
                     
                   {activeTab === "Gallery" && <RestaurantGallery images={galleryImages}/>}
                   {activeTab  ==="Updates"&&  <div className="min-h-screen ">
-      <AnnouncementList updates={announcement} />
-    </div>}
+                   <AnnouncementList updates={announcement} />
+                </div>}
                   {activeTab === "Reviews" && <p>See what others are saying!</p>}
                 </div>
               )}
