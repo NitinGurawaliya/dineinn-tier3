@@ -59,8 +59,8 @@ export default function FormStepOne({
             <FaWhatsapp />
           </div>
         </div>
-        <Input className="text-teal-600" name="email" placeholder="Email (optional)" type="email" value={formData.email} onChange={onChange} />
-        <Input className="text-teal-600" name="dob" placeholder="YYYY-MM-DD (optional)" value={formData.dob} onChange={onChange} />
+        {/* <Input className="text-teal-600" name="email" placeholder="Email (optional)" type="email" value={formData.email} onChange={onChange} />
+        <Input className="text-teal-600" name="dob" placeholder="YYYY-MM-DD (optional)" value={formData.dob} onChange={onChange} /> */}
 
         <div className="flex items-start space-x-2 pt-2">
           <Checkbox
