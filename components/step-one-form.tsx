@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import type React from "react"
 import { FaWhatsapp } from "react-icons/fa"
+import { useEffect, useRef } from "react"
 
 interface Props {
   formData: any
@@ -21,8 +22,24 @@ export default function FormStepOne({
   onNext,
 }: Props) {
 
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+
+
+    // Focus the wrapper div instead of any input
+    modalRef.current?.focus()
+  }, [])
+
   return (
+    <div
+    ref={modalRef}
+    tabIndex={-1}
+    className=" bg-white outline-none"
+  >
     <div className="p-6 space-y-4 bg-white">
+        <span tabIndex={-1}></span>
+
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium text-gray-800">Confirm your WhatsApp number</h3>
       </div>
@@ -72,5 +89,6 @@ export default function FormStepOne({
 
       </div>
     </div>
+  </div>
   )
 }
