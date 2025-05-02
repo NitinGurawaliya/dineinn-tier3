@@ -10,26 +10,24 @@ interface Props {
   formData: any
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onCheckboxChange: (checked: boolean) => void
-  onClose: () => void // You can remove this from props if it's no longer needed anywhere
   onNext: () => void
 }
 
-export default function FormStepOne({
+export default function  FormStepOne({
   formData,
   onChange,
   onCheckboxChange,
   onNext,
-  onClose, // ✅ ADD THIS
 }: Props) {
 
   return (
-    <div className="p-6 space-y-4 bg-white">
+    <div className="p-6 space-y-4 rounded-full  bg-white">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium text-gray-800">Confirm your WhatsApp number</h3>
       </div>
 
       <div className="space-y-6 pt-2">
-        <Input className="" name="name" placeholder="Customer Name" value={formData.name} onChange={onChange} />
+        <Input className="text-teal-600" name="name"  placeholder="Customer Name" value={formData.name} onChange={onChange} />
         <div className="relative ">
           <Input
             name="mobile"
@@ -37,7 +35,7 @@ export default function FormStepOne({
             type="tel"
             value={formData.mobile}
             onChange={onChange}
-            className="pl-9"
+            className="pl-9 placeholder-black text-teal-600"
           />
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
             <FaWhatsapp />
@@ -60,16 +58,7 @@ export default function FormStepOne({
         <p className="text-xs text-gray-500 pt-1">
           Yes, I would like to receive updates on WhatsApp/SMS/Email.
         </p>
-{/* 
-        <Button
-          className="w-full bg-teal-500 active:bg-teal-700 hover:bg-teal-600 mt-4"
-          onClick={() => {
-            onNext();   // go to next step (if needed)
-            onClose();  // close the modal
-          }}
-          disabled={!formData.name || !formData.mobile || !formData.acceptPolicy}>
-          Confirm
-        </Button> */}
+
 
       </div>
     </div>
