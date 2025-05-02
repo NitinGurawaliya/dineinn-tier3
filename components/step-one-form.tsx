@@ -35,9 +35,9 @@ export default function FormStepOne({
     <div
     ref={modalRef}
     tabIndex={-1}
-    className=" bg-white outline-none"
+    className=" bg-white rounded-3xl  outline-none"
   >
-    <div className="p-6 space-y-4 bg-white">
+    <div className="p-6 space-y-4 rounded-3xl ">
         <span tabIndex={-1}></span>
 
       <div className="flex items-center justify-between">
