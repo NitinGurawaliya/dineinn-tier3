@@ -9,6 +9,7 @@ import { REQUEST_URL } from "@/config";
 import AddSpecialButton from "@/components/AddSpecialButton";
 import UserRestaurantCard from "@/components/ProfileCard";
 import AnalyticsDashboard from "@/components/AnalyticsComponent";
+import ManageCustomers from "@/components/manage-customers";
 
 export const dynamic = "force-dynamic"; // Ensures SSR and disables static generation
 
@@ -52,7 +53,10 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
         break;
         case "analytics":
           content = <AnalyticsDashboard />
-        break
+        break;
+        case "my-customers":
+          content=<ManageCustomers />
+        break;
     default:
       content = (
         <main className="flex-1 overflow-x-hidden overflow-y-auto ">
