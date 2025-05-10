@@ -89,7 +89,7 @@
         >
           <img
             src={image || "/placeholder.svg"}
-            className="w-40 h-40 object-cover rounded-xl bg-white"
+            className="w-44 h-44 object-cover rounded-xl bg-white"
             alt={name}
           />
 
@@ -113,21 +113,22 @@
               )}
             </div>
 
-            <span className="text-md font-normal text-black">₹{price}</span>
 
-            <div className="mt-3 flex gap-3">
-              <button
+            <div className="mt-8 text-center flex gap-6">
+            <span className="text-md font-bold text-black">₹{price}</span>
+
+              {/* <button
                 className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
                 onClick={handleUpvote}
               >
                 <ArrowBigUpDashIcon />
-              </button>
-              <button
-                className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
+              </button> */}
+              {/* <button
+                className="flex items-center flex-none ml-2 justify-center border rounded-full  hover:bg-gray-50"
                 onClick={handleShare}
               >
                 <Share2 />
-              </button>
+              </button> */}
             </div>
           </CardContent>
         </div>
