@@ -96,7 +96,7 @@ export default function RestaurantGallery({ images }: RestaurantGalleryProps) {
   const currentImage = images[currentImageIndex]
 
   return (
-    <div className="space-y-8 px-4 md:px-6 py-6">
+    <div className="space-y-8  md:px-6 py-6">
       {/* Image Grid - Original columns style */}
       <div className="columns-2 sm:columns-3 md:columns-4 gap-2 space-y-2">
         {images.map((image, index) => (
