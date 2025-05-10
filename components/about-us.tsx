@@ -111,7 +111,7 @@ const AboutUsComponent: React.FC<AboutUsProps> = ({
         href={`https://www.instagram.com/${instagram}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-amber-700 hover:text-amber-900"
+        className="text-amber-700 ml-2 hover:text-amber-900"
       >
         <Instagram className="h-5 w-5" />
       </a>
