@@ -18,12 +18,12 @@ export const Navbar: React.FC<NavbarProps> = ({ restaurantName, logo }) => {
           <img src={logo} className="h-12 w-12" alt="Restaurant Logo" />
           <span className="text-2xl font-semibold dark:text-white">{restaurantName}</span>
         </div>
-        {/* <div className="border-2 border-gray-200    p-2 rounded-full">
+        <div className="border-2 border-gray-200    p-2 rounded-full">
                 <Avatar>
                   <AvatarImage />
                   <AvatarFallback> <UserIcon /></AvatarFallback>
                 </Avatar>
-                </div> */}
+                </div>
       </div>
     </nav>
   );
