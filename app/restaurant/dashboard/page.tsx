@@ -1,7 +1,7 @@
 
 
 import { cookies } from "next/headers";
-import Navbar from "@/components/Navbar";
+import {Dashboard_Navbar} from "@/components/Navbar";
 import EditMenu from "@/components/EditMenu";
 import GenerateQRCode from "@/components/QrCode";
 import MenuPage from "@/components/MyMenu";
@@ -84,7 +84,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
 
   return (
     <div>
-      <Navbar id={details.id} restaurantName={details.restaurantName} logo={details.logo} />
+      <Dashboard_Navbar id={details.id} restaurantName={details.restaurantName} logo={details.logo} />
    
         <main className="flex-1 overflow-x-hidden overflow-y-auto">{content}</main>
      
