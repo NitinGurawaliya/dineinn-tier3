@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script src="https://watch-dog-pi.vercel.app/track.js" data-site="3d522349-235b-4f32-9130-61dccd87f008"></script>
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
