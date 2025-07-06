@@ -1,33 +1,75 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 export default function SigninComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check if user is already authenticated on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/auth/check", {
+          credentials: "include",
+        });
+        
+        if (response.ok) {
+          // User is already authenticated, redirect to dashboard or intended page
+          const redirectTo = searchParams.get("redirect") || "/restaurant/dashboard";
+          router.push(redirectTo);
+        }
+      } catch (error) {
+        // User is not authenticated, stay on signin page
+        console.log("User not authenticated");
+      }
+    };
+
+    checkAuth();
+  }, [router, searchParams]);
 
   async function signinHandler() {
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
     try {
       setLoading(true);
+      setError("");
 
       const res = await axios.post("/api/auth/signin", { email, password });
       const token = res.data.token;
 
       console.log("Signed in successfully:", token);
 
-      router.push("/restaurant/dashboard");
-    } catch (error) {
+      // Redirect to intended page or dashboard
+      const redirectTo = searchParams.get("redirect") || "/restaurant/dashboard";
+      router.push(redirectTo);
+    } catch (error: any) {
       console.error("Signin failed:", error);
-      alert("Failed to sign in. Please check your credentials.");
+      if (error.response?.data?.msg) {
+        setError(error.response.data.msg);
+      } else {
+        setError("Failed to sign in. Please check your credentials.");
+      }
     } finally {
       setLoading(false);
     }
   }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      signinHandler();
+    }
+  };
 
   return (
     <div className="bg-white border-black-2  dark:bg-gray-900 min-h-screen flex justify-center items-start">
@@ -44,6 +86,12 @@ export default function SigninComponent() {
           Sign In to Your Account
         </h2>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
+
         <div className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -53,6 +101,7 @@ export default function SigninComponent() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={handleKeyPress}
               className="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary-500 focus:border-primary-500"
               placeholder="name@company.com"
             />
@@ -66,50 +115,31 @@ export default function SigninComponent() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
               className="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary-500 focus:border-primary-500"
               placeholder="••••••••"
             />
           </div>
 
-          <div className="flex items-center">
-            <input
-              id="terms"
-              type="checkbox"
-              className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              htmlFor="terms"
-              className="ml-2 text-sm text-gray-600 dark:text-gray-400"
-            >
-              I accept the{" "}
-              <a
-                href="#"
-                className="text-primary-600 hover:underline dark:text-primary-500"
-              >
-                Terms and Conditions
-              </a>
-            </label>
-          </div>
-
-          <p className="text-sm  text-center text-gray-600 dark:text-gray-400">
-            Don't have an account?{" "}
-            <a
-              href="/onboarding/auth/signup"
-              className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-            >
-              Create one
-            </a>
-          </p>
-
           <button
             onClick={signinHandler}
             disabled={loading}
-            className="w-full py-2.5 mt-4 rounded-lg text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition duration-300 ease-in-out shadow-md disabled:opacity-50"
+            className="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>
 
-          
+          <div className="text-center">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Don't have an account?{" "}
+              <a
+                href="/onboarding/auth/signup"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Sign up
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>

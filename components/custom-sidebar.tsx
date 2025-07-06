@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { Home, Edit, QrCode, User2, Menu, X, Search, MenuIcon, MenuSquare, HomeIcon, View, GitGraph, LineChart, UserRoundSearchIcon } from "lucide-react";
+import { Home, Edit, QrCode, User2, Menu, X, Search, MenuIcon, MenuSquare, HomeIcon, View, GitGraph, LineChart, UserRoundSearchIcon, LogOut } from "lucide-react";
 
 type NavItem = {
   section: string;
@@ -22,6 +22,7 @@ const navItems: NavItem[] = [
 
 export function CustomSidebar() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeSection = searchParams.get("section") || "";
@@ -30,6 +31,33 @@ export function CustomSidebar() {
 
   const handleNavigation = (section: string) => {
     router.push(`?section=${section}`, { scroll: false }); // Updates the URL without full page reload
+  };
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      
+      // Call logout API
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        // Redirect to home page
+        router.push("/");
+      } else {
+        console.error("Logout failed");
+        // Still redirect to home page even if logout API fails
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Still redirect to home page even if logout fails
+      router.push("/");
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   return (
@@ -66,7 +94,14 @@ export function CustomSidebar() {
             </ul>
           </nav>
           <div className="px-4 py-4 border-t border-gray-700">
-            
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="flex items-center w-full text-left px-4 py-2 rounded-md transition-colors duration-200 text-gray-300 hover:bg-gray-700 hover:text-white disabled:opacity-50"
+            >
+              <LogOut className="w-5 h-5 mr-3" />
+              {isLoggingOut ? "Logging out..." : "Logout"}
+            </button>
           </div>
         </div>
       </aside>

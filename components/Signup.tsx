@@ -2,8 +2,8 @@
 
 import { REQUEST_URL } from "@/config";
 import axios, { AxiosError } from "axios";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function SignupComponent() {
@@ -15,6 +15,29 @@ export default function SignupComponent() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [success, setSuccess] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check if user is already authenticated on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/auth/check", {
+          credentials: "include",
+        });
+        
+        if (response.ok) {
+          // User is already authenticated, redirect to dashboard or intended page
+          const redirectTo = searchParams.get("redirect") || "/restaurant/dashboard";
+          router.push(redirectTo);
+        }
+      } catch (error) {
+        // User is not authenticated, stay on signup page
+        console.log("User not authenticated");
+      }
+    };
+
+    checkAuth();
+  }, [router, searchParams]);
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -63,7 +86,8 @@ export default function SignupComponent() {
       
       // Redirect to onboarding after 2 seconds
       setTimeout(() => {
-        router.push("/onboarding/details");
+        const redirectTo = searchParams.get("redirect") || "/onboarding/details";
+        router.push(redirectTo);
       }, 2000);
 
     } catch (error) {
@@ -92,34 +116,38 @@ export default function SignupComponent() {
     });
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      signupHandler();
+    }
+  };
+
   return (
-    <div className="bg-white dark:bg-gray-900 min-h-screen flex justify-center items-start">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg p-6 mt-4 shadow-lg">
+    <div className="bg-white border-black-2 dark:bg-gray-900 min-h-screen flex justify-center items-start">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg p-4 mt-4">
         <div className="flex flex-col items-center mb-6">
           <img
-            className="w-32 h-32 rounded-full object-cover"
+            className="w-44 h-44"
             src="https://res.cloudinary.com/dixjcb4on/image/upload/v1745653811/dishes_image/logo_zayka.jpg"
             alt="DineInn Logo"
           />
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">
           Create Your Account
         </h2>
 
-        {/* Success Message */}
         {success && (
-          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2">
-            <CheckCircle className="h-5 w-5 text-green-600" />
-            <span className="text-green-800 text-sm">{success}</span>
+          <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded flex items-center">
+            <CheckCircle className="h-4 w-4 mr-2" />
+            {success}
           </div>
         )}
 
-        {/* General Error */}
         {errors.general && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
-            <AlertCircle className="h-5 w-5 text-red-600" />
-            <span className="text-red-800 text-sm">{errors.general}</span>
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded flex items-center">
+            <AlertCircle className="h-4 w-4 mr-2" />
+            {errors.general}
           </div>
         )}
 
@@ -133,46 +161,42 @@ export default function SignupComponent() {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                if (errors.name) clearError('name');
+                clearError("name");
               }}
-              className={`w-full p-3 rounded-lg border ${
-                errors.name 
-                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500' 
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-              } bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-opacity-50 transition-colors`}
-              placeholder="Enter your full name"
+              onKeyPress={handleKeyPress}
+              className={`w-full p-2.5 rounded-lg border ${
+                errors.name
+                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                  : "border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+              } bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white`}
+              placeholder="John Doe"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
-                <AlertCircle className="h-4 w-4 mr-1" />
-                {errors.name}
-              </p>
+              <p className="mt-1 text-sm text-red-600">{errors.name}</p>
             )}
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Email Address
+              Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                if (errors.email) clearError('email');
+                clearError("email");
               }}
-              className={`w-full p-3 rounded-lg border ${
-                errors.email 
-                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500' 
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-              } bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-opacity-50 transition-colors`}
-              placeholder="name@restaurant.com"
+              onKeyPress={handleKeyPress}
+              className={`w-full p-2.5 rounded-lg border ${
+                errors.email
+                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                  : "border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+              } bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white`}
+              placeholder="name@company.com"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
-                <AlertCircle className="h-4 w-4 mr-1" />
-                {errors.email}
-              </p>
+              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
             )}
           </div>
 
@@ -186,51 +210,52 @@ export default function SignupComponent() {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  if (errors.password) clearError('password');
+                  clearError("password");
                 }}
-                className={`w-full p-3 pr-10 rounded-lg border ${
-                  errors.password 
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500' 
-                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                } bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-opacity-50 transition-colors`}
-                placeholder="Create a strong password"
+                onKeyPress={handleKeyPress}
+                className={`w-full p-2.5 rounded-lg border pr-10 ${
+                  errors.password
+                    ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                    : "border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+                } bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white`}
+                placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
               >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-gray-400" />
+                ) : (
+                  <Eye className="h-4 w-4 text-gray-400" />
+                )}
               </button>
             </div>
             {errors.password && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
-                <AlertCircle className="h-4 w-4 mr-1" />
-                {errors.password}
-              </p>
+              <p className="mt-1 text-sm text-red-600">{errors.password}</p>
             )}
-            <p className="mt-1 text-xs text-gray-500">
-              Must be at least 6 characters with uppercase, lowercase, and number
-            </p>
           </div>
 
           <button
             onClick={signupHandler}
             disabled={loading}
-            className="w-full py-3 mt-6 rounded-lg text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition duration-300 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
 
-          <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-            Already have an account?{" "}
-            <a
-              href="/onboarding/auth/signin"
-              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-            >
-              Sign in here
-            </a>
-          </p>
+          <div className="text-center">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Already have an account?{" "}
+              <a
+                href="/onboarding/auth/signin"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Sign in
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>

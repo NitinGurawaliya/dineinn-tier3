@@ -34,25 +34,34 @@ export async function POST(req: NextRequest) {
     const token = sign(
       { id: user.id },
       process.env.NEXTAUTH_SECRET as string,
-      { expiresIn: "1h" }
+      { expiresIn: "30d" }
     );
 
-    const response = NextResponse.json({ msg: "Signup successful" });
+    const response = NextResponse.json({ 
+      msg: "Signup successful",
+      userId: user.id,
+      token
+    });
 
     response.cookies.set("token", token, {
       path: "/",
-      maxAge: 60 * 60,
+      maxAge: 30 * 24 * 60 * 60,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
     });
 
     response.cookies.set("userId", user.id.toString(), { 
       path: "/",
       sameSite: "strict",
-      maxAge: 60 * 60, 
+      maxAge: 30 * 24 * 60 * 60,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
     });
 
     return response;
   } catch (error) {
-    console.error(error);
+    console.error("Signup error:", error);
     return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
 }
