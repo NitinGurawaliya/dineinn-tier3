@@ -97,10 +97,10 @@ export default function EditMenu() {
       </div>
 
       {/* Category Bar - dashboard-specific sticky bar CSS will apply via .dashboard-main */}
-      <CategoryComponent
+      {/* <CategoryComponent
         categories={categories}
         onCategorySelect={handleCategorySelect}
-      />
+      /> */}
 
       {/* Dishes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 bg-gray-100 p-2 sm:p-4">
