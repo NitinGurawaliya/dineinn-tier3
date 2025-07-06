@@ -34,3 +34,11 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+@media (min-width: 1024px) {
+  .dashboard-main #category-bar.fixed {
+    left: 256px;
+    width: calc(100% - 256px);
+    z-index: 50;
+  }
+}
+

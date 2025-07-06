@@ -73,27 +73,29 @@ export default function CategoryComponent({ categories, onCategorySelect }: Cate
 
   return (
     <>
-      <div
-        ref={categoryRef}
-        className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0 " : ""}`}
-        id="category-bar"
-      >
+      <div className="w-full overflow-x-hidden">
         <div
-          ref={scrollContainerRef}
-          className="flex overflow-x-auto py-4 px-2 space-x-4 scrollbar-hide"
+          ref={categoryRef}
+          className={`bg-white w-full z-10 ${isSticky ? "fixed top-0 py-2 left-0" : ""}`}
+          id="category-bar"
         >
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              data-category-id={category.id}
-              className={`px-4 py-2 mx-2 rounded-full cursor-pointer whitespace-nowrap ${
-                selectedCategory === category.id ? "bg-stone-500 text-white" : "bg-gray-200 text-black"
-              }`}
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              {category.name}
-            </div>
-          ))}
+          <div
+            ref={scrollContainerRef}
+            className="flex overflow-x-auto w-full max-w-full py-4 px-0 space-x-2 scrollbar-hide"
+          >
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                data-category-id={category.id}
+                className={`px-4 py-2 mx-1 sm:mx-2 rounded-full cursor-pointer whitespace-nowrap ${
+                  selectedCategory === category.id ? "bg-stone-500 text-white" : "bg-gray-200 text-black"
+                }`}
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                {category.name}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       {/* Placeholder div to prevent layout shift when sticky */}

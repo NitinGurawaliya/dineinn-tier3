@@ -1,5 +1,3 @@
-
-
 import { cookies } from "next/headers";
 import {Dashboard_Navbar} from "@/components/Navbar";
 import EditMenu from "@/components/EditMenu";
@@ -83,7 +81,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { sect
   }
 
   return (
-    <div>
+    <div className="dashboard-main">
       <Dashboard_Navbar id={details.id} restaurantName={details.restaurantName} logo={details.logo} />
    
         <main className="flex-1 overflow-x-hidden overflow-y-auto">{content}</main>

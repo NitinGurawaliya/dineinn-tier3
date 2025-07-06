@@ -12,11 +12,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ msg: "Mobile and Restaurant ID are required" }, { status: 400 });
     }
 
+    // Check if customer exists by mobile number
     let customer = await prisma.customer.findUnique({
       where: { mobile },
+      include: {
+        restaurant: true,
+      },
     });
 
     if (!customer) {
+      // Create new customer and link to restaurant
       customer = await prisma.customer.create({
         data: {
           name,
@@ -27,7 +32,30 @@ export async function POST(req: NextRequest) {
             connect: { id: restaurantId },
           },
         },
+        include: {
+          restaurant: true,
+        },
       });
+    } else {
+      // Customer exists, check if already linked to this restaurant
+      const isLinkedToRestaurant = customer.restaurant.some(
+        (restaurant) => restaurant.id === restaurantId
+      );
+
+      if (!isLinkedToRestaurant) {
+        // Link existing customer to the new restaurant
+        customer = await prisma.customer.update({
+          where: { id: customer.id },
+          data: {
+            restaurant: {
+              connect: { id: restaurantId },
+            },
+          },
+          include: {
+            restaurant: true,
+          },
+        });
+      }
     }
 
     const token = sign(
@@ -36,11 +64,7 @@ export async function POST(req: NextRequest) {
       { expiresIn: "365d" } // Valid for 1 year
     );
 
-    
-
     const response = NextResponse.json({ msg: "Authenticated", customer });
-
-
 
     response.cookies.set("user_token", token, {
       httpOnly: true,
@@ -55,8 +79,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
 }
-
-
 
 export async function GET(req: NextRequest) {
   // Authenticate user

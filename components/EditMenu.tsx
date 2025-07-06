@@ -64,6 +64,12 @@ export default function EditMenu() {
     console.log("Submitted category:", category);
   };
 
+  const handleDialogClose = () => {
+    setIsDishModalOpen(false);
+    setIsCategoryDialogOpen(false);
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center my-40">
@@ -73,31 +79,31 @@ export default function EditMenu() {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <div className="flex border-gray-300 border-b p-2">
-        <h2 className="text-3xl font-semibold mb-4">Edit Menu</h2>
+    <div className="p-2 sm:p-4 md:p-6 bg-white rounded-lg shadow-md w-full max-w-full overflow-x-hidden">
+      <div className="flex flex-col md:flex-row md:items-center border-gray-300 border-b p-2 gap-2 md:gap-0 flex-wrap">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-2 md:mb-4">Edit Menu</h2>
         <Button
           onClick={() => setIsCategoryDialogOpen(true)}
-          className="px-6 ml-10 text-lg py-3 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700"
+          className="w-full md:w-auto px-4 md:px-6 ml-0 md:ml-10 text-base md:text-lg py-2 md:py-3 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700"
         >
           Manage Category
         </Button>
         <Button
           onClick={() => setIsDishModalOpen(true)}
-          className="px-6 text-lg py-3 ml-4 bg-gray-800 text-white font-semibold rounded-lg shadow-lg hover:bg-gray-200 hover:text-black"
+          className="w-full md:w-auto px-4 md:px-6 text-base md:text-lg py-2 md:py-3 ml-0 md:ml-4 bg-gray-800 text-white font-semibold rounded-lg shadow-lg hover:bg-gray-200 hover:text-black"
         >
           Add Dishes
         </Button>
       </div>
 
-      {/* Category Bar */}
+      {/* Category Bar - dashboard-specific sticky bar CSS will apply via .dashboard-main */}
       <CategoryComponent
         categories={categories}
         onCategorySelect={handleCategorySelect}
       />
 
       {/* Dishes */}
-      <div className="grid grid-cols-1 bg-gray-100 p-4 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 bg-gray-100 p-2 sm:p-4">
         {(filteredDishes.length > 0 ? filteredDishes : dishes).map((dish: Dish) => (
           <div key={dish.id} className="relative">
             <DashboardDishesCard {...dish} />
@@ -116,7 +122,7 @@ export default function EditMenu() {
                   }
                 }
               }}
-              className="absolute top-1 bg-red-600 right-1 p-2 rounded-full shadow-md hover:bg-red-700 text-white"
+              className="absolute top-1 right-1 p-2 rounded-full shadow-md bg-red-600 hover:bg-red-700 text-white"
             >
               <Trash2Icon size={18} />
             </button>
@@ -125,10 +131,10 @@ export default function EditMenu() {
       </div>
 
       {/* Dialogs */}
-      <AddDishDialog isOpen={isDishModalOpen} onClose={() => setIsDishModalOpen(false)} />
+      <AddDishDialog isOpen={isDishModalOpen} onClose={handleDialogClose} />
       <AddCategoryDialog
         isOpen={isCategoryDialogOpen}
-        onClose={() => setIsCategoryDialogOpen(false)}
+        onClose={handleDialogClose}
         onSubmit={handleCategorySubmit}
       />
     </div>

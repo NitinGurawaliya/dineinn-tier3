@@ -83,23 +83,22 @@ const DashboardDishesCard: React.FC<DishCardProps> = ({
   };
 
   return (
-    <div className="pt-2">
-      <div className="ml-6 mb-2">{type ==="VEG"?<VegLabel />:<NonVegLabel />}</div>
+    <div className="pt-0">
+      <div className="ml-2 md:ml-6 mb-2">{type ==="VEG" ? <VegLabel /> : <NonVegLabel />}</div>
       <div
-        className="flex flex-row-reverse bg-white mt-0 rounded-lg h-full w-full cursor-pointer relative overflow-hidden"
+        className="flex flex-col md:flex-row-reverse bg-white mt-0 rounded-lg h-full w-full cursor-pointer relative overflow-hidden"
         onClick={handleCardClick}
         ref={ref}
       >
         <img
           src={image || "/placeholder.svg"}
-          className="w-44 h-48 object-cover rounded-xl bg-white"
+          className="w-full h-44 md:w-44 md:h-48 object-cover rounded-xl bg-white"
           alt={name}
         />
 
-        <CardContent className="bg-white flex-1">
+        <CardContent className="bg-white flex-1 p-2 md:p-4">
           <div className="flex justify-between items-start">
             <h3 className="text-md font-bold tracking-wide">{name}</h3>
-            
           </div>
 
           <div className="text-sm pt-2 mb-4 text-gray-700 text-muted-foreground">
@@ -116,9 +115,11 @@ const DashboardDishesCard: React.FC<DishCardProps> = ({
             )}
           </div>
 
-          <span className="text-md font-normal text-black">₹{price}</span>
+          <div className="mt-8 text-center flex gap-6">
+            <span className="text-md font-bold text-black">₹{price}</span>
+          </div>
 
-          <div className="mt-3 flex gap-3">
+          <div className="mt-3 flex flex-wrap gap-2 md:gap-3">
             <button
               className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
               onClick={handleUpvote}
@@ -134,7 +135,7 @@ const DashboardDishesCard: React.FC<DishCardProps> = ({
             <Button onClick={(e)=>{
                   e.stopPropagation(); 
                   setIsEditOpen(true);
-            }} className="p-4 bg-white text-black border-gray-500 ml-4 border-2 hover:bg-black hover:text-white" >Edit details</Button>
+            }} className="p-2 md:p-4 bg-white text-black border-gray-500 md:ml-4 border-2 hover:bg-black hover:text-white text-xs md:text-base" >Edit details</Button>
           </div>
         </CardContent>
       </div>

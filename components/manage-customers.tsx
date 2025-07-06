@@ -1,13 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Search, MessageCircle, Filter, ChevronDown, ChevronUp, Phone, Mail, Calendar } from "lucide-react"
+import { Search, MessageCircle, Filter, ChevronDown, ChevronUp, Phone, Mail, Calendar, Send, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
 import axios from "axios"
 
 interface Customer {
@@ -20,6 +24,14 @@ interface Customer {
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([])
+  const [selectedCustomers, setSelectedCustomers] = useState<Set<number>>(new Set())
+  const [isBulkMessageDialogOpen, setIsBulkMessageDialogOpen] = useState(false)
+  const [bulkMessage, setBulkMessage] = useState("")
+  const [isSending, setIsSending] = useState(false)
+  const [isIndividualMessageDialogOpen, setIsIndividualMessageDialogOpen] = useState(false)
+  const [individualMessage, setIndividualMessage] = useState("")
+  const [selectedCustomerForMessage, setSelectedCustomerForMessage] = useState<Customer | null>(null)
+  const [isSendingIndividual, setIsSendingIndividual] = useState(false)
 
   useEffect(()=>{
     const fetchCustomers = async()=>{
@@ -48,30 +60,64 @@ export default function CustomersPage() {
     })
   }
 
-  // Open WhatsApp with the customer's number
-  const messageOnWhatsApp = (mobile: string) => {
-    // Clean the mobile number (remove any non-digit characters)
-    const cleanMobile = mobile.replace(/\D/g, "");
-  
-    // Prepend +91 for India country code
-    const formattedMobile = `+91${cleanMobile}`;
-  
-    // Open WhatsApp with the customer's number
-    window.open(`https://wa.me/${formattedMobile}`, "_blank");
+  // Open individual message dialog
+  const openIndividualMessageDialog = (customer: Customer) => {
+    setSelectedCustomerForMessage(customer);
+    setIndividualMessage("");
+    setIsIndividualMessageDialogOpen(true);
+  };
+
+  // Send individual WhatsApp message using API
+  const sendIndividualMessage = async () => {
+    if (!selectedCustomerForMessage || !individualMessage.trim()) return;
+
+    setIsSendingIndividual(true);
+
+    try {
+      const response = await fetch("/api/whatsapp/send-message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          phone: selectedCustomerForMessage.mobile,
+          message: individualMessage,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to send message");
+      }
+
+      alert("Message sent successfully!");
+      setIsIndividualMessageDialogOpen(false);
+      setIndividualMessage("");
+      setSelectedCustomerForMessage(null);
+    } catch (error) {
+      console.error("Error sending WhatsApp message:", error);
+      alert(`Error sending message: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+      setIsSendingIndividual(false);
+    }
   };
   
-  // Handle sorting
-  const handleSort = (field: keyof Customer) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+  // Handle individual customer selection
+  const handleCustomerSelection = (customerId: number, checked: boolean) => {
+    const newSelected = new Set(selectedCustomers)
+    if (checked) {
+      newSelected.add(customerId)
     } else {
-      setSortField(field)
-      setSortDirection("asc")
+      newSelected.delete(customerId)
     }
+    setSelectedCustomers(newSelected)
   }
 
-  // Filter and sort customers
-  const filteredCustomers = customers
+  // Helper function to get filtered and sorted customers
+  const getFilteredAndSortedCustomers = () => {
+    return customers
     .filter(
       (customer) =>
         customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -93,6 +139,77 @@ export default function CustomersPage() {
 
       return 0
     })
+  }
+
+  // Handle select all functionality
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      const allCustomerIds = new Set(getFilteredAndSortedCustomers().map(customer => customer.id))
+      setSelectedCustomers(allCustomerIds)
+    } else {
+      setSelectedCustomers(new Set())
+    }
+  }
+
+  // Check if all filtered customers are selected
+  const filteredCustomers = getFilteredAndSortedCustomers()
+  const isAllSelected = filteredCustomers.length > 0 && filteredCustomers.every(customer => selectedCustomers.has(customer.id))
+
+  // Send bulk message to selected customers using WhatsApp API
+  const sendBulkMessage = async () => {
+    if (!bulkMessage.trim() || selectedCustomers.size === 0) return
+
+    setIsSending(true)
+    
+    try {
+      const selectedCustomerIds = Array.from(selectedCustomers)
+      
+      const response = await fetch("/api/whatsapp/send-bulk-message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          customerIds: selectedCustomerIds,
+          message: bulkMessage,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to send messages")
+      }
+
+      // Show success message with results
+      const { summary } = result
+      alert(`Messages sent successfully!\n\nTotal: ${summary.total}\nSuccessful: ${summary.successful}\nFailed: ${summary.failed}`)
+
+      // Close dialog and reset
+      setIsBulkMessageDialogOpen(false)
+      setBulkMessage("")
+      setSelectedCustomers(new Set())
+      
+    } catch (error) {
+      console.error("Error sending bulk message:", error)
+      alert(`Error sending messages: ${error instanceof Error ? error.message : "Unknown error"}`)
+    } finally {
+      setIsSending(false)
+    }
+  }
+  
+  // Handle sorting
+  const handleSort = (field: keyof Customer) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    } else {
+      setSortField(field)
+      setSortDirection("asc")
+    }
+  }
+
+
 
   return (
     <div className="container mx-auto py-6">
@@ -103,9 +220,16 @@ export default function CustomersPage() {
               <CardTitle>Customer Management</CardTitle>
               <CardDescription>Manage your restaurant customers and contact them directly.</CardDescription>
             </div>
+            <div className="flex items-center gap-2">
             <Badge variant="outline" className="w-fit">
               {filteredCustomers.length} Customers
             </Badge>
+              {selectedCustomers.size > 0 && (
+                <Badge variant="secondary" className="w-fit">
+                  {selectedCustomers.size} Selected
+                </Badge>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
@@ -119,6 +243,93 @@ export default function CustomersPage() {
               />
             </div>
 
+            <div className="flex gap-2">
+              {selectedCustomers.size > 0 && (
+                <Dialog open={isBulkMessageDialogOpen} onOpenChange={setIsBulkMessageDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="default" className="w-full sm:w-auto">
+                      <Send className="mr-2 h-4 w-4" />
+                      Send Message ({selectedCustomers.size})
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Send Bulk Message</DialogTitle>
+                      <DialogDescription>
+                        Send a message to {selectedCustomers.size} selected customer{selectedCustomers.size > 1 ? 's' : ''} via WhatsApp.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid gap-2">
+                        <Label htmlFor="message">Message</Label>
+                        <Textarea
+                          id="message"
+                          placeholder="Enter your message here... This will be sent to all selected customers via WhatsApp."
+                          value={bulkMessage}
+                          onChange={(e) => setBulkMessage(e.target.value)}
+                          rows={4}
+                          maxLength={1000}
+                        />
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Message will be sent to {selectedCustomers.size} customer{selectedCustomers.size > 1 ? 's' : ''}</span>
+                          <span>{bulkMessage.length}/1000</span>
+                        </div>
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button variant="outline" onClick={() => setIsBulkMessageDialogOpen(false)}>
+                        Cancel
+                      </Button>
+                      <Button 
+                        onClick={sendBulkMessage} 
+                        disabled={!bulkMessage.trim() || isSending}
+                      >
+                        {isSending ? "Sending..." : "Send via WhatsApp"}
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              )}
+
+              {/* Individual Message Dialog */}
+              <Dialog open={isIndividualMessageDialogOpen} onOpenChange={setIsIndividualMessageDialogOpen}>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Send Message to {selectedCustomerForMessage?.name}</DialogTitle>
+                    <DialogDescription>
+                      Send a WhatsApp message to {selectedCustomerForMessage?.name} ({selectedCustomerForMessage?.mobile}).
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="individual-message">Message</Label>
+                      <Textarea
+                        id="individual-message"
+                        placeholder="Enter your message here..."
+                        value={individualMessage}
+                        onChange={(e) => setIndividualMessage(e.target.value)}
+                        rows={4}
+                        maxLength={1000}
+                      />
+                      <div className="flex justify-end text-xs text-muted-foreground">
+                        <span>{individualMessage.length}/1000</span>
+                      </div>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setIsIndividualMessageDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button 
+                      onClick={sendIndividualMessage} 
+                      disabled={!individualMessage.trim() || isSendingIndividual}
+                    >
+                      {isSendingIndividual ? "Sending..." : "Send via WhatsApp"}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full sm:w-auto">
@@ -131,6 +342,7 @@ export default function CustomersPage() {
                 <DropdownMenuItem onClick={() => handleSort("DOB")}>Sort by Date of Birth</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            </div>
           </div>
         </CardHeader>
 
@@ -139,6 +351,17 @@ export default function CustomersPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12">
+                    <Checkbox
+                      checked={isAllSelected}
+                      onCheckedChange={handleSelectAll}
+                    />
+                    {selectedCustomers.size > 0 && !isAllSelected && (
+                      <span className="ml-1 text-xs text-muted-foreground">
+                        ({selectedCustomers.size})
+                      </span>
+                    )}
+                  </TableHead>
                   <TableHead className="cursor-pointer" onClick={() => handleSort("name")}>
                     Name
                     {sortField === "name" &&
@@ -164,13 +387,19 @@ export default function CustomersPage() {
               <TableBody>
                 {filteredCustomers.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                       No customers found. Try a different search term.
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredCustomers.map((customer) => (
                     <TableRow key={customer.id}>
+                      <TableCell>
+                        <Checkbox
+                          checked={selectedCustomers.has(customer.id)}
+                          onCheckedChange={(checked) => handleCustomerSelection(customer.id, checked as boolean)}
+                        />
+                      </TableCell>
                       <TableCell className="font-medium">{customer.name}</TableCell>
                       <TableCell>
                         <div className="flex flex-col gap-1">
@@ -199,7 +428,7 @@ export default function CustomersPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => messageOnWhatsApp(customer.mobile)}
+                          onClick={() => openIndividualMessageDialog(customer)}
                           className="h-8"
                         >
                           <MessageCircle className="mr-1 h-4 w-4" />

@@ -1,0 +1,18 @@
+# WhatsApp API Configuration
+# Choose one of the following providers and add their credentials:
+
+# Option 1: WAMR API (Recommended - Easy Setup)
+WAMR_API_KEY=your_wamr_api_key_here
+
+# Option 2: Green API (Self-Hosted)
+GREEN_API_ID=7105277146
+GREEN_API_TOKEN=818c1e4e6c8e416da29e3261567102186a6c064438c24a798e
+
+# Option 3: Twilio WhatsApp API (Enterprise)
+# TWILIO_API_KEY=your_twilio_account_sid
+# TWILIO_AUTH_TOKEN=your_twilio_auth_token
+
+# Option 4: 360dialog (Enterprise)
+# DIALOG360_API_KEY=your_360dialog_api_key
+
+# Copy these variables to your .env file and uncomment the provider you want to use 
