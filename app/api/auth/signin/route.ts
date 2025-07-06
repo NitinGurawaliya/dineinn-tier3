@@ -3,6 +3,9 @@ import prisma from "@/app/lib/prisma";
 import { signinSchema } from "@/zod";
 import { sign } from "jsonwebtoken";
 
+// Force dynamic rendering since we set cookies
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();

@@ -1,14 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/toast";
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Zayka Digital Restaurant Menus",
   description: "Transform your restaurant with digital QR menus. Manage dishes, engage customers, and grow your business with DineInn's comprehensive restaurant management platform.",
   keywords: "restaurant menu, QR code menu, digital menu, restaurant management, food ordering",
   authors: [{ name: "DineInn Team" }],
-  viewport: "width=device-width, initial-scale=1",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",

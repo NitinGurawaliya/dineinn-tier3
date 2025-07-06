@@ -2,6 +2,10 @@ import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import { editRestaurantDetailsSchema } from "@/zod";
+
+// Force dynamic rendering since we use cookies
+export const dynamic = 'force-dynamic';
+
 export async function GET(req:NextRequest) {
 
     const authResult = await authMiddleware(req);

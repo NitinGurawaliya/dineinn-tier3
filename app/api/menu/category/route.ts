@@ -2,6 +2,8 @@ import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
     console.log("Handler initiated");
 

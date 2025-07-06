@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 
+// Force dynamic rendering since we use cookies
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

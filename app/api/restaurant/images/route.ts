@@ -3,6 +3,8 @@ import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
+// Force dynamic rendering since we use cookies
+export const dynamic = 'force-dynamic';
 
 cloudinary.config({
 

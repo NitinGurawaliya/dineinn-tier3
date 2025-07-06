@@ -3,7 +3,8 @@ import { AnnouncementSchema } from "@/zod";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
-
+// Force dynamic rendering since we use cookies
+export const dynamic = 'force-dynamic';
 
 export async function POST(req:NextRequest) {
 try {

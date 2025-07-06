@@ -11,6 +11,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// Force dynamic rendering since we use cookies
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
     console.log("Handler initiated");

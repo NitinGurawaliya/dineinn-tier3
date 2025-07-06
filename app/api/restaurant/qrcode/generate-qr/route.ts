@@ -3,6 +3,8 @@ import prisma from "@/app/lib/prisma";
 import QRCode from "qrcode";
 import { authMiddleware } from "@/app/lib/middleware/authMiddleware";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
     console.log("hi from route");
     

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Force dynamic rendering since we set cookies
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const response = NextResponse.json({ msg: "Logged out successfully" });
