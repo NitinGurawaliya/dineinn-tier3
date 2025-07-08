@@ -41,6 +41,7 @@ model RestaurantDetail {
   dishes          Dishes[]  
   announcements   Announcement[]
   customer        Customer []
+  dailyQrScans    DailyQRScan[]
   // polls           Poll[]
 }
 
@@ -82,6 +83,7 @@ model Dishes {
   restaurant      RestaurantDetail @relation(fields: [restaurantId], references: [id])
   category        Category     @relation(fields: [categoryId], references: [id])
   views          DishView[]
+  viewsCount     Int         @default(0) // running total of views
 }
 
 model Announcement {
@@ -116,6 +118,19 @@ model DishView{
   dishId  Int
   timestamp DateTime @default(now()) 
   dish    Dishes   @relation(fields: [dishId],references: [id],onDelete: Cascade)
+}
+
+model DailyQRScan {
+  id            Int      @id @default(autoincrement())
+  restaurantId  Int
+  scanDate      DateTime @db.Date // Store only the date part
+  scanCount     Int      @default(1)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  restaurant    RestaurantDetail @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  
+  @@unique([restaurantId, scanDate]) // Ensure one record per restaurant per day
 }
 
 

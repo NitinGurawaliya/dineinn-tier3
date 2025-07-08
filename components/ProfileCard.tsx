@@ -21,33 +21,28 @@ interface RestaurantDetail {
   instagram: string
   facebook: string
   qrScans: number
-}
-interface UserData {
-  name: string
-  email: string
-  password: string
+  user?: {
+    name: string
+    email: string
+  }
 }
 
-export default function UserRestaurantCard() {
-  const [restaurant, setRestaurant] = useState<RestaurantDetail | null>(null)
-  const [user, setUser] = useState<UserData | null>(null)
+interface UserRestaurantCardProps {
+  restaurantData?: RestaurantDetail;
+}
+
+export default function UserRestaurantCard({ restaurantData }: UserRestaurantCardProps) {
+  const [restaurant, setRestaurant] = useState<RestaurantDetail | null>(restaurantData || null)
+  const [user, setUser] = useState<{ name: string; email: string; password: string } | null>(
+    restaurantData?.user ? { ...restaurantData.user, password: '' } : null
+  )
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`/api/restaurant/details`, {
-          credentials: "include",
-        })
-        const data = await res.json()
-        setRestaurant(data.restaurantDetail)
-        setUser(data.user)
-      } catch (err) {
-        console.error("Failed to fetch data", err)
-      }
+    if (restaurantData) {
+      setRestaurant(restaurantData);
+      setUser(restaurantData.user ? { ...restaurantData.user, password: '' } : null);
     }
-
-    fetchData()
-  }, [])
+  }, [restaurantData]);
 
   const handleSave = async () => {
     try {

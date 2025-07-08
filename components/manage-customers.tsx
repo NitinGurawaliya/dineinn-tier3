@@ -17,20 +17,16 @@ interface Customer {
   DOB: string | null
 }
 
-export default function CustomersPage() {
-  const [customers, setCustomers] = useState<Customer[]>([])
+interface ManageCustomersProps {
+  customers?: Customer[];
+}
 
-  useEffect(()=>{
-    const fetchCustomers = async()=>{
-        const res = await fetch("/api/user",{
-          credentials:"include"
-        })
-        const data = await res.json();
-        setCustomers(data.customers)
-      
-    }
-    fetchCustomers()
-  },[])
+export default function ManageCustomers({ customers = [] }: ManageCustomersProps) {
+  const [customerData, setCustomerData] = useState<Customer[]>(customers)
+
+  useEffect(() => {
+    setCustomerData(customers);
+  }, [customers]);
 
   const [searchTerm, setSearchTerm] = useState("")
   const [sortField, setSortField] = useState<keyof Customer | null>(null)
@@ -56,7 +52,7 @@ export default function CustomersPage() {
 
   // Helper function to get filtered and sorted customers
   const getFilteredAndSortedCustomers = () => {
-    return customers
+    return customerData
     .filter(
       (customer) =>
         customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

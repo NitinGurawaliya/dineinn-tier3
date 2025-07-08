@@ -31,15 +31,21 @@ export async function GET(req:NextRequest,res:NextResponse) {
             id:parseInt(userId)
         },
         select:{
+            id: true,
             logo:true,
             restaurantName:true,
             weekdaysWorking:true,
             weekendWorking:true,
             instagram:true,
             facebook:true,
+            qrScans:true,
             categories:true,
             dishes:true,
-
+            user: {
+                select: {
+                    name: true
+                }
+            }
         }
     })
 

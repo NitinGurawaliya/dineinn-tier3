@@ -13,6 +13,32 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+export async function GET(req: NextRequest) {
+    const authResponse = await authMiddleware(req);
+    if (authResponse.error) {
+        return authResponse.error;
+    }
+
+    const restaurantId = req.cookies.get("userId")?.value;
+
+    if (!restaurantId) {
+        return NextResponse.json({ msg: "User ID not found" }, { status: 400 });
+    }
+
+    try {
+        const galleryImages = await prisma.restaurantGallery.findMany({
+            where: {
+                restaurantId: parseInt(restaurantId)
+            }
+        });
+
+        return NextResponse.json({ galleryImages }, { status: 200 });
+    } catch (error) {
+        console.error("Error fetching gallery images:", error);
+        return NextResponse.json({ msg: "Error fetching gallery images" }, { status: 500 });
+    }
+}
+
 export async function POST(req:NextRequest) {
 
     const authResponse  = await authMiddleware(req);

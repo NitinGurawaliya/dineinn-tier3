@@ -26,33 +26,43 @@ interface Dish {
   restaurantId: number;
 }
 
-export default function EditMenu() {
+interface MenuData {
+  id: number;
+  name: string;
+  dishes: Dish[];
+}
+
+interface EditMenuProps {
+  menuData?: MenuData[];
+}
+
+export default function EditMenu({ menuData = [] }: EditMenuProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [filteredDishes, setFilteredDishes] = useState<Dish[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [isDishModalOpen, setIsDishModalOpen] = useState(false);
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function getData() {
-      setLoading(true);
-      try {
-        const res = await axios.get(`/api/menu`, {
-          withCredentials: true,
-        });
-        setCategories(res.data.categories || []);
-        setDishes(res.data.dishes || []);
-        setFilteredDishes(res.data.dishes || []);
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getData();
-  }, []);
+    // Extract categories and dishes from menuData
+    const allCategories = menuData.map(category => ({
+      id: category.id,
+      name: category.name,
+      restaurantId: 1 // This will be set from the restaurant context
+    }));
+    
+    const allDishes = menuData.flatMap(category => 
+      category.dishes.map(dish => ({
+        ...dish,
+        categoryId: category.id
+      }))
+    );
+    
+    setCategories(allCategories);
+    setDishes(allDishes);
+    setFilteredDishes(allDishes);
+  }, [menuData]);
 
   const handleCategorySelect = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
@@ -70,13 +80,7 @@ export default function EditMenu() {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center my-40">
-        <ChefHatIcon size={80} className="animate-spin text-gray-900" />
-      </div>
-    );
-  }
+
 
   return (
     <div className="p-2 sm:p-4 md:p-6 bg-white rounded-lg shadow-md w-full max-w-full overflow-x-hidden">

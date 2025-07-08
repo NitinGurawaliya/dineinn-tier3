@@ -1,7 +1,7 @@
 "use client"
 
 import { BarChart, PieChart } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -20,7 +20,6 @@ import {
   XAxis,
   YAxis,
 } from "./../components/chart"
-import axios from "axios"
 
 interface DishViewData{
   id:number,
@@ -28,34 +27,27 @@ interface DishViewData{
   views:number
 }
 
-export default function AnalyticsDashboard() {
+interface AnalyticsComponentProps {
+  qrAnalyticsData?: any;
+  dishViewData?: DishViewData[];
+}
+
+export default function AnalyticsDashboard({ qrAnalyticsData, dishViewData }: AnalyticsComponentProps) {
   const [activeTab, setActiveTab] = useState("qr");
-  const[dishViewData,setDishViewData] = useState<DishViewData |null >(null)
 
-  useEffect(()=>{
-    async function getData() {
-      const res = await axios.get('/api/menu/analytics/dish',{
-        withCredentials:true
-      });
-
-      setDishViewData(res.data.dishes)
-
-
-      
-    }
-    getData()
-  },[])
-
-  // Mock data for QR analytics
-  const qrScanData = [
-    { name: "Mon", scans: 120 },
-    { name: "Tue", scans: 150 },
-    { name: "Wed", scans: 180 },
-    { name: "Thu", scans: 145 },
-    { name: "Fri", scans: 190 },
-    { name: "Sat", scans: 310 },
-    { name: "Sun", scans: 170 },
-  ]
+  // Transform QR analytics data for the chart
+  const qrScanData = qrAnalyticsData?.dailyScans?.map((day: any) => ({
+    name: day.dayName,
+    scans: day.count
+  })) || [
+    { name: "Mon", scans: 0 },
+    { name: "Tue", scans: 0 },
+    { name: "Wed", scans: 0 },
+    { name: "Thu", scans: 0 },
+    { name: "Fri", scans: 0 },
+    { name: "Sat", scans: 0 },
+    { name: "Sun", scans: 0 },
+  ];
 
   const qrLocationData = [
     { name: "Dining Area", value: 45 },
@@ -64,8 +56,11 @@ export default function AnalyticsDashboard() {
     { name: "Social Media", value: 10 },
   ]
 
-  // Mock data for dish analytics
-  const dishPopularityData = [
+  // Use real dish data if available, otherwise fallback to mock data
+  const dishPopularityData = dishViewData?.map(dish => ({
+    name: dish.name,
+    views: dish.views
+  })) || [
     { name: "Pasta", views: 85 },
     { name: "Pizza", views: 120 },
     { name: "Salad", views: 55 },
@@ -154,24 +149,27 @@ export default function AnalyticsDashboard() {
             <Card className="md:col-span-2">
               <CardHeader>
                 <CardTitle>QR Analytics Summary</CardTitle>
-                <CardDescription>Key metrics for your QR codes</CardDescription>
+                <CardDescription>Key metrics for your QR codes this week</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-muted rounded-lg p-4">
-                    <p className="text-muted-foreground text-sm">Total Scans</p>
-                    <p className="text-3xl font-bold">1,165</p>
-                    <p className="text-green-500 text-sm">↑ 12% from last week</p>
+                    <p className="text-muted-foreground text-sm">Total Scans This Week</p>
+                    <p className="text-3xl font-bold">{qrAnalyticsData?.totalScans || 0}</p>
+                    <p className="text-green-500 text-sm">Last 7 days</p>
                   </div>
                   <div className="bg-muted rounded-lg p-4">
-                    <p className="text-muted-foreground text-sm">Unique Users</p>
-                    <p className="text-3xl font-bold">842</p>
-                    <p className="text-green-500 text-sm">↑ 8% from last week</p>
+                    <p className="text-muted-foreground text-sm">Average Daily Scans</p>
+                    <p className="text-3xl font-bold">{qrAnalyticsData?.totalScans ? Math.round(qrAnalyticsData.totalScans / 7) : 0}</p>
+                    <p className="text-green-500 text-sm">Per day average</p>
                   </div>
                   <div className="bg-muted rounded-lg p-4">
-                    <p className="text-muted-foreground text-sm">Conversion Rate</p>
-                    <p className="text-3xl font-bold">24%</p>
-                    <p className="text-red-500 text-sm">↓ 2% from last week</p>
+                    <p className="text-muted-foreground text-sm">Peak Day</p>
+                    <p className="text-3xl font-bold">
+                      {qrAnalyticsData?.dailyScans?.reduce((max: any, day: any) => 
+                        day.count > max.count ? day : max, { count: 0, dayName: 'N/A' })?.dayName || 'N/A'}
+                    </p>
+                    <p className="text-muted-foreground text-sm">Highest scan day</p>
                   </div>
                 </div>
               </CardContent>
@@ -184,7 +182,7 @@ export default function AnalyticsDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Dish Popularity</CardTitle>
-                <CardDescription>Most ordered dishes this week</CardDescription>
+                <CardDescription>Most viewed dishes this week</CardDescription>
               </CardHeader>
               <CardContent className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
@@ -227,19 +225,25 @@ export default function AnalyticsDashboard() {
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-muted rounded-lg p-4">
-                    <p className="text-muted-foreground text-sm">Total Orders</p>
-                    <p className="text-3xl font-bold">395</p>
+                    <p className="text-muted-foreground text-sm">Total Views</p>
+                    <p className="text-3xl font-bold">
+                      {dishViewData?.reduce((sum, dish) => sum + dish.views, 0) || 395}
+                    </p>
                     <p className="text-green-500 text-sm">↑ 15% from last week</p>
                   </div>
                   <div className="bg-muted rounded-lg p-4">
-                    <p className="text-muted-foreground text-sm">Average Order Value</p>
-                    <p className="text-3xl font-bold">$28.45</p>
-                    <p className="text-green-500 text-sm">↑ 5% from last week</p>
+                    <p className="text-muted-foreground text-sm">Average Views</p>
+                    <p className="text-3xl font-bold">
+                      {dishViewData?.length ? Math.round(dishViewData.reduce((sum, dish) => sum + dish.views, 0) / dishViewData.length) : 79}
+                    </p>
+                    <p className="text-green-500 text-sm">Per dish average</p>
                   </div>
                   <div className="bg-muted rounded-lg p-4">
                     <p className="text-muted-foreground text-sm">Most Popular</p>
-                    <p className="text-3xl font-bold">Pizza</p>
-                    <p className="text-muted-foreground text-sm">120 orders this week</p>
+                    <p className="text-3xl font-bold">
+                      {dishViewData?.reduce((max, dish) => dish.views > max.views ? dish : max, { name: 'N/A', views: 0 })?.name || 'N/A'}
+                    </p>
+                    <p className="text-muted-foreground text-sm">Highest viewed dish</p>
                   </div>
                 </div>
               </CardContent>

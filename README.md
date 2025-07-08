@@ -228,8 +228,6 @@ next todos
 
 
 #tasks to do 
-gallery image integration in frontend let restaurnat users upload res images 
 post announcemnt cruds api and frontend
-responsive dashboard edit menu 
-show proper analytics on analytics section and home section with qr scans analytics overview  
+show proper analytics on analytics section and 
  

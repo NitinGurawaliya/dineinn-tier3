@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { Home, Edit, QrCode, User2, Menu, X, Search, MenuIcon, MenuSquare, HomeIcon, View, GitGraph, LineChart, UserRoundSearchIcon, LogOut } from "lucide-react";
+import { Home, Edit, QrCode, User2, Menu, X, Search, MenuIcon, MenuSquare, HomeIcon, View, GitGraph, LineChart, UserRoundSearchIcon, LogOut, Image } from "lucide-react";
 
 type NavItem = {
   section: string;
@@ -17,7 +17,8 @@ const navItems: NavItem[] = [
   { section: "generate-qr", label: "Manage QR Code", icon: QrCode },
   { section: "edit-profile", label: "Edit your Profile", icon: User2 },
   {section:"analytics",label:"View Analytics",icon:LineChart},
-  {section:"my-customers",label:"My Customers",icon:UserRoundSearchIcon}
+  {section:"my-customers",label:"My Customers",icon:UserRoundSearchIcon},
+  {section:"gallery",label:"Gallery",icon:Image}
 ];
 
 export function CustomSidebar() {
