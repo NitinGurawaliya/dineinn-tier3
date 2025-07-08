@@ -223,7 +223,7 @@ export default function RestaurantMenuPage() {
 
       {/* Tabs */}
       <TabsComponent
-        tabs={[ "Overview","Menu","Gallery","Updates", "Reviews",]}
+        tabs={[ "Overview","Menu","Gallery","Updates", ]}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />

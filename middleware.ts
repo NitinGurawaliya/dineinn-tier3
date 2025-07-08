@@ -5,10 +5,9 @@ import { jwtVerify } from 'jose'
 // Define protected routes that require authentication
 const protectedRoutes = [
   '/restaurant/dashboard',
-  '/restaurant/menu',
   '/onboarding/details',
-  '/onboarding/menu',
-  '/restaurant/' // covers all /restaurant/*
+  '/onboarding/menu'
+  // '/restaurant/menu' and '/restaurant/' are NOT here, so /restaurant/menu and its subroutes are public
 ]
 
 // Define public routes that don't require authentication
