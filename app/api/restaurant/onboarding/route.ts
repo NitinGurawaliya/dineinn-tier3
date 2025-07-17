@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
 
     const restaurantName= formData.get("restaurantName") as string
+    const subdomain = formData.get("subdomain") as string
     const contactNumber = formData.get("contactNumber") as string
     const location = formData.get("location") as string 
     const weekdaysWorking = formData.get("weekdaysWorking") as string 
@@ -53,11 +54,34 @@ export async function POST(req: NextRequest) {
 
     const imageUrl = uploadResponse.secure_url;
 
+    // Validate subdomain
+    const reserved = ["www", "api", "admin", "mail", "ftp", "blog"];
+    if (reserved.includes(subdomain)) {
+        return NextResponse.json({ msg: "This subdomain is reserved" }, { status: 400 });
+    }
+    if (!/^[a-z0-9-]+$/.test(subdomain)) {
+        return NextResponse.json({ msg: "Subdomain can only contain lowercase letters, numbers, and hyphens" }, { status: 400 });
+    }
+    if (subdomain.length < 3 || subdomain.length > 63) {
+        return NextResponse.json({ msg: "Subdomain must be between 3 and 63 characters" }, { status: 400 });
+    }
+    // Check if subdomain is already taken
+    const existingSubdomain = await prisma.restaurantDetail.findUnique({ where: { subdomain: subdomain } });
+    if (existingSubdomain) {
+        return NextResponse.json({ msg: "Subdomain already taken" }, { status: 409 });
+    }
+    // Check if restaurantName is already taken
+    const existingName = await prisma.restaurantDetail.findUnique({ where: { restaurantName: restaurantName } });
+    if (existingName) {
+        return NextResponse.json({ msg: "Restaurant name already taken" }, { status: 409 });
+    }
+
     try {
         const restaurantDetails = await prisma.restaurantDetail.create({
             data: {
                
                 restaurantName,
+                subdomain,
                 contactNumber,
                 location,
                 weekdaysWorking,

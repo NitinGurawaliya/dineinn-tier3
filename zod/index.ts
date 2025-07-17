@@ -23,6 +23,10 @@ export const restaurantOnboardingSchema = zod.object({
   instagram: zod.string().optional(),
   facebook: zod.string().optional(),
   logo: zod.string().optional(),
+  subdomain: zod.string()
+    .min(3, { message: 'Subdomain must be at least 3 characters' })
+    .max(63, { message: 'Subdomain must be at most 63 characters' })
+    .regex(/^[a-z0-9-]+$/, { message: 'Subdomain can only contain lowercase letters, numbers, and hyphens' }),
 });
 
 export const editRestaurantDetailsSchema = zod.object({

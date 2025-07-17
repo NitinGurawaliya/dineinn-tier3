@@ -23,7 +23,8 @@ model User {
 
 model RestaurantDetail {
   id              Int        @id @default(autoincrement())
-  restaurantName  String
+  restaurantName  String     @unique
+  subdomain       String     @unique
   contactNumber   String?
   location        String
   weekendWorking  String?

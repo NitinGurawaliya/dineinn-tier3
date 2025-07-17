@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
+import { subdomainMiddleware } from './middleware/subdomain'
 
 // Define protected routes that require authentication
 const protectedRoutes = [
@@ -23,6 +24,14 @@ export async function middleware(request: NextRequest) {
 
   // Debug logging
   console.log('MIDDLEWARE:', { pathname, token })
+
+  const hostname = request.headers.get('host') || '';
+  const subdomain = hostname.split('.')[0];
+
+  // Handle subdomain requests
+  if (subdomain && subdomain !== 'www' && subdomain !== 'dineinn' && subdomain !== 'localhost') {
+    return subdomainMiddleware(request);
+  }
 
   // If requesting an API route, skip middleware
   if (pathname.startsWith('/api')) return NextResponse.next()

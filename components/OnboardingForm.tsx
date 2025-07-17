@@ -6,6 +6,8 @@ import { REQUEST_URL } from "@/config";
 
 const RestaurantOnboardingForm = () => {
     const [restaurantName, setRestaurantName] = useState("");
+    const [subdomain, setSubdomain] = useState("");
+    const [subdomainError, setSubdomainError] = useState("");
     const [contactNumber, setContactNumber] = useState("");
     const [location, setLocation] = useState("");
     const [weekdaysWorking, setWeekdaysWorking] = useState("");
@@ -17,6 +19,30 @@ const RestaurantOnboardingForm = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
+    const handleRestaurantNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value;
+        setRestaurantName(name);
+        // Auto-generate subdomain from restaurant name
+        const slug = name
+          .toLowerCase()
+          .replace(/[^a-z0-9-]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .replace(/--+/g, '-');
+        setSubdomain(slug);
+    };
+    const validateSubdomain = (value: string) => {
+        const reserved = ["www", "api", "admin", "mail", "ftp", "blog"];
+        if (reserved.includes(value)) return "This subdomain is reserved";
+        if (!/^[a-z0-9-]+$/.test(value)) return "Subdomain can only contain lowercase letters, numbers, and hyphens";
+        if (value.length < 3 || value.length > 63) return "Subdomain must be between 3 and 63 characters";
+        return null;
+    };
+    const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.toLowerCase();
+        setSubdomain(value);
+        setSubdomainError(validateSubdomain(value) || "");
+    };
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]; // If files is null, file will be undefined
         if (file) {
@@ -26,9 +52,17 @@ const RestaurantOnboardingForm = () => {
 
     const submitRestaurantDetails = async () => {
         setLoading(true);
+        setSubdomainError("");
+        const error = validateSubdomain(subdomain);
+        if (error) {
+            setSubdomainError(error);
+            setLoading(false);
+            return;
+        }
 
         const formData = new FormData();
         formData.append("restaurantName", restaurantName);
+        formData.append("subdomain", subdomain);
         formData.append("contactNumber", contactNumber);
         formData.append("location", location);
         formData.append("weekdaysWorking", weekdaysWorking);
@@ -74,10 +108,30 @@ const RestaurantOnboardingForm = () => {
                     type="text"
                     name="restaurantName"
                     placeholder="Restaurant Name"
-                    onChange={(e) => setRestaurantName(e.target.value)}
+                    value={restaurantName}
+                    onChange={handleRestaurantNameChange}
                     className="w-full p-3 border border-gray-300 rounded-md"
                     required
                 />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Subdomain</label>
+                  <div className="flex items-center">
+                    <input
+                      type="text"
+                      name="subdomain"
+                      value={subdomain}
+                      onChange={handleSubdomainChange}
+                      className="flex-1 p-2 border border-gray-300 rounded-l-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="restaurant-name"
+                    />
+                    <span className="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-gray-600">
+                      .dineinn.shop
+                    </span>
+                  </div>
+                  {subdomainError && (
+                    <p className="mt-1 text-sm text-red-600">{subdomainError}</p>
+                  )}
+                </div>
                 <input
                     type="text"
                     name="contactNumber"
