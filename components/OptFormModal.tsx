@@ -72,6 +72,7 @@ export default function FormModal({ open, setOpen, restaurantId }: FormModalProp
       })
       setStep(1)
       setOpen(false)
+      window.location.reload(); // Force reload so HTTP-only cookie is recognized
     } catch (error) {
       console.error("Error:", error)
     } finally {

@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const token = sign(
       { id: customer.id },
       process.env.NEXTAUTH_SECRET as string,
-      { expiresIn: "365d" } // Valid for 1 year
+      { expiresIn: "365d" } 
     );
 
     const response = NextResponse.json({ msg: "Authenticated", customer });
