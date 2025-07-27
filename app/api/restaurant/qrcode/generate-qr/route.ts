@@ -26,11 +26,12 @@ export async function GET(req: NextRequest) {
         },
     });
 
+
     if (!restaurantDetail) {
         return NextResponse.json({ msg: "Restaurant not found" }, { status: 404 });
     }
 
-    const frontendUrl = `https://dineinn.shop/restaurant/menu/home/${restaurantId}`;
+    const frontendUrl = `https://${restaurantDetail?.subdomain}.dineinn.shop`;
 
     try {
         const qrCodeUrl = await QRCode.toDataURL(frontendUrl);
