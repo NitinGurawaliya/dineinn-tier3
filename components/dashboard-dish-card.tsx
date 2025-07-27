@@ -31,13 +31,7 @@ const DashboardDishesCard: React.FC<DishCardProps> = ({
   price,
   image,
   description,
-  categoryId,
   type,
-  restaurantId,
-  rating = 4.5,
-  reviewCount = 24,
-  isVeg = true,
-  isNew = false,
   
 }) => {
   const ref = useRef(null);
@@ -117,21 +111,6 @@ const DashboardDishesCard: React.FC<DishCardProps> = ({
 
           <div className="mt-8 text-center flex gap-6">
             <span className="text-md font-bold text-black">₹{price}</span>
-          </div>
-
-          <div className="mt-3 flex flex-wrap gap-2 md:gap-3">
-            <button
-              className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
-              onClick={handleUpvote}
-            >
-              <ArrowBigUpDashIcon />
-            </button>
-            <button
-              className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
-              onClick={handleShare}
-            >
-              <Share2 />
-            </button>
             <Button onClick={(e)=>{
                   e.stopPropagation(); 
                   setIsEditOpen(true);
