@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import FormStepOne from "./step-one-form"
@@ -8,9 +8,10 @@ interface FormModalProps {
   open: boolean
   setOpen: (value: boolean) => void
   restaurantId?: number
+  onSuccess?: () => void
 }
 
-export default function FormModal({ open, setOpen, restaurantId }: FormModalProps) {
+export default function FormModal({ open, setOpen, restaurantId, onSuccess }: FormModalProps) {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: "",
@@ -72,7 +73,7 @@ export default function FormModal({ open, setOpen, restaurantId }: FormModalProp
       })
       setStep(1)
       setOpen(false)
-      window.location.reload(); // Force reload so HTTP-only cookie is recognized
+      if (onSuccess) onSuccess()
     } catch (error) {
       console.error("Error:", error)
     } finally {

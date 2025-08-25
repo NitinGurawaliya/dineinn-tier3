@@ -213,6 +213,10 @@ For support, email support@dineinn.com or create an issue in the repository.
 
 Made with ❤️ by the DineInn Team
 
+## Table Ordering System
+
+See `README_TABLE_ORDERING.md` for the end-to-end plan and setup (QR → Cart → Order → Dashboard).
+
 next todos 
 
 1 implement rating api's frontend and backend for menu page and admin dashboard #done

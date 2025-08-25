@@ -43,6 +43,7 @@ model RestaurantDetail {
   announcements   Announcement[]
   customer        Customer []
   dailyQrScans    DailyQRScan[]
+  orders          Order[]
   // polls           Poll[]
 }
 
@@ -85,6 +86,7 @@ model Dishes {
   category        Category     @relation(fields: [categoryId], references: [id])
   views          DishView[]
   viewsCount     Int         @default(0) // running total of views
+  orderItems     OrderItem[]
 }
 
 model Announcement {
@@ -104,6 +106,7 @@ model Customer{
   DOB             DateTime?
 
   restaurant      RestaurantDetail[]
+  orders          Order[]
 
 }
 
@@ -132,6 +135,55 @@ model DailyQRScan {
   restaurant    RestaurantDetail @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   
   @@unique([restaurantId, scanDate]) // Ensure one record per restaurant per day
+}
+
+// --- Orders for table-ordering system ---
+
+enum OrderStatus {
+  PLACED
+  ACCEPTED
+  IN_PROGRESS
+  READY
+  SERVED
+  CANCELLED
+}
+
+model Order {
+  id            String           @id @default(cuid())
+  restaurantId  Int
+  sessionId     String?
+  customerId    Int?
+  tableNo       String
+  status        OrderStatus      @default(PLACED)
+  subtotal      Decimal          @db.Decimal(10,2)
+  tax           Decimal          @db.Decimal(10,2)
+  total         Decimal          @db.Decimal(10,2)
+  notes         String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  restaurant    RestaurantDetail @relation(fields: [restaurantId], references: [id])
+  customer      Customer?        @relation(fields: [customerId], references: [id])
+  items         OrderItem[]
+
+  @@index([restaurantId])
+  @@index([sessionId])
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  dishId      Int
+  nameSnapshot String
+  priceSnapshot Decimal @db.Decimal(10,2)
+  quantity    Int
+  lineTotal   Decimal @db.Decimal(10,2)
+
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  dish        Dishes  @relation(fields: [dishId], references: [id])
+
+  @@index([orderId])
+  @@index([dishId])
 }
 
 

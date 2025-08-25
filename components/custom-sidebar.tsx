@@ -15,6 +15,7 @@ const navItems: NavItem[] = [
   {section: "home", label: "Home", icon: HomeIcon},
   { section: "edit-menu", label: "Edit your Menu", icon: Edit },
   { section: "generate-qr", label: "Manage QR Code", icon: QrCode },
+  { section: "orders", label: "Orders", icon: MenuSquare },
   { section: "edit-profile", label: "Edit your Profile", icon: User2 },
   {section:"analytics",label:"View Analytics",icon:LineChart},
   {section:"my-customers",label:"My Customers",icon:UserRoundSearchIcon},

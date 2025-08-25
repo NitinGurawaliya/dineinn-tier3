@@ -10,6 +10,7 @@ import GalleryManager from "@/components/GalleryManager";
 import AddSpecialButton from "@/components/AddSpecialButton";
 import GalleryUploadButton from "@/components/GalleryUploadButton";
 import VisitorCountCard from "@/components/VisitorCountCard";
+import OrdersBoard from "@/components/OrdersBoard";
 
 interface DashboardContentProps {
   section?: string;
@@ -41,6 +42,9 @@ export default function DashboardContent({ section, dashboardData }: DashboardCo
       break;
     case "generate-qr":
       content = <GenerateQRCode />;
+      break;
+    case "orders":
+      content = <OrdersBoard />;
       break;
     case "edit-profile":
       content = <UserRestaurantCard restaurantData={dashboardData.restaurant} />;

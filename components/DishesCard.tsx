@@ -21,6 +21,10 @@
     isVeg?: boolean;
     isNew?: boolean;
     type:string
+    quantity?: number;
+    onAdd?: () => void;
+    onIncrement?: () => void;
+    onDecrement?: () => void;
   }
 
   const DishesCard: React.FC<DishCardProps> = ({
@@ -36,6 +40,10 @@
     reviewCount = 24,
     isVeg = true,
     isNew = false,
+    quantity = 0,
+    onAdd,
+    onIncrement,
+    onDecrement,
     
   }) => {
     const ref = useRef(null);
@@ -114,8 +122,42 @@
             </div>
 
 
-            <div className="mt-8 text-center flex gap-6">
+            <div className="mt-8 text-center flex items-center justify-between">
             <span className="text-md font-bold text-black">₹{price}</span>
+
+            {quantity <= 0 ? (
+              <button
+                className="bg-black text-white px-3 py-1 rounded-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAdd && onAdd();
+                }}
+              >
+                Add
+              </button>
+            ) : (
+              <div className="flex items-center gap-3">
+                <button
+                  className="border rounded-full w-8 h-8 flex items-center justify-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDecrement && onDecrement();
+                  }}
+                >
+                  -
+                </button>
+                <span className="min-w-4 text-black">{quantity}</span>
+                <button
+                  className="border rounded-full w-8 h-8 flex items-center justify-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onIncrement && onIncrement();
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            )}
 
               {/* <button
                 className="flex items-center justify-center border rounded-full p-1.5 hover:bg-gray-50"
