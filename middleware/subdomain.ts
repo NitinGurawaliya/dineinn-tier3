@@ -1,22 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function subdomainMiddleware(request: NextRequest) {
-  const hostname = request.headers.get('host') || '';
-  const subdomain = hostname.split('.')[0];
-  
-  // Skip for main domain and www
-  if (subdomain === 'www' || subdomain === 'dineinn' || subdomain === 'localhost') {
+  const hostHeader = request.headers.get('host') || '';
+  const hostname = hostHeader.split(':')[0]; // strip port if present
+  const labels = hostname.toLowerCase().split('.');
+
+  // Skip for localhost/dev and apex domain (no subdomain) or www
+  const isLocalDev = hostname === 'localhost' || hostname === '127.0.0.1';
+  if (isLocalDev || labels.length < 3 || labels[0] === 'www') {
     return NextResponse.next();
   }
 
-  // Check if this is a valid subdomain
+  const subdomain = labels[0];
   const url = request.nextUrl.clone();
-  
-  // If accessing root path on subdomain, redirect to menu page
+
+  // If accessing root path on subdomain, rewrite to menu page
   if (url.pathname === '/') {
     url.pathname = `/menu/${subdomain}`;
     return NextResponse.rewrite(url);
   }
 
   return NextResponse.next();
-} 
+}
