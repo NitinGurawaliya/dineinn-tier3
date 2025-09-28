@@ -79,6 +79,7 @@ export default function RestaurantMenuClient({ menuData, showRegistrationPopup }
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [showScrollText, setShowScrollText] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showRegistrationOpen, setShowRegistrationOpen] = useState<boolean>(showRegistrationPopup);
   const dishesContainerRef = useRef<HTMLDivElement>(null);
   const categoryBarRef = useRef<HTMLDivElement>(null);
 
@@ -229,7 +230,13 @@ export default function RestaurantMenuClient({ menuData, showRegistrationPopup }
         </div>
       )}
       {/* Registration Popup (only for unregistered users) */}
-      {showRegistrationPopup && <RegistrationPopup restaurantId={menuData?.id} />}
+      {showRegistrationPopup && (
+        <RegistrationPopup
+          restaurantId={menuData?.id}
+          open={showRegistrationOpen}
+          setOpen={setShowRegistrationOpen}
+        />
+      )}
       {/* <RatingDialog open={showRatingDialog} setOpen={setShowRatingDialog} restaurantId={menuData.id} /> */}
       <BackToTop />
     </div>
